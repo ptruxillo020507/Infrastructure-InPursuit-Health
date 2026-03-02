@@ -132,13 +132,23 @@ body {
 /* ===== HERO — TETRA INFRASTRUCTURE THESIS ===== */
 .hero {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 640px;
   background: var(--navy-deep);
   overflow: hidden;
+}
+.hero-slider {
+  position: absolute; inset: 0;
+  z-index: 2;
+}
+.hero-slide {
+  position: absolute; inset: 0;
+  display: none;
+  align-items: center; justify-content: center;
   padding-top: 64px;
+}
+.hero-slide.active {
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -175,8 +185,10 @@ body {
 }
 
 .hero-text {
-  animation: fadeInUp 1s ease 0.3s both;
   text-align: center;
+}
+.hero-slide.active .hero-text {
+  display: block;
 }
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -1120,6 +1132,125 @@ body {
   display: flex; gap: 12px; margin-left: auto;
   font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
 }
+/* ===== HERO SLIDER ===== */
+
+/* Particle dissolve overlay — flashes on transition */
+.hero-slide.dissolving::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(197,164,78,0.06), transparent 70%);
+  animation: dissolveFlash 1.2s ease forwards;
+  pointer-events: none;
+}
+@keyframes dissolveFlash {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.slide-breadcrumb {
+  font-size: 10px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,0.25);
+  margin-bottom: 20px;
+}
+.slide-back-link {
+  margin-top: 20px; font-size: 12px; font-weight: 600;
+  letter-spacing: 1px; color: rgba(255,255,255,0.25);
+  cursor: pointer;
+}
+.slide-back-link:hover { color: var(--gold); }
+.slide-overline {
+  font-size: 11px; font-weight: 700; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px; opacity: 0.8;
+}
+/* Slide stats column */
+.slide-stats-col {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; animation: fadeInUp 1s ease 0.5s both;
+}
+.slide-stat-card {
+  background: rgba(197,164,78,0.06);
+  border: 1px solid rgba(197,164,78,0.15);
+  border-radius: 10px; padding: 20px 18px;
+  text-align: center;
+}
+.slide-stat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px; font-weight: 400; color: var(--gold-light);
+  line-height: 1; margin-bottom: 8px;
+}
+.slide-stat-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+  line-height: 1.4;
+}
+/* Slide countdown */
+.slide-countdown {
+  display: flex; gap: 8px; align-items: center;
+  margin: 28px 0; justify-content: center;
+}
+.slide-cd-unit {
+  background: rgba(197,164,78,0.08);
+  border: 1px solid rgba(197,164,78,0.2);
+  border-radius: 8px; padding: 16px 20px;
+  text-align: center; min-width: 80px;
+}
+.slide-cd-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+  margin-top: 6px;
+}
+.slide-cd-sep {
+  font-size: 28px; color: var(--gold); opacity: 0.4;
+  margin-bottom: 20px;
+}
+/* Slider controls row (dots + pause) */
+.slider-controls {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 20px; z-index: 10;
+}
+.slider-dots {
+  display: flex; gap: 10px; align-items: center;
+}
+.slider-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); border: none;
+  cursor: pointer; transition: all 0.3s; padding: 0;
+}
+.slider-dot.active {
+  background: var(--gold); width: 24px; border-radius: 4px;
+}
+.slider-dot:hover { background: rgba(197,164,78,0.6); }
+.slider-pause-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(197,164,78,0.15);
+  border: 1px solid rgba(197,164,78,0.3);
+  color: var(--gold); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s; flex-shrink: 0;
+}
+.slider-pause-btn:hover {
+  background: rgba(197,164,78,0.25);
+  border-color: var(--gold);
+  transform: scale(1.1);
+}
+/* Progress bar */
+.slider-progress-bar {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; background: var(--gold);
+  width: 0%; z-index: 10;
+  transition: width linear;
+  opacity: 0.6;
+}
+@media (max-width: 768px) {
+  .slide-stats-col { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .slide-stat-card { padding: 14px 12px; }
+  .slide-stat-num { font-size: 22px; }
+  .slide-countdown { gap: 4px; }
+  .slide-cd-unit { min-width: 60px; padding: 12px 10px; }
+}
+
 /* ===== UNIVERSAL NAV ===== */
 #iph-topbar {
   background: #060E1A;
@@ -1237,8 +1368,6 @@ body {
       <div class="iph-dropdown">
         <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">TETRA <span class="iph-caret">▼</span></span>
         <div class="iph-dropdown-menu">
-          <span class="iph-sub-label">TETRA Suite</span>
-          <span style="cursor:default;">TETRA™ Overview</span>
           <span style="cursor:default;">TETRA Aegis™</span>
           <span style="cursor:default;">TETRA Sentinel™</span>
         </div>
@@ -1246,21 +1375,17 @@ body {
       <div class="iph-dropdown">
         <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">For You <span class="iph-caret">▼</span></span>
         <div class="iph-dropdown-menu">
-          <span class="iph-sub-label">Personal Health</span>
-          <span style="cursor:default;">For You &amp; Your Family</span>
           <span style="cursor:default;">For Your Pets</span>
         </div>
       </div>
       <div class="iph-dropdown">
-        <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">For Providers <span class="iph-caret">▼</span></span>
+        <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">For VBC Providers <span class="iph-caret">▼</span></span>
         <div class="iph-dropdown-menu">
-          <span class="iph-sub-label">Provider Solutions</span>
-          <span style="cursor:default;">Provider Overview</span>
-          <span style="cursor:default;">Increase Revenue: CMS ACCESS Model</span>
-          <span style="cursor:default;">MyPursuit</span>
+          <span style="cursor:default;">ACCESS Model Offer</span>
         </div>
       </div>
-      <span class="iph-nav-item" style="cursor:default;">Data &amp; AI</span>
+      <span class="iph-nav-item" style="cursor:default;">MyPursuit</span>
+      <span class="iph-nav-item" style="cursor:default;">Data Oath</span>
       <span class="iph-nav-item" style="cursor:default;">Partner Network</span>
       <span id="iph-cta" style="cursor:default;">Invest</span>
     </nav>
@@ -1280,22 +1405,86 @@ body {
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <canvas class="hero-particles" id="heroParticles" width="1912" height="922"></canvas>
-  <div class="hero-content">
-    <div class="hero-text">
-      <div class="hero-badge">
-        <span class="pulse-dot"></span>
-        Enterprise Healthcare Orchestration
-      </div>
-      <h1>AI Can Orchestrate Models. <em>InPursuit Orchestrates Healthcare.</em></h1>
-      <p class="hero-tagline" style="text-align:center;">Every AI company wants into healthcare. None of them can get there alone. They need a HIPAA-compliant, federally validated data orchestration layer to operate. That's not a product gap — that's an infrastructure gap.</p>
-      <p class="hero-tagline-bold">"We don't compete with AI.<br>We're the layer AI needs to exist in healthcare."</p>
-      <div class="hero-cta-row">
-        <span class="btn-gold" style="cursor:default;">Explore TETRA™ Architecture →</span>
-        <span class="btn-outline" style="cursor:default;">Build on Our Infrastructure</span>
+
+  <!-- ===== HERO SLIDER ===== -->
+  <div class="hero-slider" id="heroSlider">
+
+    <!-- SLIDE 1: Main Infrastructure Thesis -->
+    <div class="hero-slide active" data-slide="0">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            Enterprise Healthcare Orchestration
+          </div>
+          <h1>AI Can Orchestrate Models. <em>InPursuit Orchestrates Healthcare.</em></h1>
+          <p class="hero-tagline">Every AI company wants into healthcare. None of them can get there alone. They need a HIPAA-compliant, federally validated data orchestration layer to operate. That's not a product gap — that's an infrastructure gap.</p>
+          <p class="hero-tagline-bold">"We don't compete with AI.<br>We're the layer AI needs to exist in healthcare."</p>
+          <div class="hero-cta-row">
+            <a class="btn-gold" href="tetra.html">Explore TETRA™ Architecture →</a>
+            <a class="btn-outline" href="partner-network.html">Build on Our Infrastructure</a>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- SLIDE 2: MAHA Alignment -->
+    <div class="hero-slide" data-slide="1">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge" style="background:rgba(197,164,78,0.1);border-color:rgba(197,164,78,0.3);">
+            <span class="pulse-dot"></span>
+            MAHA Initiative
+          </div>
+          <div class="slide-overline">MAKING AMERICA HEALTHY AGAIN</div>
+          <h1>Patient-first healthcare.<br><em>Built on transparency.</em></h1>
+          <p class="hero-tagline">InPursuit proudly supports the MAHA Initiative — a movement to put patients back in control of their health. Through radical transparency, data ownership, and AI-enabled empowerment, we're building the healthcare system Americans deserve.</p>
+          <p class="hero-tagline-bold">Your health. Your data. Your future.</p>
+          <div class="hero-cta-row">
+            <span class="btn-gold" style="cursor:default;">Learn About MAHA →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: For You -->
+    <div class="hero-slide" data-slide="2">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge" style="background:rgba(197,164,78,0.08);border-color:rgba(197,164,78,0.2);">
+            <span class="pulse-dot"></span>
+            For You &amp; Your Family
+          </div>
+          <div class="slide-overline">HARNESS THE POWER OF YOUR DATA™</div>
+          <h1>Your Health. Your Data.<br>Your Feed. Your <em>Rewards.</em></h1>
+          <p class="hero-tagline">Your health data is the most valuable asset you own — and you've been giving it away for free. InPursuit gives every American a single, secure, complete health record that follows you for life. We put the power back where it belongs.</p>
+          <div class="hero-cta-row">
+          <div class="hero-cta-row" style="flex-direction:column;align-items:center;gap:12px;">
+            <a class="btn-gold" href="for-you.html">Harness the Power of Your Data™ →</a>
+            <a class="btn-outline" href="for-your-pets.html">For Your Pets Too</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end hero-slider -->
+
+  <!-- Dot indicators + pause -->
+  <div class="slider-controls">
+    <div class="slider-dots" id="sliderDots">
+      <button class="slider-dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+      <button class="slider-dot" onclick="goToSlide(1)" aria-label="Slide 2"></button>
+      <button class="slider-dot" onclick="goToSlide(2)" aria-label="Slide 3"></button>
+    </div>
+    <button class="slider-pause-btn" id="sliderPauseBtn" onclick="toggleSliderPause()" aria-label="Pause slideshow">
+      <svg id="pauseIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="4" height="16" rx="1"/><rect x="15" y="4" width="4" height="16" rx="1"/></svg>
+      <svg id="playIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5,3 19,12 5,21"/></svg>
+    </button>
   </div>
+
+  <!-- Progress bar -->
+  <div class="slider-progress-bar" id="sliderProgress"></div>
+
 </section>
 
 <!-- GOLD TICKER -->
@@ -1648,7 +1837,7 @@ function updateCountdown() {
     if (el) el.textContent = String(vals[i]).padStart(2,'0');
   });
 }
-updateCountdown(); setInterval(updateCountdown, 1000);
+
 
 // ===== COPY PROMPT =====
 function copyPrompt(card) {
@@ -1728,4 +1917,91 @@ document.querySelectorAll('.iph-dropdown-toggle').forEach(function(t) {
 });
 </script>
 
+<script>
+// ===== HERO SLIDER =====
+var sliderCurrent = 0;
+var sliderTotal = 3;
+var sliderTimer = null;
+var sliderPaused = false;
+var SLIDE_MS = 10000;
+
+function goToSlide(n) {
+  var slides = document.querySelectorAll('.hero-slide');
+  var dots = document.querySelectorAll('.slider-dot');
+  slides[sliderCurrent].classList.remove('active');
+  dots[sliderCurrent].classList.remove('active');
+  sliderCurrent = ((n % sliderTotal) + sliderTotal) % sliderTotal;
+  slides[sliderCurrent].classList.add('active');
+  dots[sliderCurrent].classList.add('active');
+  startSliderTimer();
+}
+
+function startSliderTimer() {
+  clearTimeout(sliderTimer);
+  var bar = document.getElementById('sliderProgress');
+  if (bar) {
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    setTimeout(function() {
+      bar.style.transition = 'width ' + SLIDE_MS + 'ms linear';
+      bar.style.width = '100%';
+    }, 30);
+  }
+  if (!sliderPaused) {
+    sliderTimer = setTimeout(function() { goToSlide(sliderCurrent + 1); }, SLIDE_MS);
+  }
+}
+
+function toggleSliderPause() {
+  sliderPaused = !sliderPaused;
+  var pauseIcon = document.getElementById('pauseIcon');
+  var playIcon = document.getElementById('playIcon');
+  var bar = document.getElementById('sliderProgress');
+  if (sliderPaused) {
+    clearTimeout(sliderTimer);
+    if (bar) { bar.style.transition = 'none'; }
+    if (pauseIcon) pauseIcon.style.display = 'none';
+    if (playIcon) playIcon.style.display = 'block';
+  } else {
+    if (pauseIcon) pauseIcon.style.display = 'block';
+    if (playIcon) playIcon.style.display = 'none';
+    goToSlide(sliderCurrent);
+  }
+}
+
+// Pause on hover
+document.addEventListener('DOMContentLoaded', function() {
+  var slider = document.getElementById('heroSlider');
+  if (slider) {
+    slider.addEventListener('mouseenter', function() {
+      if (!sliderPaused) {
+        clearTimeout(sliderTimer);
+        var bar = document.getElementById('sliderProgress');
+        if (bar) bar.style.transition = 'none';
+      }
+    });
+    slider.addEventListener('mouseleave', function() {
+      if (!sliderPaused) goToSlide(sliderCurrent);
+    });
+  }
+  startSliderTimer();
+});
+
+// Countdown
+function updateAllCountdowns() {
+  var deadline = new Date('2026-03-20T23:59:59').getTime();
+  var diff = Math.max(0, deadline - Date.now());
+  var d = Math.floor(diff / 864e5);
+  var h = Math.floor((diff % 864e5) / 36e5);
+  var m = Math.floor((diff % 36e5) / 6e4);
+  var s = Math.floor((diff % 6e4) / 1e3);
+  function pad(n) { return String(n).padStart(2, '0'); }
+  ['cntDays','cntDays2'].forEach(function(id) { var el = document.getElementById(id); if(el) el.textContent = pad(d); });
+  ['cntHours','cntHours2'].forEach(function(id) { var el = document.getElementById(id); if(el) el.textContent = pad(h); });
+  ['cntMins','cntMins2'].forEach(function(id) { var el = document.getElementById(id); if(el) el.textContent = pad(m); });
+  ['cntSecs','cntSecs2'].forEach(function(id) { var el = document.getElementById(id); if(el) el.textContent = pad(s); });
+}
+updateAllCountdowns();
+setInterval(updateAllCountdowns, 1000);
+</script>
 </body></html>

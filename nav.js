@@ -134,8 +134,6 @@
         <div class="iph-dropdown">
           <a href="tetra.html" class="iph-nav-item iph-dropdown-toggle">TETRA <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
-            <span class="iph-sub-label">TETRA Suite</span>
-            <a href="tetra.html">TETRA™ Overview</a>
             <a href="tetra-aegis.html">TETRA Aegis™</a>
             <a href="tetra-sentinel.html">TETRA Sentinel™</a>
           </div>
@@ -144,23 +142,19 @@
         <div class="iph-dropdown">
           <a href="for-you.html" class="iph-nav-item iph-dropdown-toggle">For You <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
-            <span class="iph-sub-label">Personal Health</span>
-            <a href="for-you.html">For You &amp; Your Family</a>
             <a href="for-your-pets.html">For Your Pets</a>
           </div>
         </div>
 
         <div class="iph-dropdown">
-          <a href="for-providers.html" class="iph-nav-item iph-dropdown-toggle">For Providers <span class="iph-caret">▼</span></a>
+          <a href="for-providers.html" class="iph-nav-item iph-dropdown-toggle">For VBC Providers <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
-            <span class="iph-sub-label">Provider Solutions</span>
-            <a href="for-providers.html">Provider Overview</a>
-            <a href="cms-access-model.html">Increase Revenue: CMS ACCESS Model</a>
-            <a href="mypursuit.html">MyPursuit</a>
+            <a href="cms-access-model.html">ACCESS Model Offer</a>
           </div>
         </div>
 
-        <a href="data-security-ai.html" class="iph-nav-item">Data &amp; AI</a>
+        <a href="mypursuit.html" class="iph-nav-item">MyPursuit</a>
+        <a href="data-oath.html" class="iph-nav-item">Data Oath</a>
         <a href="partner-network.html" class="iph-nav-item">Partner Network</a>
         <a id="iph-cta" href="investors.html">Invest</a>
 
