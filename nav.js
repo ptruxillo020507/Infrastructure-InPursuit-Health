@@ -136,17 +136,17 @@
         <div class="iph-dropdown">
           <a href="tetra.html" class="iph-nav-item iph-dropdown-toggle">TETRA <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
-            <a href="tetra.html">TETRA <em>ex</em>™</a>
+            <a href="tetra-ex.html">TETRA <em>ex</em>™</a>
             <a href="tetra-aegis.html">TETRA Aegis™</a>
-            <a href="tetra-sentinel.html">TETRA Sentinel™</a>
+            <a href="tetra-sentinel.html" style="padding-left:28px;">↳ TETRA Sentinel™</a>
           </div>
         </div>
 
         <div class="iph-dropdown">
           <a href="for-you.html" class="iph-nav-item iph-dropdown-toggle">For You <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
-            <a href="for-your-pets.html">For Your Pets</a>
-            <a href="aegis-for-you.html">Aegis for You</a>
+            
+            
           </div>
         </div>
 
@@ -170,7 +170,7 @@
   var bar = document.createElement('header');
   bar.id = 'iph-topbar';
   bar.innerHTML = html;
-  document.querySelectorAll('header.top-bar,header#topBar,.nav,nav.nav').forEach(function(el){el.remove();});
+  document.querySelectorAll('header#iph-topbar,header.top-bar,header#topBar,.nav,nav.nav').forEach(function(el){el.remove();});
   document.body.insertBefore(bar, document.body.firstChild);
 
   window.addEventListener('scroll', function(){bar.classList.toggle('scrolled',window.scrollY>10);});
