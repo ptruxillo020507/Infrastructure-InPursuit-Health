@@ -19,17 +19,7 @@ html{scroll-behavior:smooth}
 body{font-family:var(--body);background:var(--navy-deep);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* ====== NAV ====== */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
-.nav.scrolled{background:rgba(5,13,24,.95);backdrop-filter:blur(20px);padding:16px 48px;box-shadow:0 1px 0 rgba(197,164,78,.1)}
-.nav-brand{font-family:var(--display);font-size:20px;color:var(--gold);text-decoration:none;letter-spacing:.5px;white-space:nowrap}
-.nav-brand span{color:rgba(255,255,255,.4);font-weight:400}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-link{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .3s;white-space:nowrap}
-.nav-link:hover{color:var(--gold)}
-.nav-cta{padding:10px 28px;background:transparent;border:1.5px solid rgba(197,164,78,.4);color:var(--gold);font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:4px;transition:all .3s;white-space:nowrap}
-.nav-cta:hover{background:var(--gold);color:var(--navy-deep);transform:translateY(-1px)}
-.nav-toggle{display:none;background:none;border:none;color:var(--gold);font-size:24px;cursor:pointer;padding:4px 8px;line-height:1}
-.nav-links.open{display:flex}
+
 
 /* ====== BUTTONS ====== */
 .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:var(--gold);color:var(--navy-deep);font-family:var(--body);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:4px;border:none;cursor:pointer;transition:all .3s}
@@ -293,14 +283,11 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
   .ba-divider{transform:rotate(90deg);margin:-12px auto}
   .econ-card:first-child{border-radius:12px 12px 0 0}.econ-card:last-child{border-radius:0 0 12px 12px}
   .calc-layout{grid-template-columns:1fr}.rg3{grid-template-columns:1fr}
-  .nav-toggle{display:block}
-  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(5,13,24,.97);backdrop-filter:blur(20px);padding:24px 32px;gap:20px;align-items:flex-start;border-bottom:1px solid rgba(197,164,78,.15)}
-  .nav-links.open{display:flex}
-  .nav-links .nav-pipe{display:none}
+
   .nav-cta{margin-top:8px}
 }
 @media(max-width:768px){
-  .nav{padding:16px 20px}.nav.scrolled{padding:12px 20px}
+
   .scene{padding:100px 24px 80px}
   .detail-section{padding:60px 24px}
   .promise{padding:40px 28px}
@@ -313,24 +300,38 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
 }
 
 
+
+/* --- ARCHITECTURE DIAGRAM --- */
+.arch-card{background:rgba(14,29,53,.4);border:1px solid rgba(197,164,78,.08);border-radius:20px;padding:56px 48px 48px;position:relative;overflow:hidden}
+.arch-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),rgba(197,164,78,.1))}
+.arch-header{text-align:center;margin-bottom:48px}
+.arch-header h3{font-family:'Instrument Serif',Georgia,serif;font-size:15px;color:var(--gold);letter-spacing:1px;margin-bottom:6px}
+.arch-header p{font-size:12px;color:rgba(255,255,255,.25);letter-spacing:.5px}
+.arch-layer{display:flex;align-items:stretch;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.04)}
+.arch-label{width:180px;padding:20px 22px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.04)}
+.al-tag{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.al-name{font-family:var(--display);font-size:15px;font-weight:500;line-height:1.3}
+.arch-content{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 28px}
+.arch-text{font-size:13px;color:rgba(255,255,255,.45);text-align:center;letter-spacing:.3px;line-height:1.6}
+.arch-text span{color:rgba(255,255,255,.6);font-weight:500}
+.arch-cell{flex:1;display:flex;align-items:center;justify-content:center;padding:16px 12px;border-right:1px solid rgba(197,164,78,.06);font-size:13px;font-weight:600;color:var(--gold);letter-spacing:.3px;text-align:center}
+.arch-cell.ac-blue{color:#3B82F6}
+.arch-cell.ac-last{border-right:none}
+.al-brand{background:rgba(197,164,78,.03)}.al-brand .arch-label{background:rgba(197,164,78,.06)}.al-brand .al-tag{color:var(--gold)}.al-brand .al-name{color:var(--gold)}
+.al-clinical{background:rgba(99,102,241,.02)}.al-clinical .arch-label{background:rgba(99,102,241,.04)}.al-clinical .al-tag{color:#818CF8}.al-clinical .al-name{color:#A5B4FC}
+.al-ehr{background:rgba(16,185,129,.02)}.al-ehr .arch-label{background:rgba(16,185,129,.04)}.al-ehr .al-tag{color:#34D399}.al-ehr .al-name{color:#6EE7B7}
+.al-tetra{background:rgba(197,164,78,.02)}.al-tetra .arch-label{background:rgba(197,164,78,.05)}.al-tetra .al-tag{color:var(--gold)}.al-tetra .al-name{color:var(--gold-light)}
+.arch-connector{display:flex;align-items:center;justify-content:center;padding:10px 0}
+.arch-line{width:2px;height:28px;background:linear-gradient(to bottom,rgba(197,164,78,.15),rgba(197,164,78,.06));border-radius:1px}
+.arch-legend{display:flex;justify-content:space-between;margin-top:28px;padding:0 8px}
+.arch-legend-item{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.5px}
+.arch-legend-dot{width:8px;height:8px;border-radius:50%}
+@media(max-width:768px){.arch-card{padding:32px 20px 28px}.arch-layer{flex-direction:column}.arch-label{width:100%;border-right:none;border-bottom:1px solid rgba(255,255,255,.04);padding:14px 18px}.arch-content{flex-direction:column}.arch-cell{border-right:none;border-bottom:1px solid rgba(197,164,78,.04);padding:12px;width:100%}.arch-cell.ac-last{border-bottom:none}}
 </style>
 </head>
 <body id="top">
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a class="nav-brand" href="#">MyPursuit <span>by InPursuit Health</span></a>
-  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
-  <div class="nav-links">
-    <span class="nav-pipe" style="color:rgba(197,164,78,.15);font-size:16px;font-weight:300">|</span>
-    <a class="nav-link" href="https://www.InPursuitHealth.com">Home</a>
-    <a class="nav-link" href="#what">What It Is</a>
-    <a class="nav-link" href="#calculator">Calculator</a>
-    <a class="nav-link" href="#infrastructure">Infrastructure</a>
-    <a class="nav-link" href="#financing">Financing</a>
-    <a class="nav-cta" href="mailto:info@inpursuithealth.com">Launch Your Practice &rarr;</a>
-  </div>
-</nav>
+
 
 <!-- ====================================================================
      PART 1: THE COMMERCIAL
@@ -341,9 +342,9 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
   <div class="scene-content">
     <div class="s1-tag">Virtual Private Practice</div>
     <h1 class="s1-headline">Great Care.<br>Great Business.<br><em>Your Life Back.</em></h1>
-    <p class="s1-sub"><strong>MyPursuit is how physicians capitalize on the future of healthcare.</strong> We give you the complete infrastructure to open your own virtual practice &mdash; your name, your patients, your schedule, your equity &mdash; without building a single thing yourself.</p>
+    <p class="s1-sub"><strong>MyPursuit is how physicians and nurse practitioners capitalize on the future of healthcare.</strong> We give you the complete infrastructure to open your own virtual practice &mdash; your name, your patients, your schedule, your equity &mdash; without building a single thing yourself.</p>
     <div class="s1-ctas">
-      <a class="btn-primary" href="mailto:info@inpursuithealth.com">Launch Your Practice &rarr;</a>
+      <a class="btn-primary" href="/cdn-cgi/l/email-protection#2940474f46694047595c5b5a5c405d414c48455d41074a4644">Launch Your Practice &rarr;</a>
       <a class="btn-secondary" href="#what">See How It Works</a>
     </div>
   </div>
@@ -355,7 +356,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
   <div class="s2-inner">
     <div class="s2-eyebrow reveal">What is MyPursuit</div>
     <div class="s2-statement reveal reveal-d1">
-      MyPursuit is the <em>complete operating infrastructure</em> for your independent virtual medical practice. <span class="dim">We handle the technology, the integrations, the billing, the compliance, and the operations.</span> You handle the medicine. <span class="dim">Think of it like this:</span> DoorDash gave every restaurant a delivery network. <em>MyPursuit gives every physician a practice.</em>
+      MyPursuit is the <em>complete operating infrastructure</em> for your independent virtual practice. <span class="dim">We handle the technology, the integrations, the billing, the compliance, and the operations.</span> You handle the medicine. <span class="dim">Think of it like this:</span> DoorDash gave every restaurant a delivery network. <em>MyPursuit gives every clinician a practice.</em>
     </div>
     <div class="promises">
       <div class="promise reveal reveal-d2">
@@ -409,7 +410,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
           <div id="payback-wrap"></div>
         </div>
         <div class="tab-content" id="tab-compare">
-          <div class="rg2"><div class="rc"><div class="rc-l">Employed Physician</div><div class="rc-v">$260K</div><div class="rc-s">Avg primary care salary</div></div><div class="rc hl"><div class="rc-l">Your MyPursuit Practice</div><div class="rc-v" id="r-net2">$0</div><div class="rc-s">Net after infrastructure</div></div></div>
+          <div class="rg2"><div class="rc"><div class="rc-l">Employed Clinician</div><div class="rc-v">$260K</div><div class="rc-s">Avg primary care physician salary</div></div><div class="rc hl"><div class="rc-l">Your MyPursuit Practice</div><div class="rc-v" id="r-net2">$0</div><div class="rc-s">Net after infrastructure</div></div></div>
           <div class="pnl" id="compare-bars"></div>
           <div class="diff-box"><div style="font-size:11px;color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Earnings Difference</div><div id="r-diff" style="font-family:var(--display);font-size:36px"></div><div id="r-diff-sub" style="font-size:12px;color:rgba(255,255,255,.35);margin-top:4px"></div></div>
         </div>
@@ -417,10 +418,10 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
           <div class="rc hl lg"><div class="rc-l">Hours You Get Back Per Year</div><div class="rc-v" id="r-hours">0</div><div class="rc-s" id="r-hours-sub"></div></div>
           <div class="rg2" style="margin-top:16px"><div class="rc"><div class="rc-l">Your Weekly Hours</div><div class="rc-v" id="r-yourhrs">25h</div><div class="rc-s">You set the schedule</div></div><div class="rc"><div class="rc-l">Employed Average</div><div class="rc-v">52h</div><div class="rc-s">Plus pajama-time charting</div></div></div>
           <div class="pnl"><div class="pnl-t">What You Get Back</div><div id="life-rows"></div></div>
-          <div class="life-q"><p>&ldquo;I was up till 10 PM writing notes instead of spending time with my kids.&rdquo;</p><div class="at">The #1 reason physicians leave isn&rsquo;t money. It&rsquo;s time.</div></div>
+          <div class="life-q"><p>&ldquo;I was up till 10 PM writing notes instead of spending time with my kids.&rdquo;</p><div class="at">The #1 reason clinicians leave isn&rsquo;t money. It&rsquo;s time.</div></div>
         </div>
         <div class="calc-cta">
-          <a class="btn-primary" href="mailto:info@inpursuithealth.com">Launch Your Practice &rarr;</a>
+          <a class="btn-primary" href="/cdn-cgi/l/email-protection#83eaede5ecc3eaedf3f6f1f0f6eaf7ebe6e2eff7ebade0ecee">Launch Your Practice &rarr;</a>
           <p class="calc-disc">Projections based on published CMS fee schedules &amp; peer-reviewed compensation data. <a href="mypursuit-methodology.html" style="color:var(--gold);text-decoration:underline" download="mypursuit-methodology.html">Download Full Methodology &darr;</a> &nbsp;|&nbsp; Actual results vary. Financing subject to qualification.</p>
         </div>
       </div>
@@ -460,7 +461,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
 <!-- SCENE 4: VOICES -->
 <section class="scene-4">
   <div class="s4-inner">
-    <div class="s4-eyebrow reveal">Why Physicians Are Making the Leap</div>
+    <div class="s4-eyebrow reveal">Why Clinicians Are Making the Leap</div>
     <div class="voice reveal">
       <div class="voice-quote">&ldquo;I was up till 10 PM writing notes instead of spending time with my kids. I didn&rsquo;t go to med school to be a <span class="g">data entry clerk.</span>&rdquo;</div>
       <div class="voice-attr">Primary Care Physician, 12 years in employed practice</div>
@@ -473,7 +474,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
     <div class="voice-div"></div>
     <div class="voice reveal">
       <div class="voice-quote">&ldquo;I work 25 hours a week, earn more than I did employed, and I coach my daughter&rsquo;s soccer team on Tuesdays. <span class="g">That wasn&rsquo;t an option before.</span>&rdquo;</div>
-      <div class="voice-attr">Family Medicine, MyPursuit physician</div>
+      <div class="voice-attr">Family Medicine, MyPursuit clinician</div>
     </div>
   </div>
 </section>
@@ -503,7 +504,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
     </div>
 
     <div class="orch-spokes reveal reveal-d3">
-      <div class="orch-spoke"><div class="tag">Clinical</div><h4>EHR &amp; Documentation</h4><p>White-label, AI-assisted charting under your brand. We configure, maintain, and update it.</p></div>
+      <div class="orch-spoke"><div class="tag">Clinical</div><h4>EHR &amp; Documentation</h4><p>AI-assisted charting under your brand. We configure, maintain, and update it.</p></div>
       <div class="orch-spoke"><div class="tag">Connectivity</div><h4>Health Data Exchange</h4><p>TETRA connects you to national health networks, labs, pharmacies, and 140M+ CMS beneficiary records.</p></div>
       <div class="orch-spoke"><div class="tag">Delivery</div><h4>Virtual Care Suite</h4><p>HIPAA-compliant HD video, secure messaging, digital intake, virtual waiting room &mdash; all your brand.</p></div>
     </div>
@@ -519,12 +520,51 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
   </div>
 </section>
 
+<!-- ARCHITECTURE DIAGRAM -->
+<section class="detail-section" style="background:var(--navy-deep);padding-top:0;">
+  <div class="detail-inner">
+    <div class="arch-card reveal">
+      <div class="arch-header">
+        <h3>MyPursuit Infrastructure Architecture</h3>
+        <p>What users experience &rarr; What operates underneath</p>
+      </div>
+      <div class="arch-layer al-brand">
+        <div class="arch-label"><div class="al-tag">User Experience</div><div class="al-name">Branded<br>Experiences</div></div>
+        <div class="arch-content">
+          <div class="arch-cell">MyPursuit Clinical</div>
+          <div class="arch-cell">InPursuit Health App</div>
+          <div class="arch-cell ac-blue ac-last">Veterans First Telehealth</div>
+        </div>
+      </div>
+      <div class="arch-connector"><div class="arch-line"></div></div>
+      <div class="arch-layer al-clinical">
+        <div class="arch-label"><div class="al-tag">Operations</div><div class="al-name">Clinical<br>Infrastructure</div></div>
+        <div class="arch-content"><div class="arch-text"><span>Clinician Network</span> &middot; <span>50-State Coverage</span> &middot; <span>NCQA Credentialing</span> &middot; <span>Revenue Cycle Management</span> &middot; <span>Compliance</span> &middot; <span>Staffing</span></div></div>
+      </div>
+      <div class="arch-connector"><div class="arch-line"></div></div>
+      <div class="arch-layer al-ehr">
+        <div class="arch-label"><div class="al-tag">Clinical System</div><div class="al-name">EHR<br>Engine</div></div>
+        <div class="arch-content"><div class="arch-text"><span>Scheduling</span> &middot; <span>Charting</span> &middot; <span>e-Prescribing</span> &middot; <span>Patient Portal</span> &middot; <span>Video Visits</span> &middot; <span>Billing</span> &middot; <span>API</span></div></div>
+      </div>
+      <div class="arch-connector"><div class="arch-line"></div></div>
+      <div class="arch-layer al-tetra">
+        <div class="arch-label"><div class="al-tag">Foundation</div><div class="al-name">TETRA&trade; Data<br>Intelligence</div></div>
+        <div class="arch-content"><div class="arch-text"><span>Interoperability</span> &middot; <span>Record Unification</span> &middot; <span>Consent Management</span> &middot; <span>Risk Stratification</span> &middot; <span>Quality Measures</span> &middot; <span>HIE / QHIN Connectivity</span></div></div>
+      </div>
+      <div class="arch-legend">
+        <div class="arch-legend-item"><div class="arch-legend-dot" style="background:var(--gold);"></div><span style="color:var(--gold);">What users see</span></div>
+        <div class="arch-legend-item"><div class="arch-legend-dot" style="background:rgba(255,255,255,.12);"></div><span style="color:rgba(255,255,255,.25);">Operates invisibly underneath</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="detail-section how">
   <div class="detail-inner">
     <div class="d-eyebrow reveal" style="text-align:center">How It Works</div>
     <div class="d-title reveal reveal-d1" style="text-align:center;max-width:700px;margin:0 auto 20px">From Idea to Live Practice.<br><em>30 Days.</em></div>
-    <p class="d-subtitle reveal reveal-d2" style="text-align:center;margin:0 auto 64px">You bring the medical license and the patients. We bring everything else.</p>
+    <p class="d-subtitle reveal reveal-d2" style="text-align:center;margin:0 auto 64px">You bring the clinical license and the patients. We bring everything else.</p>
     <div class="how-grid">
       <div class="how-card reveal reveal-d2"><div class="how-num">01</div><h4>Apply &amp; Design</h4><p>Tell us your vision. We evaluate your credentials and design your operating environment &mdash; <strong>brand, domain, specialties, pricing, and financing.</strong></p></div>
       <div class="how-card reveal reveal-d3"><div class="how-num">02</div><h4>We Build &amp; Orchestrate</h4><p>We deploy your complete infrastructure: <strong>EHR, telehealth, billing, labs, e-prescribing, compliance, and TETRA interoperability.</strong> You don&rsquo;t manage any of it.</p></div>
@@ -590,7 +630,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
       <div class="split-card platform reveal reveal-d2">
         <div class="split-lbl">MyPursuit Orchestrates</div>
         <h3>Your Complete Operating Infrastructure</h3>
-        <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>White-label EHR/EMR</strong> &mdash; AI-assisted documentation, branded to your practice</p></div>
+        <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>Branded EHR/EMR</strong> &mdash; AI-assisted documentation, branded to your practice</p></div>
         <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>TETRA Interoperability</strong> &mdash; 140M+ CMS beneficiary records</p></div>
         <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>HD Telehealth Suite</strong> &mdash; video, messaging, intake, waiting room</p></div>
         <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>E-Prescribing &amp; Labs</strong> &mdash; Surescripts, Quest, LabCorp</p></div>
@@ -603,7 +643,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
       <div class="split-card physician reveal reveal-d3">
         <div class="split-lbl">You Handle</div>
         <h3>What You Went to Med School For</h3>
-        <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>Your medical license</strong> &mdash; practice under your own credentials</p></div>
+        <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>Your clinical license</strong> &mdash; practice under your own credentials</p></div>
         <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>Your NPI number</strong> &mdash; bill under your own identity</p></div>
         <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>Your clinical decisions</strong> &mdash; full autonomy, no corporate protocols</p></div>
         <div class="split-item"><div class="split-chk">&mdash;</div><p><strong>Your patient relationships</strong> &mdash; they are your patients, not ours</p></div>
@@ -623,7 +663,7 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
     <h2 class="reveal reveal-d1">Your Patients Are<br>Waiting for <em>You.</em><br>Not Your Employer.</h2>
     <p class="final-sub reveal reveal-d2">Great care. A practice you own. A life you actually live. MyPursuit makes it real &mdash; in 30 days, with the infrastructure and financing to get you there.</p>
     <div class="final-btns reveal reveal-d3">
-      <a class="btn-primary" href="mailto:info@inpursuithealth.com">Launch Your Practice &rarr;</a>
+      <a class="btn-primary" href="/cdn-cgi/l/email-protection#97fef9f1f8d7fef9e7e2e5e4e2fee3fff2f6fbe3ffb9f4f8fa">Launch Your Practice &rarr;</a>
       <a class="btn-secondary" href="#calculator">Model Your Revenue</a>
     </div>
     <div class="final-trust reveal reveal-d4">Powered by TETRA &mdash; validated across 290,000+ federal server instances</div>
@@ -631,11 +671,10 @@ body{font-family:var(--body);background:var(--navy-deep);color:var(--white);over
 </section>
 
 <!-- FOOTER -->
-<footer class="site-footer"><div class="footer-inner"><div class="footer-brand">InPursuit Health</div><div class="footer-legal">&copy; 2026 InPursuit Health, LLC. All rights reserved.</div><div class="footer-links"><a href="https://www.InPursuitHealth.com">Home</a><a href="#what">What It Is</a><a href="#calculator">Calculator</a><a href="#infrastructure">Infrastructure</a><a href="#financing">Financing</a><a href="mypursuit-methodology.html" download="mypursuit-methodology.html">Methodology</a><a href="mailto:info@inpursuithealth.com">Contact</a></div><div class="footer-tagline">Harness the Power of Your Data&trade;</div></div></footer>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-brand">InPursuit Health</div><div class="footer-legal">&copy; 2026 InPursuit Health, LLC. All rights reserved.</div><div class="footer-links"><a href="https://www.InPursuitHealth.com">Home</a><a href="#what">What It Is</a><a href="#calculator">Calculator</a><a href="#infrastructure">Infrastructure</a><a href="#financing">Financing</a><a href="mypursuit-methodology.html" download="mypursuit-methodology.html">Methodology</a><a href="/cdn-cgi/l/email-protection#f0999e969fb0999e808582838599849895919c8498de939f9d">Contact</a></div><div class="footer-tagline">Harness the Power of Your Data&trade;</div></div></footer>
 
-<script>
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)});
-document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{document.querySelector('.nav-links').classList.remove('open')}));
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
 const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
@@ -659,10 +698,11 @@ function calc(){
   document.getElementById('compare-bars').innerHTML=bars;
   var diff=net-empSal,diffEl=document.getElementById('r-diff');diffEl.textContent=(diff>0?'+':'')+fmt(diff);diffEl.style.color=diff>0?'#10B981':'rgba(255,255,255,0.5)';document.getElementById('r-diff-sub').textContent=diff>0?'more per year with MyPursuit':'Adjust volume or VBC participation';
   var hrsBack=hrsSaved>0?hrsSaved:0;document.getElementById('r-hours').textContent=fmtN(hrsBack);document.getElementById('r-hours-sub').textContent=hrsSaved>0?'That\u2019s '+(empHrs-hpw)+' extra hours every week':'Already working fewer hours';document.getElementById('r-yourhrs').textContent=hpw+'h';
-  var life='';life+='<div class="life-row"><span class="life-row-l">Extra weeks of vacation</span><span class="life-row-v">'+(52-wpy)+'</span></div>';life+='<div class="life-row"><span class="life-row-l">No pajama-time charting</span><span class="life-row-v">AI-assisted</span></div>';life+='<div class="life-row"><span class="life-row-l">No corporate protocols</span><span class="life-row-v">Full autonomy</span></div>';life+='<div class="life-row"><span class="life-row-l">No RVU treadmill</span><span class="life-row-v">Your pace</span></div>';life+='<div class="life-row"><span class="life-row-l">Effective hourly rate</span><span class="life-row-v">$'+Math.round(effRate)+'</span></div>';
+  var life='';life+='<div class="life-row"><span class="life-row-l">Extra weeks of vacation</span><span class="life-row-v">'+(52-wpy)+'</span></div>';life+='<div class="life-row"><span class="life-row-l">No pajama-time charting</span><span class="life-row-v">AI-assisted</span></div>';life+='<div class="life-row"><span class="life-row-l">No corporate protocols</span><span class="life-row-v">Full autonomy</span></div>';life+='<div class="life-row"><span class="life-row-l">No RVU treadmill</span><span class="life-row-v">Your pace</span></div>';life+='<div class="life-row"><span class="life-row-l">Your effective hourly rate</span><span class="life-row-v">$'+Math.round(effRate)+'</span></div>';
   document.getElementById('life-rows').innerHTML=life;
 }
 calc();
 </script>
+<script src="nav.js"></script>
 </body>
 </html>
