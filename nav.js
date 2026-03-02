@@ -24,14 +24,16 @@
       font-family:'Instrument Serif',Georgia,serif;
       font-size:22px;color:var(--gold);letter-spacing:1px;
       line-height:1;white-space:nowrap;
-      text-decoration:none;cursor:default;pointer-events:none;
+      text-decoration:none;transition:opacity 0.3s;
     }
+    #iph-wordmark:hover{opacity:0.8;}
     #iph-brand-divider{color:rgba(255,255,255,0.2);font-size:14px;}
     #iph-maha{
       font-size:11px;font-weight:500;letter-spacing:0.5px;
       color:rgba(255,255,255,0.45);
-      white-space:nowrap;cursor:default;pointer-events:none;
+      white-space:nowrap;text-decoration:none;transition:color 0.3s;
     }
+    #iph-maha:hover{color:rgba(255,255,255,0.7);}
     #iph-nav{display:flex;align-items:center;gap:4px;}
     .iph-nav-item{
       padding:20px 14px;font-size:11px;font-weight:500;
@@ -125,15 +127,16 @@
   var html = `
     <div id="iph-topbar-inner">
       <div id="iph-brand-group">
-        <span id="iph-wordmark">InPursuit Health</span>
+        <a id="iph-wordmark" href="index.html">InPursuit Health</a>
         <span id="iph-brand-divider">|</span>
-        <span id="iph-maha">MAHA Policy Alignment</span>
+        <a id="iph-maha" href="maha.html">MAHA Policy Alignment</a>
       </div>
       <nav id="iph-nav">
 
         <div class="iph-dropdown">
           <a href="tetra.html" class="iph-nav-item iph-dropdown-toggle">TETRA <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
+            <a href="tetra.html">TETRA <em>ex</em>™</a>
             <a href="tetra-aegis.html">TETRA Aegis™</a>
             <a href="tetra-sentinel.html">TETRA Sentinel™</a>
           </div>
@@ -143,17 +146,18 @@
           <a href="for-you.html" class="iph-nav-item iph-dropdown-toggle">For You <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
             <a href="for-your-pets.html">For Your Pets</a>
+            <a href="aegis-for-you.html">Aegis for You</a>
           </div>
         </div>
 
         <div class="iph-dropdown">
           <a href="for-providers.html" class="iph-nav-item iph-dropdown-toggle">For VBC Providers <span class="iph-caret">▼</span></a>
           <div class="iph-dropdown-menu">
-            <a href="cms-access-model.html">ACCESS Model Offer</a>
+            <a href="access.html">CMS ACCESS Model Offer</a>
           </div>
         </div>
 
-        <a href="mypursuit.html" class="iph-nav-item">MyPursuit</a>
+        <a href="mypursuit.html" class="iph-nav-item">MyPursuit™</a>
         <a href="data-oath.html" class="iph-nav-item">Data Oath</a>
         <a href="partner-network.html" class="iph-nav-item">Partner Network</a>
         <a id="iph-cta" href="investors.html">Invest</a>

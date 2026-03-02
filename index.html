@@ -1269,12 +1269,16 @@ body {
   font-family: 'Instrument Serif', Georgia, serif;
   font-size: 22px; color: #C5A44E; letter-spacing: 1px;
   line-height: 1; white-space: nowrap;
+  text-decoration: none;
 }
+#iph-wordmark:hover { color: #E8D48B; }
 #iph-brand-divider { color: rgba(255,255,255,0.2); font-size: 14px; }
 #iph-maha {
   font-size: 11px; font-weight: 500; letter-spacing: 0.5px;
   color: rgba(255,255,255,0.45); white-space: nowrap;
+  text-decoration: none;
 }
+#iph-maha:hover { color: rgba(255,255,255,0.7); }
 #iph-nav { display: flex; align-items: center; gap: 4px; }
 .iph-nav-item {
   padding: 20px 14px; font-size: 11px; font-weight: 500;
@@ -1360,34 +1364,36 @@ body {
 <header id="iph-topbar">
   <div id="iph-topbar-inner">
     <div id="iph-brand-group">
-      <span id="iph-wordmark">InPursuit Health</span>
+      <a id="iph-wordmark" href="index.html">InPursuit Health</a>
       <span id="iph-brand-divider">|</span>
-      <span id="iph-maha">MAHA Policy Alignment</span>
+      <a id="iph-maha" href="maha.html">MAHA Policy Alignment</a>
     </div>
     <nav id="iph-nav">
       <div class="iph-dropdown">
-        <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">TETRA <span class="iph-caret">▼</span></span>
+        <a href="tetra.html" class="iph-nav-item iph-dropdown-toggle">TETRA <span class="iph-caret">&#9660;</span></a>
         <div class="iph-dropdown-menu">
-          <span style="cursor:default;">TETRA Aegis™</span>
-          <span style="cursor:default;">TETRA Sentinel™</span>
+          <a href="tetra-ex.html">TETRA <em>ex</em>&trade;</a>
+          <a href="tetra-aegis.html">TETRA Aegis&trade;</a>
+          <a href="tetra-sentinel.html">TETRA Sentinel&trade;</a>
         </div>
       </div>
       <div class="iph-dropdown">
-        <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">For You <span class="iph-caret">▼</span></span>
+        <a href="for-you.html" class="iph-nav-item iph-dropdown-toggle">For You <span class="iph-caret">&#9660;</span></a>
         <div class="iph-dropdown-menu">
-          <span style="cursor:default;">For Your Pets</span>
+          <a href="for-your-pets.html">For Your Pets</a>
+          <a href="aegis-for-you.html">Aegis for You</a>
         </div>
       </div>
       <div class="iph-dropdown">
-        <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">For VBC Providers <span class="iph-caret">▼</span></span>
+        <a href="for-providers.html" class="iph-nav-item iph-dropdown-toggle">For VBC Providers <span class="iph-caret">&#9660;</span></a>
         <div class="iph-dropdown-menu">
-          <span style="cursor:default;">ACCESS Model Offer</span>
+          <a href="access.html">CMS ACCESS Model Offer</a>
         </div>
       </div>
-      <span class="iph-nav-item" style="cursor:default;">MyPursuit</span>
-      <span class="iph-nav-item" style="cursor:default;">Data Oath</span>
-      <span class="iph-nav-item" style="cursor:default;">Partner Network</span>
-      <span id="iph-cta" style="cursor:default;">Invest</span>
+      <a href="mypursuit.html" class="iph-nav-item">MyPursuit&trade;</a>
+      <a href="data-oath.html" class="iph-nav-item">Data Oath</a>
+      <a href="partner-network.html" class="iph-nav-item">Partner Network</a>
+      <a id="iph-cta" href="investors.html">Invest</a>
     </nav>
     <button id="iph-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
