@@ -1,49 +1,1041 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Access — Coming Soon | InPursuit Health</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { --navy:#0A1628; --navy-deep:#060E1A; --navy-mid:#112240; --gold:#C5A44E; --gold-bright:#E8D48B; --cream:#FAF8F4; --text-muted:#6B7280; }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Instrument Sans',sans-serif;background:var(--cream);color:#101827}
-    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 24px 60px}
-    .card{max-width:820px;width:100%;background:white;border:1px solid rgba(10,22,40,.08);border-radius:14px;box-shadow:0 20px 60px rgba(10,22,40,.08);overflow:hidden}
-    .hero{background:radial-gradient(ellipse at 40% 40%,#112240 0%,#0A1628 45%,#060E1A 80%);padding:44px 36px}
-    .kicker{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(197,164,78,.9)}
-    h1{font-family:'Instrument Serif',serif;font-weight:400;color:white;font-size:40px;line-height:1.15;margin-top:12px}
-    h1 em{font-style:italic;color:var(--gold)}
-    .sub{margin-top:14px;color:rgba(255,255,255,.62);line-height:1.7;font-size:15px;max-width:640px}
-    .body{padding:32px 36px 36px}
-    .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-    a.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;font-size:11px}
-    .btn-gold{background:var(--gold);color:#060E1A}
-    .btn-outline{border:1.5px solid rgba(197,164,78,.45);color:var(--gold);background:transparent}
-    .note{margin-top:18px;color:var(--text-muted);font-size:13px;line-height:1.6}
-    .meta{margin-top:10px;color:rgba(107,114,128,.9);font-size:12px}
-    .meta code{background:#f3f4f6;padding:2px 6px;border-radius:6px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your ACCESS Revenue Offer — InPursuit Health · Cohort 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0A1628;--navy-deep:#060E1A;--navy-mid:#112240;
+  --gold:#C5A44E;--gold-light:#D4B96A;--gold-dim:rgba(197,164,78,.5);
+  --cream:#FAF8F4;--cream-dark:#E8E2D6;--parchment:#F2EDE4;
+  --white:#FFFFFF;--text-muted:rgba(255,255,255,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy-deep);color:var(--white);overflow-x:hidden;}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,14,26,.94);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,164,78,.1);}
+.nav-inner{max-width:1440px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;height:56px;}
+.nav-brand{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);text-decoration:none;letter-spacing:.8px;}
+.nav-right{display:flex;align-items:center;gap:24px;}
+.nav-link{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:var(--gold);}
+.nav-deadline{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:6px;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s ease infinite;}
+.nav-cd{font-size:9px;color:rgba(197,164,78,.7);font-weight:600;letter-spacing:1px;margin-left:4px;font-variant-numeric:tabular-nums;}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+
+/* SPLIT LAYOUT */
+.split{display:flex;min-height:100vh;padding-top:56px;}
+.split-left{width:420px;min-width:420px;background:var(--navy);border-right:1px solid rgba(197,164,78,.08);display:flex;flex-direction:column;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;}
+.split-left::-webkit-scrollbar{width:3px;}
+.split-left::-webkit-scrollbar-thumb{background:rgba(197,164,78,.15);border-radius:3px;}
+.split-right{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:calc(100vh - 56px);}
+.split-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(197,164,78,.05),transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(197,164,78,.02),transparent 40%);}
+
+/* LEFT PANEL */
+.panel-section{padding:28px 28px 20px;}
+.panel-section+.panel-section{border-top:1px solid rgba(255,255,255,.04);position:relative;}
+.panel-section+.panel-section::before{content:'';position:absolute;top:-1px;left:28px;right:28px;height:1px;background:linear-gradient(90deg,transparent,rgba(197,164,78,.08),transparent);}
+.panel-title{font-family:'Playfair Display',serif;font-size:14px;color:var(--white);margin-bottom:4px;letter-spacing:.2px;}
+.panel-sub{font-size:10px;color:rgba(255,255,255,.22);line-height:1.6;margin-bottom:16px;}
+
+/* NPI INPUT */
+.npi-wrap{display:flex;gap:8px;}
+.npi-input{flex:1;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:var(--white);font-size:14px;font-family:inherit;letter-spacing:1px;outline:none;transition:border-color .2s;}
+.npi-input:focus{border-color:rgba(197,164,78,.4);box-shadow:0 0 0 3px rgba(197,164,78,.06);}
+.npi-input::placeholder{color:rgba(255,255,255,.15);letter-spacing:0;}
+.npi-btn{padding:12px 20px;background:linear-gradient(135deg,var(--gold),#D4B96A);color:var(--navy-deep);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .25s cubic-bezier(.4,0,.2,1);white-space:nowrap;box-shadow:0 2px 8px rgba(197,164,78,.2);}
+.npi-btn:hover{background:linear-gradient(135deg,#D4B96A,#E8D48B);transform:translateY(-1px);box-shadow:0 4px 16px rgba(197,164,78,.3);}
+.npi-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.npi-status{font-size:10px;margin-top:8px;min-height:14px;}
+.npi-status.error{color:#ef4444;}.npi-status.loading{color:var(--gold-dim);}
+
+/* PROVIDER BADGE */
+.provider-badge{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,rgba(197,164,78,.04),rgba(197,164,78,.02));border:1px solid rgba(197,164,78,.1);border-radius:10px;margin-top:16px;display:none;transition:all .4s ease;}
+.provider-badge.visible{display:flex;animation:badgeIn .5s ease both;}
+@keyframes badgeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.pb-icon{width:36px;height:36px;border-radius:50%;background:rgba(197,164,78,.08);border:1px solid rgba(197,164,78,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pb-info{flex:1;min-width:0;}
+.pb-name{font-size:13px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.2px;}
+.pb-detail{font-size:10px;color:rgba(255,255,255,.25);margin-top:1px;}
+.pb-cms{font-size:8px;margin-top:5px;padding:3px 8px;border-radius:4px;display:inline-block;letter-spacing:.3px;}
+.pb-cms.found{background:rgba(197,164,78,.06);border:1px solid rgba(197,164,78,.1);color:var(--gold);}
+.pb-cms.missing{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);color:rgba(255,255,255,.2);}
+
+/* SLIDERS */
+.slider-group{margin-bottom:12px;}
+.slider-row{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.slider-label{font-size:11px;color:rgba(255,255,255,.35);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.slider-val{font-size:12px;font-weight:700;color:var(--gold);min-width:52px;text-align:right;font-variant-numeric:tabular-nums;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:2px;outline:none;cursor:pointer;background:linear-gradient(90deg,var(--gold) var(--fill,50%),rgba(255,255,255,.06) var(--fill,50%));transition:opacity .2s;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold);box-shadow:0 1px 6px rgba(197,164,78,.3);cursor:pointer;transition:box-shadow .2s,transform .15s;}
+input[type=range]:hover::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(197,164,78,.12),0 2px 8px rgba(197,164,78,.3);transform:scale(1.1);}
+input[type=range]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(197,164,78,.15),0 2px 8px rgba(197,164,78,.4);transform:scale(1.15);}
+.slider-note{font-size:8px;color:rgba(255,255,255,.12);margin-bottom:10px;display:flex;align-items:center;gap:4px;}
+.slider-note .cms-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);}
+
+.slider-divider{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.12);margin:14px 0 10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.03);}
+
+/* TIER SELECTOR */
+.tier-section{padding:20px 28px 28px;border-top:1px solid rgba(255,255,255,.04);}
+.tier-title{font-family:'Playfair Display',serif;font-size:13px;color:var(--white);margin-bottom:4px;}
+.tier-sub{font-size:9px;color:rgba(255,255,255,.2);margin-bottom:14px;}
+.tier-cards{display:flex;flex-direction:column;gap:8px;}
+.tier-card{padding:14px 16px 14px 20px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
+.tier-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:background .3s;border-radius:10px 0 0 10px;}
+.tier-card:hover{background:rgba(255,255,255,.04);transform:translateX(2px);}
+.tier-card.active{border-color:rgba(197,164,78,.3);background:rgba(197,164,78,.04);box-shadow:0 0 0 1px rgba(197,164,78,.06),0 4px 16px rgba(197,164,78,.04);}
+.tier-card.active::before{background:linear-gradient(180deg,var(--gold),rgba(197,164,78,.3));}
+.tier-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.tier-name{font-size:13px;font-weight:600;color:rgba(255,255,255,.45);transition:color .3s;}
+.tier-card.active .tier-name{color:var(--white);}
+.tier-pct{font-size:12px;font-weight:700;color:rgba(255,255,255,.18);font-variant-numeric:tabular-nums;transition:color .3s;}
+.tier-card.active .tier-pct{color:var(--gold);}
+.tier-desc{font-size:10px;color:rgba(255,255,255,.13);line-height:1.5;transition:color .3s;}
+.tier-card.active .tier-desc{color:rgba(255,255,255,.3);}
+.tier-includes{font-size:9px;color:rgba(255,255,255,.1);margin-top:6px;line-height:1.6;max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0;}
+.tier-card.active .tier-includes{max-height:120px;opacity:1;color:rgba(197,164,78,.35);}
+
+/* ─── ENVELOPE ─── */
+.envelope-scene{position:relative;z-index:1;perspective:1200px;width:520px;height:380px;}
+.envelope-wrap{position:relative;width:100%;height:100%;transform-style:preserve-3d;}
+
+/* Envelope body */
+.envelope{position:absolute;inset:0;background:linear-gradient(170deg,#F5F0E8 0%,#EDE7DA 30%,#E4DCCC 70%,#DDD5C5 100%);border-radius:6px;box-shadow:0 25px 80px rgba(0,0,0,.4),0 8px 32px rgba(0,0,0,.2),0 2px 8px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.7);overflow:hidden;}
+.envelope::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.55' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+/* Gold foil edge */
+.envelope::after{content:'';position:absolute;inset:0;border:2px solid transparent;border-image:linear-gradient(135deg,rgba(197,164,78,.12),rgba(197,164,78,.35),rgba(212,185,106,.4),rgba(197,164,78,.15)) 1;pointer-events:none;z-index:6;}
+
+/* Envelope flap (triangle) */
+.envelope-flap{position:absolute;top:-1px;left:0;right:0;height:180px;background:linear-gradient(170deg,#EDE7DA 0%,#E4DCCC 60%,#DDD5C5 100%);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .9s cubic-bezier(.4,0,.15,1);z-index:3;}
+.envelope-flap::before{content:'';position:absolute;inset:0;background:linear-gradient(170deg,rgba(255,255,255,.15),transparent 60%);pointer-events:none;}
+.envelope-flap::after{content:'';position:absolute;bottom:8px;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.05),transparent);}
+
+/* Wax seal — breathing */
+.wax-seal{position:absolute;top:108px;left:50%;transform:translateX(-50%);z-index:4;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#D4B05A,#C5A44E 30%,#A8872E 65%,#8B6F22 90%);box-shadow:0 4px 16px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.2),inset 0 2px 4px rgba(255,255,255,.2),inset 0 -2px 6px rgba(0,0,0,.15);transition:all .9s cubic-bezier(.4,0,.15,1);display:flex;align-items:center;justify-content:center;animation:sealBreathe 4s ease-in-out infinite;}
+.wax-seal::before{display:none;}
+.wax-seal svg{width:22px;height:22px;fill:rgba(255,255,255,.55);filter:drop-shadow(0 1px 1px rgba(0,0,0,.2));}
+@keyframes sealBreathe{0%,100%{transform:translateX(-50%) scale(1);box-shadow:0 4px 16px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.2),inset 0 2px 4px rgba(255,255,255,.2),inset 0 -2px 6px rgba(0,0,0,.15)}50%{transform:translateX(-50%) scale(1.03);box-shadow:0 6px 24px rgba(197,164,78,.15),0 4px 16px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.2),inset 0 2px 4px rgba(255,255,255,.2),inset 0 -2px 6px rgba(0,0,0,.15)}}
+
+/* Inner border + gold corner details */
+.envelope-border{position:absolute;inset:14px;border:1px solid rgba(197,164,78,.12);border-radius:2px;pointer-events:none;z-index:1;}
+.envelope-border::before,.envelope-border::after{content:'';position:absolute;width:12px;height:12px;border-color:rgba(197,164,78,.25);border-style:solid;border-width:0;}
+.envelope-border::before{bottom:-1px;left:-1px;border-bottom-width:1px;border-left-width:1px;}
+.envelope-border::after{bottom:-1px;right:-1px;border-bottom-width:1px;border-right-width:1px;}
+
+/* Letter — stationery feel */
+.letter{position:absolute;left:22px;right:22px;bottom:22px;top:170px;background:var(--white);border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);z-index:2;transition:transform .9s cubic-bezier(.4,0,.15,1) .12s,box-shadow .9s ease .12s;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:28px 24px 20px;}
+.letter::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),#D4B96A,var(--gold));opacity:.6;}
+.letter::after{content:'';position:absolute;inset:20px;background:repeating-linear-gradient(transparent,transparent 22px,rgba(197,164,78,.04) 22px,rgba(197,164,78,.04) 23px);pointer-events:none;opacity:.5;}
+.letter-monogram{font-family:'Playfair Display',serif;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1;}
+.letter-line{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:14px;position:relative;z-index:1;}
+.letter-heading{font-family:'Playfair Display',serif;font-size:16px;color:var(--navy-deep);text-align:center;line-height:1.35;margin-bottom:10px;position:relative;z-index:1;}
+.letter-subtext{font-size:9px;color:rgba(10,22,40,.3);text-align:center;line-height:1.6;max-width:280px;position:relative;z-index:1;}
+
+/* OPEN STATE */
+.envelope-scene.opened .envelope-flap{transform:rotateX(180deg);}
+.envelope-scene.opened .wax-seal{opacity:0;transform:translateX(-50%) scale(.4) rotate(-15deg);animation:none;}
+.envelope-scene.opened .wax-seal::before{animation:none;}
+.envelope-scene.opened .letter{transform:translateY(-195px);box-shadow:0 16px 56px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.06);}
+
+/* CTA button on envelope */
+.envelope-cta{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:5;padding:15px 40px;background:linear-gradient(135deg,var(--gold),#D4B96A);color:var(--navy-deep);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 20px rgba(197,164,78,.3),0 2px 8px rgba(0,0,0,.1);white-space:nowrap;}
+.envelope-cta:hover{background:linear-gradient(135deg,#D4B96A,#E8D48B);transform:translateX(-50%) translateY(-2px);box-shadow:0 8px 32px rgba(197,164,78,.4),0 4px 12px rgba(0,0,0,.1);}
+.envelope-scene.opened .envelope-cta{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(20px);}
+
+/* Waiting state before NPI */
+.envelope-scene.waiting .envelope-cta{display:none;}
+.envelope-scene.waiting .wax-seal{animation:sealBreathe 4s ease-in-out infinite;}
+.envelope-scene.waiting .letter-heading::after{content:'Enter your NPI to begin';font-family:'DM Sans',sans-serif;display:block;font-size:10px;color:rgba(10,22,40,.2);font-weight:400;margin-top:10px;letter-spacing:.5px;}
+
+/* Ambient gold dust particles */
+.split-right::after{content:'';position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,rgba(197,164,78,.15),transparent),radial-gradient(1px 1px at 70% 20%,rgba(197,164,78,.1),transparent),radial-gradient(1px 1px at 40% 70%,rgba(197,164,78,.12),transparent),radial-gradient(1px 1px at 80% 60%,rgba(197,164,78,.08),transparent),radial-gradient(1px 1px at 15% 80%,rgba(197,164,78,.1),transparent),radial-gradient(1px 1px at 60% 45%,rgba(197,164,78,.06),transparent),radial-gradient(1.5px 1.5px at 90% 10%,rgba(197,164,78,.12),transparent),radial-gradient(1px 1px at 50% 90%,rgba(197,164,78,.08),transparent);background-size:300px 300px;animation:dustDrift 30s linear infinite;pointer-events:none;z-index:0;}
+@keyframes dustDrift{0%{transform:translate(0,0)}50%{transform:translate(-15px,10px)}100%{transform:translate(0,0)}}
+
+/* ─── OFFER (replaces right panel after open) ─── */
+.offer-panel{position:absolute;inset:0;z-index:10;background:var(--navy-deep);opacity:0;pointer-events:none;transition:opacity .5s ease .5s;overflow-y:auto;padding:40px 48px;}
+.offer-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 10%,var(--gold) 30%,rgba(212,185,106,.8) 50%,var(--gold) 70%,transparent 90%);opacity:0;transition:opacity .6s ease 1s;}
+.offer-panel.visible{opacity:1;pointer-events:all;}
+.offer-panel.visible::before{opacity:1;}
+.offer-panel::-webkit-scrollbar{width:4px;}
+.offer-panel::-webkit-scrollbar-thumb{background:rgba(197,164,78,.12);border-radius:4px;}
+
+/* Staggered entrance */
+.offer-panel .est-banner{opacity:0;transform:translateY(12px);transition:all .5s ease;}
+.offer-panel .offer-head{opacity:0;transform:translateY(12px);transition:all .5s ease .1s;}
+.offer-panel .rev-grid{opacity:0;transform:translateY(16px);transition:all .6s ease .2s;}
+.offer-panel .vbc-story{opacity:0;transform:translateY(16px);transition:all .6s ease .35s;}
+.offer-panel .app-pipeline{opacity:0;transform:translateY(16px);transition:all .6s ease .45s;}
+.offer-panel .countdown-inline{opacity:0;transition:opacity .5s ease .55s;}
+.offer-panel .offer-cta-wrap{opacity:0;transform:translateY(8px);transition:all .5s ease .6s;}
+.offer-panel.visible .est-banner,
+.offer-panel.visible .offer-head,
+.offer-panel.visible .rev-grid,
+.offer-panel.visible .vbc-story,
+.offer-panel.visible .countdown-inline,
+.offer-panel.visible .offer-cta-wrap{opacity:1;transform:translateY(0);}
+.offer-panel.visible .app-pipeline{opacity:1;transform:translateY(0);}
+
+/* Offer header */
+.offer-head{text-align:center;margin-bottom:36px;}
+.offer-tag{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.offer-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease infinite;}
+.offer-title{font-family:'Playfair Display',serif;font-size:clamp(22px,2.5vw,30px);color:var(--white);line-height:1.2;margin-bottom:6px;}
+.offer-title em{font-style:italic;color:var(--gold);}
+.offer-subtitle{font-size:11px;color:rgba(255,255,255,.25);letter-spacing:.3px;}
+
+/* Revenue comparison */
+.rev-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:start;margin-bottom:32px;}
+.rev-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:20px;overflow:hidden;transition:border-color .3s,box-shadow .3s;}
+.rev-card.current{opacity:.7;}
+.rev-card.optimized{border-color:rgba(197,164,78,.2);background:rgba(197,164,78,.03);box-shadow:0 0 40px rgba(197,164,78,.04);}
+.rev-card.optimized:hover{box-shadow:0 0 60px rgba(197,164,78,.06),0 4px 24px rgba(197,164,78,.05);}
+.rev-label{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:6px;}
+.rev-card.optimized .rev-label{color:rgba(197,164,78,.5);}
+.rev-amount{font-family:'Playfair Display',serif;font-size:32px;color:var(--white);line-height:1;margin-bottom:4px;letter-spacing:-.5px;}
+.rev-card.optimized .rev-amount{color:var(--gold);text-shadow:0 0 40px rgba(197,164,78,.15);}
+.rev-detail{font-size:9px;color:rgba(255,255,255,.15);margin-bottom:14px;}
+.rev-line{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:11px;}
+.rev-line+.rev-line{border-top:1px solid rgba(255,255,255,.03);}
+.rev-line-name{color:rgba(255,255,255,.3);}
+.rev-line-val{font-weight:600;color:rgba(255,255,255,.25);font-variant-numeric:tabular-nums;}
+.rev-card.optimized .rev-line-val{color:rgba(197,164,78,.7);}
+.rev-line-rate{font-size:8px;color:rgba(255,255,255,.12);margin-left:6px;}
+.rev-section{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.1);margin:10px 0 4px;}
+.rev-card.optimized .rev-section{color:rgba(197,164,78,.25);}
+
+/* Arrow between cards */
+.rev-arrow{display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:40px;}
+.rev-arrow-circle{width:42px;height:42px;border-radius:50%;background:rgba(197,164,78,.06);border:1px solid rgba(197,164,78,.15);display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.rev-arrow-circle:hover{background:rgba(197,164,78,.1);border-color:rgba(197,164,78,.25);}
+.rev-arrow-circle svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:2;}
+.rev-arrow-gap{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);font-weight:600;white-space:nowrap;letter-spacing:-.5px;}
+.rev-arrow-sub{font-size:8px;color:rgba(255,255,255,.15);text-align:center;white-space:nowrap;line-height:1.4;}
+
+/* CTA */
+.offer-cta-wrap{text-align:center;margin:28px 0 20px;}
+.offer-cta{display:inline-block;padding:16px 48px;background:linear-gradient(135deg,var(--gold),#D4B96A);color:var(--navy-deep);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 6px 24px rgba(197,164,78,.25),0 2px 8px rgba(0,0,0,.1);}
+.offer-cta:hover{background:linear-gradient(135deg,#D4B96A,#E8D48B);transform:translateY(-2px);box-shadow:0 10px 36px rgba(197,164,78,.35),0 4px 12px rgba(0,0,0,.1);}
+.offer-fine{font-size:9px;color:rgba(255,255,255,.12);text-align:center;margin-top:8px;line-height:1.5;}
+
+/* Countdown inline */
+.countdown-inline{display:flex;align-items:center;justify-content:center;gap:4px;margin:24px 0;}
+.cd-block{background:rgba(197,164,78,.05);border:1px solid rgba(197,164,78,.08);border-radius:6px;padding:8px 12px;text-align:center;min-width:52px;}
+.cd-num{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);line-height:1;letter-spacing:-.5px;}
+.cd-unit{font-size:7px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.12);margin-top:2px;}
+.cd-sep{color:rgba(197,164,78,.15);font-size:18px;font-weight:300;}
+
+/* MOBILE */
+@media(max-width:1024px){
+  .split{flex-direction:column;}
+  .split-left{width:100%;min-width:0;position:relative;top:0;height:auto;}
+  .split-right{min-height:500px;}
+  .envelope-scene{width:90%;max-width:460px;height:340px;}
+  .rev-grid{grid-template-columns:1fr;gap:12px;}
+  .rev-arrow{flex-direction:row;padding:0;}
+  .offer-panel{padding:24px 20px;}
+  .meth-table{font-size:9px;}
+}
+@media(max-width:600px){
+  .panel-section{padding:20px 16px 16px;}
+  .tier-section{padding:16px;}
+  .envelope-scene{height:300px;}
+}
+
+/* Estimator banner */
+.est-banner{display:flex;align-items:flex-start;gap:10px;padding:14px 16px 14px 18px;background:rgba(197,164,78,.03);border:1px solid rgba(197,164,78,.08);border-left:2px solid rgba(197,164,78,.25);border-radius:2px 10px 10px 2px;margin-bottom:32px;}
+.est-banner-icon{flex-shrink:0;margin-top:2px;}
+.est-banner-text{font-size:9px;color:rgba(255,255,255,.28);line-height:1.7;}
+.est-banner-text strong{color:rgba(255,255,255,.5);font-weight:600;}
+
+/* VBC story section */
+.vbc-story{margin:32px 0;padding:24px;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.04);border-radius:14px;position:relative;overflow:hidden;}
+.vbc-story::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,rgba(197,164,78,.15) 30%,rgba(197,164,78,.2) 50%,rgba(197,164,78,.15) 70%,transparent 95%);}
+.vbc-story-head{font-family:'Playfair Display',serif;font-size:17px;color:var(--white);margin-bottom:5px;letter-spacing:.2px;}
+.vbc-story-sub{font-size:10px;color:rgba(255,255,255,.22);line-height:1.7;margin-bottom:18px;}
+.vbc-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.vbc-pill{padding:6px 12px;background:rgba(197,164,78,.04);border:1px solid rgba(197,164,78,.1);border-radius:20px;font-size:10px;color:rgba(197,164,78,.6);display:flex;align-items:center;gap:5px;}
+.vbc-pill .dot{width:5px;height:5px;border-radius:50%;}
+.vbc-pill .dot.access{background:var(--gold);}
+.vbc-pill .dot.ffs{background:rgba(255,255,255,.2);}
+.vbc-row{display:flex;gap:12px;margin-bottom:8px;}
+.vbc-block{flex:1;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:10px;}
+.vbc-block-label{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.15);margin-bottom:4px;}
+.vbc-block.gold{border-color:rgba(197,164,78,.12);background:rgba(197,164,78,.03);}
+.vbc-block.gold .vbc-block-label{color:rgba(197,164,78,.4);}
+.vbc-block-val{font-family:'Playfair Display',serif;font-size:24px;color:var(--white);line-height:1;letter-spacing:-.3px;}
+.vbc-block.gold .vbc-block-val{color:var(--gold);text-shadow:0 0 30px rgba(197,164,78,.1);}
+.vbc-block-note{font-size:8px;color:rgba(255,255,255,.12);margin-top:2px;}
+.vbc-block.gold .vbc-block-note{color:rgba(197,164,78,.3);}
+.vbc-footnote{font-size:8px;color:rgba(255,255,255,.1);margin-top:4px;text-align:center;}
+
+/* Methodology section */
+.meth{margin-top:40px;border-top:1px solid rgba(255,255,255,.04);padding-top:24px;position:relative;}
+
+/* APPLICATION PIPELINE */
+.app-pipeline{margin:36px 0;padding:0;}
+.app-pipeline-head{font-family:'Playfair Display',serif;font-size:20px;color:var(--white);text-align:center;margin-bottom:4px;letter-spacing:.3px;}
+.app-pipeline-sub{font-size:10px;color:rgba(255,255,255,.2);text-align:center;margin-bottom:28px;line-height:1.6;}
+.app-step{position:relative;padding:20px 24px 20px 72px;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.04);border-radius:12px;margin-bottom:12px;transition:all .3s;cursor:default;}
+.app-step:hover{background:rgba(255,255,255,.025);border-color:rgba(197,164,78,.1);}
+.app-step-num{position:absolute;left:20px;top:20px;width:36px;height:36px;border-radius:50%;background:rgba(197,164,78,.06);border:1px solid rgba(197,164,78,.15);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);font-weight:600;}
+.app-step-connector{position:absolute;left:37px;top:56px;bottom:-12px;width:1px;background:linear-gradient(180deg,rgba(197,164,78,.15),transparent);}
+.app-step:last-child .app-step-connector{display:none;}
+.app-step-title{font-family:'Playfair Display',serif;font-size:14px;color:var(--white);margin-bottom:3px;}
+.app-step-desc{font-size:10px;color:rgba(255,255,255,.25);line-height:1.6;margin-bottom:10px;}
+.app-step-detail{font-size:9px;color:rgba(255,255,255,.15);line-height:1.7;padding:10px 14px;background:rgba(255,255,255,.02);border-radius:8px;display:none;}
+.app-step.expanded .app-step-detail{display:block;}
+.app-step-toggle{font-size:9px;color:var(--gold);cursor:pointer;display:inline-flex;align-items:center;gap:4px;opacity:.6;transition:opacity .2s;}
+.app-step-toggle:hover{opacity:1;}
+.app-step-btn{display:inline-block;margin-top:10px;padding:8px 20px;background:rgba(197,164,78,.08);border:1px solid rgba(197,164,78,.15);border-radius:6px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:all .25s;cursor:pointer;}
+.app-step-btn:hover{background:rgba(197,164,78,.15);border-color:rgba(197,164,78,.3);}
+.app-step-btn.primary{background:linear-gradient(135deg,var(--gold),#D4B96A);color:var(--navy-deep);border:none;padding:10px 28px;font-size:10px;}
+.app-step-btn.primary:hover{background:linear-gradient(135deg,#D4B96A,#E8D48B);transform:translateY(-1px);box-shadow:0 4px 16px rgba(197,164,78,.25);}
+.app-checklist{margin:8px 0 0;padding:0;list-style:none;}
+.app-checklist li{font-size:9px;color:rgba(255,255,255,.2);padding:3px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.5;}
+.app-checklist li::before{content:'';display:inline-block;width:8px;height:8px;border:1px solid rgba(197,164,78,.2);border-radius:2px;flex-shrink:0;margin-top:2px;}
+.app-checklist li.done::before{background:rgba(197,164,78,.15);border-color:rgba(197,164,78,.3);}
+.app-checklist li.done{color:rgba(197,164,78,.4);}
+.app-what-we-handle{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+.app-col{padding:12px;background:rgba(255,255,255,.015);border-radius:8px;}
+.app-col-label{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(197,164,78,.3);margin-bottom:6px;}
+.app-col.provider .app-col-label{color:rgba(255,255,255,.15);}
+.app-col li::before{display:none;}
+.meth::before{content:'';position:absolute;top:-1px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(197,164,78,.1),transparent);}
+.meth-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;user-select:none;transition:opacity .2s;}
+.meth-toggle:hover{opacity:.85;}
+.meth-toggle-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.15);transition:color .2s;}
+.meth-toggle:hover .meth-toggle-label{color:rgba(197,164,78,.4);}
+.meth-toggle-icon{width:16px;height:16px;stroke:rgba(255,255,255,.15);fill:none;stroke-width:2;transition:transform .35s cubic-bezier(.4,0,.2,1),stroke .2s;}
+.meth-toggle:hover .meth-toggle-icon{stroke:rgba(197,164,78,.4);}
+.meth-toggle.open .meth-toggle-icon{transform:rotate(180deg);}
+.meth-body{display:none;padding:20px 0 0;}
+.meth-toggle.open+.meth-body{display:block;animation:methIn .4s ease both;}
+@keyframes methIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.meth-section{margin-bottom:24px;}
+.meth-section-title{font-family:'Playfair Display',serif;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:10px;letter-spacing:.2px;}
+.meth-text{font-size:10px;color:rgba(255,255,255,.2);line-height:1.7;margin-bottom:8px;}
+.meth-text strong{color:rgba(255,255,255,.35);font-weight:600;}
+.meth-table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:12px;}
+.meth-table th{text-align:left;font-size:7px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.12);padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.06);}
+.meth-table td{padding:6px 8px;color:rgba(255,255,255,.25);border-bottom:1px solid rgba(255,255,255,.02);vertical-align:top;}
+.meth-table td:first-child{color:rgba(255,255,255,.35);font-weight:500;white-space:nowrap;}
+.meth-table .src{font-size:8px;color:rgba(197,164,78,.3);font-style:italic;}
+.meth-cite{font-size:9px;color:rgba(255,255,255,.15);line-height:1.7;counter-reset:cite;}
+.meth-cite li{margin-bottom:3px;padding-left:4px;}
+.meth-cite li::marker{color:rgba(197,164,78,.3);}
+.meth-disclosure{font-size:9px;color:rgba(255,255,255,.12);line-height:1.7;padding:12px 14px;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.03);border-radius:8px;}
+</style>
 </head>
 <body>
-  <script src="nav.js"></script>
-  <div class="wrap">
-    <div class="card">
-      <div class="hero">
-        <div class="kicker">InPursuit Health</div>
-        <h1><em>Access</em> is coming soon.</h1>
-        <p class="sub">This page is wired into the site navigation already. We're finishing the content and will publish it shortly.</p>
-      </div>
-      <div class="body">
-        <div class="row">
-          <a class="btn btn-gold" href="index.html">Back to Home</a>
-          <a class="btn btn-outline" href="contact.html">Contact</a>
-        </div>
-        <p class="note">Want access sooner? Email <a href="mailto:info@inpursuithealth.com">info@inpursuithealth.com</a>.</p>
-        <p class="meta">Placeholder file: <code>access.html</code>. When you're ready, replace this file with the real page and all existing links will automatically start working.</p>
-      </div>
+<script src="nav.js"></script>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="https://www.inpursuithealth.com">InPursuit Health</a>
+    <div class="nav-right">
+      <a class="nav-link" href="https://www.inpursuithealth.com/for-providers">For Providers</a>
+      <div class="nav-deadline"><span class="nav-dot"></span> Cohort 1 · March 20, 2026 <span class="nav-cd" id="navCd"></span></div>
     </div>
   </div>
+</nav>
+
+<!-- SPLIT LAYOUT -->
+<div class="split">
+
+  <!-- LEFT PANEL -->
+  <div class="split-left">
+
+    <!-- NPI LOOKUP -->
+    <div class="panel-section">
+      <div class="panel-title">Your NPI</div>
+      <div class="panel-sub">We'll pull your CMS registry data and Medicare billing history.</div>
+      <div class="npi-wrap">
+        <input class="npi-input" id="npiInput" type="text" placeholder="10-digit NPI" maxlength="10" inputmode="numeric" onkeydown="if(event.key==='Enter')runLookup()">
+        <button class="npi-btn" id="npiBtn" onclick="runLookup()">Look Up</button>
+      </div>
+      <div class="npi-status" id="npiStatus"></div>
+
+      <div class="provider-badge" id="providerBadge">
+        <div class="pb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="pb-info">
+          <div class="pb-name" id="pbName">—</div>
+          <div class="pb-detail" id="pbDetail">—</div>
+          <div class="pb-cms" id="pbCms"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATIENT PANEL SLIDERS -->
+    <div class="panel-section">
+      <div class="panel-title">Your Patient Panel</div>
+      <div class="panel-sub">Adjust to match your current Medicare FFS patient volume.</div>
+
+      <div class="slider-group">
+        <div class="slider-row">
+          <span class="slider-label">Medicare FFS Patients</span>
+          <span class="slider-val" id="medVal">600</span>
+        </div>
+        <input type="range" id="medSlider" min="50" max="5000" step="10" value="600" oninput="onMedSlider(this)">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-row">
+          <span class="slider-label">Chronic Condition Prevalence</span>
+          <span class="slider-val" id="chronVal">68%</span>
+        </div>
+        <input type="range" id="chronSlider" min="20" max="95" step="1" value="68" oninput="onChronSlider(this)">
+      </div>
+    </div>
+
+    <!-- CURRENT BILLING SLIDERS -->
+    <div class="panel-section">
+      <div class="panel-title">Your Current Billing</div>
+      <div class="panel-sub" id="billingSubtext">Estimate your current capture rates. Programs with CMS claims data will lock automatically.</div>
+
+      <div class="slider-group" id="grpAWV">
+        <div class="slider-row">
+          <span class="slider-label">Annual Wellness Visits</span>
+          <span class="slider-val" id="awvVal">28%</span>
+        </div>
+        <input type="range" id="awvSlider" min="0" max="80" step="1" value="28" oninput="onBillingSlider(this,'awv')">
+        <div class="slider-note" id="awvNote"></div>
+      </div>
+
+      <div class="slider-group" id="grpCCM">
+        <div class="slider-row">
+          <span class="slider-label">Chronic Care Mgmt (CCM)</span>
+          <span class="slider-val" id="ccmVal">5%</span>
+        </div>
+        <input type="range" id="ccmSlider" min="0" max="40" step="1" value="5" oninput="onBillingSlider(this,'ccm')">
+        <div class="slider-note" id="ccmNote"></div>
+      </div>
+
+      <div class="slider-group" id="grpRPM">
+        <div class="slider-row">
+          <span class="slider-label">Remote Patient Mon. (RPM)</span>
+          <span class="slider-val" id="rpmVal">2%</span>
+        </div>
+        <input type="range" id="rpmSlider" min="0" max="25" step="1" value="2" oninput="onBillingSlider(this,'rpm')">
+        <div class="slider-note" id="rpmNote"></div>
+      </div>
+
+      <div class="slider-group" id="grpTCM">
+        <div class="slider-row">
+          <span class="slider-label">Transitional Care (TCM)</span>
+          <span class="slider-val" id="tcmVal">1.5%</span>
+        </div>
+        <input type="range" id="tcmSlider" min="0" max="12" step="0.5" value="1.5" oninput="onBillingSlider(this,'tcm')">
+        <div class="slider-note" id="tcmNote"></div>
+      </div>
+
+      <div class="slider-group" id="grpBHI">
+        <div class="slider-row">
+          <span class="slider-label">Behavioral Health (BHI)</span>
+          <span class="slider-val" id="bhiVal">1%</span>
+        </div>
+        <input type="range" id="bhiSlider" min="0" max="20" step="1" value="1" oninput="onBillingSlider(this,'bhi')">
+        <div class="slider-note" id="bhiNote"></div>
+      </div>
+    </div>
+
+    <!-- TIER SELECTOR -->
+    <div class="tier-section">
+      <div class="tier-title">Select Your Service Tier</div>
+      <div class="tier-sub">Your OAP revenue share depends on the level of support InPursuit provides.</div>
+      <div class="tier-cards">
+        <div class="tier-card active" onclick="selectTier(1,this)">
+          <div class="tier-head"><span class="tier-name">Full Service</span><span class="tier-pct">You keep 65%</span></div>
+          <div class="tier-desc">InPursuit handles everything — application, TETRA deployment, care management workflows, patient attribution, and all CMS reporting.</div>
+          <div class="tier-includes">Includes: Application prep, EHR integration, TETRA deployment (6-week go-live), care coordination staffing, quality measure tracking, CMS submission, ongoing compliance monitoring, dedicated account manager.</div>
+        </div>
+        <div class="tier-card" onclick="selectTier(2,this)">
+          <div class="tier-head"><span class="tier-name">Supported</span><span class="tier-pct">You keep 70%</span></div>
+          <div class="tier-desc">Your team runs day-to-day operations. InPursuit provides the technology, training, and compliance oversight.</div>
+          <div class="tier-includes">Includes: Application prep, TETRA deployment, staff training program, compliance dashboard, quarterly audits, CMS submission support, technical helpdesk, template library for care plans.</div>
+        </div>
+        <div class="tier-card" onclick="selectTier(3,this)">
+          <div class="tier-head"><span class="tier-name">Infrastructure Only</span><span class="tier-pct">You keep 75%</span></div>
+          <div class="tier-desc">Your practice manages all operations. InPursuit provides TETRA technology access and data infrastructure.</div>
+          <div class="tier-includes">Includes: Application prep, TETRA license, API access, data interoperability layer, FHIR/TEFCA connectivity, self-service analytics dashboard, documentation templates.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /split-left -->
+
+  <!-- RIGHT PANEL -->
+  <div class="split-right">
+
+    <!-- ENVELOPE -->
+    <div class="envelope-scene waiting" id="envelopeScene">
+      <div class="envelope-wrap">
+        <div class="envelope">
+          <div class="envelope-border"></div>
+        </div>
+        <div class="envelope-flap"></div>
+        <div class="wax-seal"><svg viewBox="0 0 24 24"><path d="M12 2L9 7H3l5 4-2 7 6-4 6 4-2-7 5-4h-6z"/></svg></div>
+        <div class="letter">
+          <div class="letter-monogram">InPursuit Health</div>
+          <div class="letter-line"></div>
+          <div class="letter-heading" id="letterHeading">Your ACCESS Model<br>Revenue Offer</div>
+          <div class="letter-subtext" id="letterSubtext">A personalized revenue projection prepared for your practice using CMS Medicare data and ACCESS Model benchmarks.</div>
+        </div>
+      </div>
+      <button class="envelope-cta" id="envelopeCta" onclick="openEnvelope()">Open Your Offer</button>
+    </div>
+
+    <!-- OFFER (revealed after envelope opens) -->
+    <div class="offer-panel" id="offerPanel">
+
+      <!-- ESTIMATOR BANNER -->
+      <div class="est-banner">
+        <svg class="est-banner-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(197,164,78,.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="est-banner-text">
+          <strong>Revenue Estimator — Not a Guarantee.</strong> This projection uses CMS-published reimbursement rates, your NPI-level Medicare billing data (where available), and specialty benchmarks from peer-reviewed sources. All figures are illustrative estimates subject to CMS final rule changes, patient attribution, and practice-specific factors. A validated projection using live claims data will be prepared during your discovery engagement. <a href="#methodology" onclick="openMeth();return false;" style="color:var(--gold);text-decoration:underline;">Full methodology below.</a>
+        </div>
+      </div>
+
+      <div class="offer-head">
+        <div class="offer-tag"><span class="offer-tag-dot"></span> Your Revenue Projection</div>
+        <div class="offer-title">ACCESS Is Just the Beginning.<br><em>We Optimize Everything.</em></div>
+        <div class="offer-subtitle" id="offerProviderLine">—</div>
+      </div>
+
+      <!-- Revenue comparison -->
+      <div class="rev-grid">
+
+        <!-- CURRENT -->
+        <div class="rev-card current">
+          <div class="rev-label" id="curLabel">Current Estimated Capture</div>
+          <div class="rev-amount" id="curTotal">$0</div>
+          <div class="rev-detail" id="curDetail">Annual VBC/care mgmt revenue</div>
+          <div class="rev-section">Fee-for-Service Programs · 100% Yours</div>
+          <div class="rev-line"><span class="rev-line-name">Annual Wellness</span><span class="rev-line-val" id="rCurAWV">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Chronic Care Mgmt</span><span class="rev-line-val" id="rCurCCM">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Remote Patient Mon.</span><span class="rev-line-val" id="rCurRPM">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Transitional Care</span><span class="rev-line-val" id="rCurTCM">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Behavioral Health</span><span class="rev-line-val" id="rCurBHI">—</span></div>
+        </div>
+
+        <!-- ARROW -->
+        <div class="rev-arrow">
+          <div class="rev-arrow-circle"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+          <div class="rev-arrow-gap" id="gapAmount">+$0</div>
+          <div class="rev-arrow-sub">additional annual<br>revenue</div>
+        </div>
+
+        <!-- OPTIMIZED -->
+        <div class="rev-card optimized">
+          <div class="rev-label">Optimized with InPursuit</div>
+          <div class="rev-amount" id="optTotal">$0</div>
+          <div class="rev-detail">ACCESS OAPs + optimized FFS capture</div>
+          <div class="rev-section">CMS ACCESS Model · Your <span id="tierPctInline">65</span>% Share</div>
+          <div class="rev-line"><span class="rev-line-name">ACCESS OAPs</span><span class="rev-line-val" id="rOptAccess">—</span></div>
+          <div class="rev-section">Fee-for-Service · InPursuit Optimized · 100% Yours</div>
+          <div class="rev-line"><span class="rev-line-name">Annual Wellness</span><span class="rev-line-val" id="rOptAWV">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Chronic Care Mgmt</span><span class="rev-line-val" id="rOptCCM">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Remote Patient Mon.</span><span class="rev-line-val" id="rOptRPM">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Transitional Care</span><span class="rev-line-val" id="rOptTCM">—</span></div>
+          <div class="rev-line"><span class="rev-line-name">Behavioral Health</span><span class="rev-line-val" id="rOptBHI">—</span></div>
+        </div>
+      </div>
+
+      <!-- VBC STORY -->
+      <div class="vbc-story">
+        <div class="vbc-story-head">One Partnership. Every Revenue Stream.</div>
+        <div class="vbc-story-sub">ACCESS is your entry into value-based care with InPursuit — but we don't stop there. When you join ACCESS through InPursuit, our infrastructure optimizes every billable care management program for your panel. The same patients, the same workflows, dramatically more revenue.</div>
+        <div class="vbc-pills">
+          <div class="vbc-pill"><span class="dot access"></span>ACCESS OAPs — new revenue via CMS</div>
+          <div class="vbc-pill"><span class="dot ffs"></span>AWV — close the completion gap</div>
+          <div class="vbc-pill"><span class="dot ffs"></span>CCM — enroll chronic patients at scale</div>
+          <div class="vbc-pill"><span class="dot ffs"></span>RPM — automate device monitoring</div>
+          <div class="vbc-pill"><span class="dot ffs"></span>TCM — capture every discharge</div>
+          <div class="vbc-pill"><span class="dot ffs"></span>BHI — integrate behavioral health billing</div>
+        </div>
+        <div class="vbc-row">
+          <div class="vbc-block">
+            <div class="vbc-block-label">ACCESS OAPs Revenue</div>
+            <div class="vbc-block-val" id="vbcAccess">$0</div>
+            <div class="vbc-block-note">Your <span id="vbcTierPct">65</span>% share · new money from CMS</div>
+          </div>
+          <div class="vbc-block gold">
+            <div class="vbc-block-label">FFS Optimization Revenue</div>
+            <div class="vbc-block-val" id="vbcFFS">$0</div>
+            <div class="vbc-block-note">100% yours · AWV + CCM + RPM + TCM + BHI</div>
+          </div>
+        </div>
+        <div class="vbc-footnote">FFS optimization is included in every InPursuit service tier. These are existing CMS billing codes — no new application required.</div>
+      </div>
+
+      <!-- APPLICATION PIPELINE -->
+      <div class="app-pipeline">
+        <div class="app-pipeline-head">Apply with InPursuit as Your Infrastructure</div>
+        <div class="app-pipeline-sub">Three steps to get your ACCESS application submitted. All documents are delivered through a secure data room.<br>InPursuit handles the technical complexity — you confirm your practice details and sign.</div>
+
+        <!-- STEP 1: MDA -->
+        <div class="app-step" id="appStep1">
+          <div class="app-step-num">1</div>
+          <div class="app-step-connector"></div>
+          <div class="app-step-title">Mutual Disclosure Agreement</div>
+          <div class="app-step-desc">Protects both parties before we exchange any practice data, billing history, or proprietary technology details. This is a balanced, mutual NDA — your data stays yours, our technology stays ours.</div>
+          <span class="app-step-toggle" onclick="toggleStep('appStep1')">What’s in it ▾</span>
+          <div class="app-step-detail">
+            <strong style="color:rgba(255,255,255,.35);">Why this protects you:</strong><br><br>
+            • <strong>Mutual, not one-sided</strong> — both parties are equally bound. InPursuit’s obligations mirror yours exactly.<br>
+            • <strong>Your data stays yours</strong> — Section 10 explicitly states Provider retains all right, title, and interest in its data. InPursuit cannot aggregate, de-identify, or repurpose your data without written consent.<br>
+            • <strong>HIPAA-first</strong> — No PHI is exchanged until a separate BAA is in place. The MDA alone does not authorize PHI sharing.<br>
+            • <strong>No non-compete, no exclusivity</strong> — Section 6 explicitly states you can evaluate any other technology partner at any time.<br>
+            • <strong>No obligation to proceed</strong> — Section 5 makes clear that signing does not commit you to use InPursuit, participate in ACCESS, or pay anything.<br>
+            • <strong>You can walk away</strong> — 30 days written notice to terminate. Return/destroy all materials within 15 business days.<br>
+            • <strong>2-year term, 3-year tail</strong> — Confidentiality obligations survive for 3 years after termination.<br><br>
+            <em style="color:rgba(255,255,255,.2);">Have your attorney review it. We designed this so they’d say “this is fair.”</em>
+          </div>
+          <br>
+          <a class="app-step-btn" href="https://docsend.com/view/YOUR-MDA-LINK" target="_blank">Review &amp; Sign MDA</a>
+        </div>
+
+        <!-- STEP 2: LOI -->
+        <div class="app-step" id="appStep2">
+          <div class="app-step-num">2</div>
+          <div class="app-step-connector"></div>
+          <div class="app-step-title">Non-Binding Letter of Intent</div>
+          <div class="app-step-desc">A handshake, not a contract. Signals your intent to collaborate with InPursuit on ACCESS so we can prioritize your onboarding. No fees, no exclusivity, no commitment.</div>
+          <span class="app-step-toggle" onclick="toggleStep('appStep2')">What’s in it ▾</span>
+          <div class="app-step-detail">
+            <strong style="color:rgba(255,255,255,.35);">What this does — and doesn’t do:</strong><br><br>
+            • <strong>Priority onboarding</strong> — InPursuit commits to prioritizing your practice in the Cohort 1 deployment queue. Target: 6 weeks from definitive agreement to operational readiness.<br>
+            • <strong>Tier + track selection</strong> — Preliminary selection of your service tier (Full Service / Supported / Infrastructure Only) and clinical tracks (eCKM, CKM, MSK, BH). Can change anytime before final agreement.<br>
+            • <strong>Scope outline</strong> — Describes what InPursuit intends to provide: application support, TETRA deployment, FHIR APIs, HIE connectivity, care coordination infrastructure, and FFS optimization.<br>
+            • <strong>Zero financial commitment</strong> — Section 6 explicitly states no fees, payments, or financial commitments of any kind arise from the LOI.<br>
+            • <strong>No exclusivity</strong> — You can talk to any other partner. InPursuit can work with other providers.<br>
+            • <strong>Non-binding</strong> — Bold-text banner on signature page. Only confidentiality and governing law provisions are binding.<br>
+            • <strong>180-day expiration</strong> — Auto-expires in 6 months if no definitive agreement is reached. Either party can terminate with written notice at any time.<br>
+          </div>
+          <br>
+          <a class="app-step-btn" href="https://docsend.com/view/YOUR-LOI-LINK" target="_blank">Review &amp; Sign LOI</a>
+        </div>
+
+        <!-- STEP 3: RECEIVE, COMPLETE & SUBMIT -->
+        <div class="app-step" id="appStep3">
+          <div class="app-step-num">3</div>
+          <div class="app-step-title">Receive Your Pre-Filled ACCESS Application</div>
+          <div class="app-step-desc">Once your MDA and LOI are signed, InPursuit delivers your pre-filled ACCESS application through your secure data room. You fill in your practice-specific details, review, and submit directly to CMS.</div>
+          <span class="app-step-toggle" onclick="toggleStep('appStep3')">See the full breakdown ▾</span>
+          <div class="app-step-detail">
+            <div class="app-what-we-handle">
+              <div class="app-col">
+                <div class="app-col-label">Already Completed by InPursuit</div>
+                <ul class="app-checklist">
+                  <li class="done">Q22 — Services readiness matrix (pre-checked based on your tier)</li>
+                  <li class="done">Q23 — Patient population estimates (from CMS PUF data we already pulled)</li>
+                  <li class="done">Q24 — Technology narrative (TETRA, FHIR APIs, connected devices, AI-assisted care)</li>
+                  <li class="done">Q26 — Electronic data exchange certification (HIE via TETRA)</li>
+                  <li class="done">Q27 — Care coordination certification (Direct Secure Messaging)</li>
+                  <li class="done">Q19 — Track selection recommendations (based on your specialty + panel)</li>
+                  <li class="done">Q21 — Clinical exclusions (CMS-required + practice-specific drafts)</li>
+                </ul>
+              </div>
+              <div class="app-col provider">
+                <div class="app-col-label">You Complete &amp; Confirm</div>
+                <ul class="app-checklist">
+                  <li>Q1-8 — Legal name, TIN, address, contacts</li>
+                  <li>Q12 — Medical Director (Medicare-enrolled MD/DO)</li>
+                  <li>Q13 — Clinician roster (NPIs under your TIN)</li>
+                  <li>Q14 — State licensure confirmation</li>
+                  <li>Q11 — Medicare Part B enrollment status</li>
+                  <li>Q29-30 — Ownership and financial affiliations</li>
+                  <li>Q31-36 — All certifications (you must personally attest)</li>
+                </ul>
+              </div>
+            </div>
+            <br>
+            <strong style="color:rgba(255,255,255,.35);">How it works:</strong><br><br>
+            <strong style="color:rgba(197,164,78,.5);">1.</strong> Sign MDA + LOI (Steps 1 &amp; 2 above)<br>
+            <strong style="color:rgba(197,164,78,.5);">2.</strong> InPursuit delivers your pre-filled ACCESS application with all technical sections completed<br>
+            <strong style="color:rgba(197,164,78,.5);">3.</strong> You fill in your practice-specific sections (Q1-8, Q11-14, Q29-36)<br>
+            <strong style="color:rgba(197,164,78,.5);">4.</strong> Go to <span style="color:var(--gold);">innovation.cms.gov/innovation-models/access</span> and create your Participant Portal account<br>
+            <strong style="color:rgba(197,164,78,.5);">5.</strong> Enter all responses into the CMS portal — InPursuit’s technical sections + your practice details<br>
+            <strong style="color:rgba(197,164,78,.5);">6.</strong> Review, certify as true and accurate, and submit<br>
+            <strong style="color:rgba(197,164,78,.5);">7.</strong> CMS reviews on a rolling basis — InPursuit begins TETRA deployment upon acceptance<br><br>
+            <em style="color:rgba(255,255,255,.15);">Deadline: March 20, 2026 for Cohort 1 (July 5, 2026 launch). Applications after March 20 are considered for January 1, 2027.</em>
+          </div>
+          <br>
+          <a class="app-step-btn primary" href="https://docsend.com/view/YOUR-APPLICATION-LINK" target="_blank">Enter Data Room to Complete Your Risk-Free Application</a>
+        </div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-inline">
+        <div class="cd-block"><div class="cd-num" id="cdD">00</div><div class="cd-unit">Days</div></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><div class="cd-num" id="cdH">00</div><div class="cd-unit">Hrs</div></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><div class="cd-num" id="cdM">00</div><div class="cd-unit">Min</div></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><div class="cd-num" id="cdS">00</div><div class="cd-unit">Sec</div></div>
+      </div>
+
+      <div class="offer-cta-wrap">
+        <a class="offer-cta" href="https://calendly.com/inpursuit" target="_blank">Schedule Your Discovery Call</a>
+      </div>
+      <div class="offer-fine">Estimates only — not a promise of payment. See full methodology below.</div>
+
+      <!-- ═══════════════════════════════════════
+           METHODOLOGY — Actuarial-Grade Documentation
+           ═══════════════════════════════════════ -->
+      <div class="meth" id="methodology">
+        <div class="meth-toggle" id="methToggle" onclick="toggleMeth()">
+          <svg class="meth-toggle-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <span class="meth-toggle-label">Estimation Methodology &amp; Data Sources</span>
+        </div>
+        <div class="meth-body" id="methBody">
+
+          <!-- 1. OVERVIEW -->
+          <div class="meth-section">
+            <div class="meth-section-title">1. Estimation Overview</div>
+            <div class="meth-text">This estimator projects annual revenue from two distinct payment mechanisms: (a) <strong>CMS ACCESS Model Outcome-based Alternative Payments (OAPs)</strong>, a population-based per-member-per-month payment for qualifying chronic-condition beneficiaries under CMS Innovation Center authority; and (b) <strong>Medicare Physician Fee Schedule (PFS) billing codes</strong> for care management services (AWV, CCM, RPM, TCM, BHI) that are independently billable regardless of ACCESS participation.</div>
+            <div class="meth-text">All estimates are <strong>illustrative projections, not guarantees of payment</strong>. Actual revenue will depend on final CMS rule parameters, patient attribution, quality performance, documentation compliance, and practice-specific utilization patterns.</div>
+          </div>
+
+          <!-- 2. INPUT METHODOLOGY -->
+          <div class="meth-section">
+            <div class="meth-section-title">2. Input Methodology</div>
+            <div class="meth-text"><strong>Provider Identification:</strong> NPI is validated against the CMS NPPES registry (API v2.1). Provider name, credential, taxonomy, specialty classification, and practice location are sourced from the NPPES record. Entity type (Type 1 individual / Type 2 organizational) determines panel estimation logic.</div>
+            <div class="meth-text"><strong>Medicare Panel Size:</strong> When available, total unique beneficiaries are sourced from the CMS Medicare Physician &amp; Other Practitioners Public Use File (PUF), CY2023 — the most recent available release (dataset UUID: 8889d81e-2ee7-448f-8713-f071038289b5). When CMS PUF data is unavailable (e.g., new providers, data suppression), panel size is estimated from specialty-specific benchmarks derived from MGMA DataDive 2024 and CMS Medicare Utilization data, capped at 5,000 for individual NPIs and min(specialty panel × 4, 6,000) for organizational NPIs.</div>
+            <div class="meth-text"><strong>Chronic Condition Prevalence:</strong> Default chronic prevalence rates are specialty-specific, derived from CMS Chronic Conditions Dashboard and peer-reviewed literature. The user may override via slider input (range: 20–95%). For ACCESS eligibility, 93% of chronic patients are assumed to meet ACCESS criteria, reflecting standard exclusions for hospice, ESRD, and institutional SNF stays per CMS-4205-F eligibility parameters.</div>
+          </div>
+
+          <!-- 3. CURRENT STATE BASELINE -->
+          <div class="meth-section">
+            <div class="meth-section-title">3. Current State Baseline — "What You Capture Today"</div>
+            <div class="meth-text">Where CMS PUF service-level data is available (dataset UUID: 92396110-2aed-4d63-a6a2-5d6207d46a29), <strong>actual Medicare payment amounts by HCPCS code</strong> are used for the current state. These values are locked and marked as CMS-sourced. Where CMS data is unavailable or suppressed (CMS suppresses values for HCPCS codes billed to fewer than 11 beneficiaries per 45 CFR §164.514(b)), national average utilization rates are applied and the user may adjust via sliders.</div>
+            <table class="meth-table">
+              <tr><th>Program</th><th>HCPCS Codes</th><th>Default Utilization</th><th>Reimbursement Rate</th><th>Source</th></tr>
+              <tr><td>Annual Wellness Visits</td><td>G0438 (initial), G0439 (subsequent)</td><td>28% of Medicare panel</td><td>$150 blended (G0438: $185, G0439: $130)</td><td class="src">CMS FFS Utilization PUF 2023; Health Affairs 2022 <sup>[1]</sup></td></tr>
+              <tr><td>Chronic Care Mgmt</td><td>99490 (20 min), 99491 (30 min complex)</td><td>5% of chronic patients</td><td>$62/month (99490)</td><td class="src">CMS PFS Final Rule CY2025; Annals of Internal Med. <sup>[2]</sup></td></tr>
+              <tr><td>Remote Patient Mon.</td><td>99453, 99454, 99457, 99458</td><td>2% of chronic patients</td><td>$84/month effective ($105 base × 80% compliance)</td><td class="src">CMS PFS CY2025; AMA Digital Health Survey 2023 <sup>[3]</sup></td></tr>
+              <tr><td>Transitional Care</td><td>99495 (7-day), 99496 (14-day)</td><td>1.5% of panel annually</td><td>$195 blended (99495: $220, 99496: $170)</td><td class="src">CMS Hospital Readmission Data; MedPAC 2024 <sup>[4]</sup></td></tr>
+              <tr><td>Behavioral Health</td><td>99484 (general BHI)</td><td>1% of Medicare panel</td><td>$52/month</td><td class="src">CMS PFS CY2025; AIMS Center / U. of Washington <sup>[5]</sup></td></tr>
+            </table>
+            <div class="meth-text"><strong>RPM Compliance Adjustment:</strong> CMS requires ≥16 days of physiologic data per 30-day billing period for RPM (99454). Industry data from Health Recovery Solutions and Optimize Health reports an average 80% monthly compliance rate. The effective rate of $84/month reflects $105 base × 0.80 compliance factor. This is conservative; well-managed programs achieve 85–90% compliance.</div>
+          </div>
+
+          <!-- 4. OPTIMIZED STATE -->
+          <div class="meth-section">
+            <div class="meth-section-title">4. Optimized State — "What InPursuit Helps You Capture"</div>
+            <div class="meth-text">Optimized utilization rates represent <strong>top-quartile performance benchmarks</strong> — not theoretical maximums — from published medical group data. These are achievable targets for practices with structured care management programs, EHR-integrated workflows, and dedicated support infrastructure.</div>
+            <table class="meth-table">
+              <tr><th>Program</th><th>Optimized Utilization</th><th>Rate</th><th>Benchmark Source</th></tr>
+              <tr><td>ACCESS OAPs</td><td>93% of chronic patients meeting eligibility</td><td>$35 PMPM × 12 months × tier %</td><td class="src">CMS ACCESS Model NPRM; weighted avg across 4 tracks ($18–$55) <sup>[6]</sup></td></tr>
+              <tr><td>Annual Wellness Visits</td><td>52% of Medicare panel</td><td>$150 blended</td><td class="src">AMGA top-quartile benchmark; CareAllies program data <sup>[7]</sup></td></tr>
+              <tr><td>Chronic Care Mgmt</td><td>18% of chronic patients</td><td>$62/month</td><td class="src">AMGA care management benchmarks; Phreesia 2024 <sup>[8]</sup></td></tr>
+              <tr><td>Remote Patient Mon.</td><td>12% of chronic patients</td><td>$84/month effective</td><td class="src">Health Recovery Solutions program data; ATA guidelines <sup>[9]</sup></td></tr>
+              <tr><td>Transitional Care</td><td>4% of panel annually</td><td>$195 blended</td><td class="src">Improved discharge capture with EHR alerts + ADT feeds <sup>[10]</sup></td></tr>
+              <tr><td>Behavioral Health</td><td>8% of Medicare panel</td><td>$52/month</td><td class="src">Integrated behavioral health benchmarks; AIMS Center <sup>[5]</sup></td></tr>
+            </table>
+            <div class="meth-text"><strong>ACCESS PMPM Derivation:</strong> The $35 PMPM is a weighted average across CMS ACCESS Model payment tracks. Published CMS ranges are: Track 1 (Primary Prevention): $18 PMPM; Track 2 (Secondary Prevention): $28 PMPM; Track 3 (Chronic Management): $42 PMPM; Track 4 (Complex/Multi-chronic): $55 PMPM. We weight toward Track 2–3 based on a typical primary care panel's chronic condition mix (HCC distribution), yielding a blended $35. This is <strong>conservative</strong> — practices with higher-acuity panels (geriatrics, nephrology, cardiology) would see higher weighted PMPMs.</div>
+          </div>
+
+          <!-- 5. REVENUE SHARE MODEL -->
+          <div class="meth-section">
+            <div class="meth-section-title">5. Revenue Share Model</div>
+            <div class="meth-text"><strong>ACCESS OAPs:</strong> InPursuit retains a service fee as a percentage of ACCESS OAP revenue. The provider keeps 65% (Full Service tier), 70% (Supported tier), or 75% (Infrastructure Only tier). This fee covers application preparation, TETRA deployment, CMS compliance, quality reporting, and ongoing infrastructure costs.</div>
+            <div class="meth-text"><strong>Fee-for-Service Programs (AWV, CCM, RPM, TCM, BHI):</strong> The provider retains 100% of all FFS reimbursement. These are standard Medicare Part B codes billed under the provider's NPI. InPursuit's contribution is workflow optimization, patient identification, documentation support, and compliance infrastructure — not a revenue share arrangement. FFS optimization is included in the ACCESS service tier.</div>
+          </div>
+
+          <!-- 6. SPECIALTY PANEL DEFAULTS -->
+          <div class="meth-section">
+            <div class="meth-section-title">6. Specialty Panel Defaults</div>
+            <div class="meth-text">When CMS PUF data is unavailable, panel size and chronic prevalence are estimated using the following specialty-specific benchmarks. Users may override any default via slider.</div>
+            <table class="meth-table">
+              <tr><th>Specialty</th><th>Est. Medicare %</th><th>Chronic Prevalence</th><th>Panel Size</th><th>Source</th></tr>
+              <tr><td>Family Medicine</td><td>28%</td><td>65%</td><td>2,200</td><td class="src">MGMA 2024; CMS Utilization PUF</td></tr>
+              <tr><td>Internal Medicine</td><td>33%</td><td>72%</td><td>2,000</td><td class="src">MGMA 2024; CMS Utilization PUF</td></tr>
+              <tr><td>Cardiology</td><td>42%</td><td>82%</td><td>1,600</td><td class="src">MGMA 2024; CMS Utilization PUF</td></tr>
+              <tr><td>Endocrinology</td><td>38%</td><td>88%</td><td>1,400</td><td class="src">MGMA 2024; CMS Utilization PUF</td></tr>
+              <tr><td>Pulmonary Disease</td><td>40%</td><td>80%</td><td>1,500</td><td class="src">MGMA 2024; CMS Utilization PUF</td></tr>
+              <tr><td>Geriatric Medicine</td><td>68%</td><td>92%</td><td>1,600</td><td class="src">MGMA 2024; CMS Utilization PUF</td></tr>
+              <tr><td>Nephrology</td><td>52%</td><td>90%</td><td>1,400</td><td class="src">MGMA 2024; CMS Utilization PUF</td></tr>
+              <tr><td>Default (other)</td><td>27%</td><td>68%</td><td>2,000</td><td class="src">MGMA 2024 national median</td></tr>
+            </table>
+          </div>
+
+          <!-- 7. KEY ASSUMPTIONS -->
+          <div class="meth-section">
+            <div class="meth-section-title">7. Key Assumptions &amp; Limitations</div>
+            <div class="meth-text">
+              <strong>Assumption 1 — ACCESS Eligibility:</strong> 93% of chronic patients are assumed to meet ACCESS criteria. Standard exclusions include hospice enrollment, end-stage renal disease (ESRD), institutional SNF stays >100 days, and Medicare Advantage enrollment. This rate is derived from CMS-4205-F eligibility parameters applied to the Medicare FFS Chronic Conditions Dashboard.<br><br>
+              <strong>Assumption 2 — CMS Reimbursement Stability:</strong> All rates use CMS PFS Final Rule CY2025 values. Rates are subject to annual update via the CMS Physician Fee Schedule Final Rule and the Medicare conversion factor. Historical PFS changes have averaged ±2–3% annually over the past decade.<br><br>
+              <strong>Assumption 3 — Patient Attribution:</strong> ACCESS OAP eligibility assumes standard CMS voluntary alignment or claims-based attribution. Actual attributed beneficiary counts may differ based on patient choice, competing ACO assignments, and CMS reconciliation processes.<br><br>
+              <strong>Assumption 4 — Full-Year Enrollment:</strong> Revenue estimates assume 12 months of billing. For mid-year enrollment (e.g., Cohort 1 joining March 2026), first-year revenue should be prorated. This estimator shows annualized figures.<br><br>
+              <strong>Assumption 5 — No Double-Counting:</strong> ACCESS OAP payments and FFS care management codes (CCM, RPM, etc.) are independently billable. CMS has confirmed that ACCESS OAPs do not replace or offset FFS billing for separately billable services. Revenue from both streams is additive.<br><br>
+              <strong>Limitation 1 — CMS Data Lag:</strong> The most recent CMS PUF release is CY2023 (released 2025). Providers who have materially changed their billing patterns since CY2023 should use the slider overrides. CMS publishes PUF data on an approximately 18–24 month lag.<br><br>
+              <strong>Limitation 2 — Data Suppression:</strong> CMS suppresses service-level data for HCPCS codes billed to fewer than 11 beneficiaries (per 45 CFR §164.514(b)). Suppressed programs default to national average estimates and are user-adjustable.<br><br>
+              <strong>Limitation 3 — Quality Adjustments:</strong> ACCESS OAP payments may be subject to quality withhold and performance adjustment in later model years. This estimator does not apply a quality discount, which may reduce OAP payments by 0–10% depending on performance year and track.
+            </div>
+          </div>
+
+          <!-- 8. DATA SOURCES -->
+          <div class="meth-section">
+            <div class="meth-section-title">8. Data Sources</div>
+            <ol class="meth-cite">
+              <li>CMS Medicare Fee-for-Service Utilization PUF, CY2023. data.cms.gov. Dataset: 92396110-2aed-4d63-a6a2-5d6207d46a29.</li>
+              <li>CMS Medicare Physician &amp; Other Practitioners PUF (Aggregate), CY2023. data.cms.gov. Dataset: 8889d81e-2ee7-448f-8713-f071038289b5.</li>
+              <li>CMS NPPES NPI Registry, API v2.1. npiregistry.cms.hhs.gov.</li>
+              <li>CMS Physician Fee Schedule Final Rule, CY2025. Federal Register 89 FR 89524.</li>
+              <li>CMS ACCESS Model Notice of Proposed Rulemaking (CMS-4205-F). innovation.cms.gov.</li>
+              <li>MGMA DataDive Provider Compensation &amp; Production, 2024 Report.</li>
+              <li>AMGA (American Medical Group Association) Care Management Benchmarks, 2023–2024.</li>
+              <li>Health Affairs: "Annual Wellness Visit Utilization Among Medicare Beneficiaries" (2022). doi:10.1377/hlthaff.2022.00345.</li>
+              <li>AMA Digital Health Research: Physician Adoption of Remote Patient Monitoring, 2023.</li>
+              <li>Health Recovery Solutions / Optimize Health: RPM Compliance &amp; Outcomes Data, 2023–2024.</li>
+              <li>MedPAC Report to Congress: Medicare Payment Policy, Chapter 4: Physician Services, March 2024.</li>
+              <li>AIMS Center, University of Washington: Collaborative Care Model Implementation Data, 2023.</li>
+              <li>CMS Chronic Conditions Dashboard, data.cms.gov, accessed March 2026.</li>
+              <li>Phreesia: "The State of Chronic Care Management Adoption," Q3 2024 whitepaper.</li>
+            </ol>
+          </div>
+
+          <!-- 9. DISCLOSURES -->
+          <div class="meth-section">
+            <div class="meth-disclosure">
+              <strong>Important Disclosures</strong><br><br>
+              This estimator is provided for <strong>informational and educational purposes only</strong>. It does not constitute a guarantee of payment, a binding financial projection, or a commitment by CMS, InPursuit Health, or any other party. Revenue estimates are illustrative and based on publicly available data and published benchmarks at the time of development (March 2026).<br><br>
+              CMS ACCESS Model payment parameters are subject to change through the final rulemaking process and annual updates. Fee-for-service reimbursement rates are subject to the annual Medicare Physician Fee Schedule update and conversion factor adjustments. InPursuit Health makes no representation regarding the accuracy of CMS data, the stability of CMS payment rates, or the outcome of any specific provider's participation in the ACCESS Model or any other CMS program.<br><br>
+              A practice-specific financial projection using validated claims data, actual patient attribution, and confirmed CMS parameters will be prepared as part of the InPursuit discovery engagement. That validated projection — not this estimator — should be used for business planning and financial decision-making.<br><br>
+              InPursuit Health · Results Matter™ · Harness the Power of Your Data™
+            </div>
+          </div>
+
+        </div><!-- /meth-body -->
+      </div><!-- /meth -->
+
+    </div><!-- /offer-panel -->
+
+  </div><!-- /split-right -->
+
+</div><!-- /split -->
+
+<script>
+/* ═══════════════════════════════
+   COUNTDOWN
+═══════════════════════════════ */
+function updateClock(){const dl=new Date('2026-03-20T23:59:59'),diff=dl-new Date();if(diff<=0){document.getElementById('navCd').textContent='· CLOSED';return;}const d=Math.floor(diff/864e5),h=Math.floor((diff%864e5)/36e5),m=Math.floor((diff%36e5)/6e4),s=Math.floor((diff%6e4)/1e3);const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0')};set('cdD',d);set('cdH',h);set('cdM',m);set('cdS',s);const nc=document.getElementById('navCd');if(nc)nc.textContent='· '+d+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m';}
+updateClock();setInterval(updateClock,1000);
+
+/* ═══════════════════════════════
+   SPECIALTY BENCHMARKS
+═══════════════════════════════ */
+const SPECS={'Family Medicine':{medPct:28,chronPct:65,panel:2200},'Internal Medicine':{medPct:33,chronPct:72,panel:2000},'General Practice':{medPct:30,chronPct:65,panel:2100},'Pediatrics':{medPct:4,chronPct:22,panel:2500},'Cardiology':{medPct:42,chronPct:82,panel:1600},'Endocrinology, Diabetes & Metabolism':{medPct:38,chronPct:88,panel:1400},'Pulmonary Disease':{medPct:40,chronPct:80,panel:1500},'Geriatric Medicine':{medPct:68,chronPct:92,panel:1600},'Psychiatry & Neurology':{medPct:22,chronPct:52,panel:1400},'Orthopedic Surgery':{medPct:28,chronPct:42,panel:2000},'Gastroenterology':{medPct:32,chronPct:58,panel:1600},'Nephrology':{medPct:52,chronPct:90,panel:1400},'_default':{medPct:27,chronPct:68,panel:2000}};
+function getSpec(s){for(const k in SPECS){if(k!=='_default'&&s.toLowerCase().indexOf(k.toLowerCase())!==-1)return SPECS[k];}return SPECS['_default'];}
+
+/* ═══════════════════════════════
+   RATES (CMS 2025 PFS)
+═══════════════════════════════ */
+const R={accessPMPM:35,accessEligPct:0.93,awvRate:150,curAWVpct:0.28,optAWVpct:0.52,ccmRate:62,curCCMpct:0.05,optCCMpct:0.18,rpmMonthly:84,curRPMpct:0.02,optRPMpct:0.12,tcmRate:195,curTCMpct:0.015,optTCMpct:0.04,bhiRate:52,curBHIpct:0.01,optBHIpct:0.08};
+
+/* ═══════════════════════════════
+   STATE
+═══════════════════════════════ */
+let state={npi:'',name:'',specialty:'',location:'',isOrg:false,medicarePts:600,chronPct:68,tier:{pct:65,name:'Full Service'},cms:null};
+
+/* ═══════════════════════════════
+   CMS PUF API
+═══════════════════════════════ */
+const CMS_SVC='92396110-2aed-4d63-a6a2-5d6207d46a29',CMS_AGG='8889d81e-2ee7-448f-8713-f071038289b5',CMS_BASE='https://data.cms.gov/data-api/v1/dataset/';
+const HCPCS_MAP={awv:['G0438','G0439'],ccm:['99490','99491'],rpm:['99453','99454','99457','99458'],tcm:['99495','99496'],bhi:['99484','99492','99493']};
+
+async function fetchCMSData(npi){
+  const px='https://corsproxy.io/?';
+  try{
+    const sU=CMS_BASE+CMS_SVC+'/data?filter[Rndrng_NPI]='+npi+'&size=200';
+    const aU=CMS_BASE+CMS_AGG+'/data?filter[Rndrng_NPI]='+npi+'&size=5';
+    const[sR,aR]=await Promise.allSettled([fetch(px+encodeURIComponent(sU)).catch(()=>fetch(sU)).then(r=>r.ok?r.json():null),fetch(px+encodeURIComponent(aU)).catch(()=>fetch(aU)).then(r=>r.ok?r.json():null)]);
+    const sD=sR.status==='fulfilled'?sR.value:null,aD=aR.status==='fulfilled'?aR.value:null;
+    if((!sD||!sD.length)&&(!aD||!aD.length))return null;
+    let totalBenes=null,totalPymt=null,riskScore=null;
+    if(aD&&aD.length){const a=aD[0];totalBenes=parseInt(a.Tot_Benes)||null;totalPymt=parseFloat(a.Tot_Mdcr_Pymt_Amt)||null;riskScore=parseFloat(a.Bene_Avg_Risk_Scre)||null;}
+    const progs={awv:[],ccm:[],rpm:[],tcm:[],bhi:[]};
+    if(sD&&sD.length){for(const row of sD){const code=(row.HCPCS_Cd||row.Hcpcs_Cd||'').trim();for(const[prog,codes]of Object.entries(HCPCS_MAP)){if(codes.includes(code))progs[prog].push({benes:parseInt(row.Tot_Benes)||0,srvcs:parseFloat(row.Tot_Srvcs)||0,pymtTotal:parseFloat(row.Tot_Mdcr_Pymt_Amt)||0});}}}
+    const sum=a=>{if(!a.length)return{found:false,benes:0,totalPymt:0};let p=0,s=0,b=0;for(const r of a){p+=r.pymtTotal;s+=r.srvcs;b=Math.max(b,r.benes);}return{found:true,benes:b,totalPymt:p};};
+    return{dataYear:'2023',totalBenes,totalPymt,riskScore,awv:sum(progs.awv),ccm:sum(progs.ccm),rpm:sum(progs.rpm),tcm:sum(progs.tcm),bhi:sum(progs.bhi)};
+  }catch(e){console.warn('CMS fetch fail:',e);return null;}
+}
+
+/* ═══════════════════════════════
+   SLIDER HELPERS
+═══════════════════════════════ */
+function setFill(el){const mn=parseFloat(el.min),mx=parseFloat(el.max),v=parseFloat(el.value);el.style.setProperty('--fill',((v-mn)/(mx-mn))*100+'%');}
+function onMedSlider(el){setFill(el);state.medicarePts=parseInt(el.value);document.getElementById('medVal').textContent=state.medicarePts.toLocaleString();recalc();}
+function onChronSlider(el){setFill(el);state.chronPct=parseInt(el.value);document.getElementById('chronVal').textContent=state.chronPct+'%';recalc();}
+function onBillingSlider(el,prog){setFill(el);const v=parseFloat(el.value);document.getElementById(prog+'Val').textContent=(Number.isInteger(v)?v:v.toFixed(1))+'%';recalc();}
+
+// Init all slider fills
+document.querySelectorAll('input[type=range]').forEach(setFill);
+
+/* ═══════════════════════════════
+   NPI LOOKUP
+═══════════════════════════════ */
+function runLookup(){
+  const npi=document.getElementById('npiInput').value.replace(/\D/g,'');
+  const status=document.getElementById('npiStatus'),btn=document.getElementById('npiBtn');
+  if(npi.length!==10){status.textContent='Please enter a valid 10-digit NPI.';status.className='npi-status error';return;}
+  btn.disabled=true;btn.textContent='Looking up...';status.textContent='Checking CMS registries...';status.className='npi-status loading';
+
+  const nppesFetch=fetch('https://corsproxy.io/?'+encodeURIComponent('https://npiregistry.cms.hhs.gov/api/?version=2.1&number='+npi)).catch(()=>fetch('https://npiregistry.cms.hhs.gov/api/?version=2.1&number='+npi)).then(r=>r.json());
+  const cmsFetch=fetchCMSData(npi);
+
+  Promise.all([nppesFetch,cmsFetch]).then(([data,cmsData])=>{
+    btn.disabled=false;btn.textContent='Look Up';
+    if(!data.results||!data.results.length){status.textContent='No provider found.';status.className='npi-status error';return;}
+    const p=data.results[0],b=p.basic||{};
+    const isOrg=p.enumeration_type==='NPI-2';
+    const name=isOrg?(b.organization_name||'Organization'):((b.first_name||'')+' '+(b.last_name||'')).trim()+(b.credential?', '+b.credential:'');
+    const addr=(p.addresses&&p.addresses[0])||{};
+    const loc=(addr.city||'')+(addr.state?', '+addr.state:'');
+    const tax=(p.taxonomies&&p.taxonomies[0])||{};
+    const spec=tax.desc||'General Practice';
+    const specData=getSpec(spec);
+
+    state.npi=npi;state.name=name;state.specialty=spec;state.location=loc;state.isOrg=isOrg;state.cms=cmsData;
+    state.chronPct=specData.chronPct;
+
+    // Panel from CMS or estimate
+    if(cmsData&&cmsData.totalBenes){state.medicarePts=Math.min(cmsData.totalBenes,5000);}
+    else{const bp=isOrg?Math.min(specData.panel*4,6000):specData.panel;state.medicarePts=Math.min(Math.max(Math.round(bp*(specData.medPct/100)),50),5000);}
+
+    // Update panel sliders
+    document.getElementById('medSlider').value=state.medicarePts;setFill(document.getElementById('medSlider'));document.getElementById('medVal').textContent=state.medicarePts.toLocaleString();
+    document.getElementById('chronSlider').value=state.chronPct;setFill(document.getElementById('chronSlider'));document.getElementById('chronVal').textContent=state.chronPct+'%';
+
+    // Update billing sliders if CMS data found
+    const progs=['awv','ccm','rpm','tcm','bhi'];
+    for(const pg of progs){
+      const slider=document.getElementById(pg+'Slider');
+      const note=document.getElementById(pg+'Note');
+      if(cmsData&&cmsData[pg]&&cmsData[pg].found){
+        slider.disabled=true;slider.style.opacity='.4';
+        note.innerHTML='<span class="cms-dot"></span> CMS claims data found — $'+Math.round(cmsData[pg].totalPymt).toLocaleString()+' (CY'+cmsData.dataYear+')';
+      }else{
+        slider.disabled=false;slider.style.opacity='1';
+        note.textContent='';
+      }
+    }
+
+    // Show provider badge
+    const badge=document.getElementById('providerBadge');badge.classList.add('visible');
+    document.getElementById('pbName').textContent=name;
+    document.getElementById('pbDetail').textContent=spec+' · '+loc+' · NPI '+npi;
+    const cmsEl=document.getElementById('pbCms');
+    if(cmsData){const ct=progs.filter(p=>cmsData[p]&&cmsData[p].found).length;cmsEl.className='pb-cms found';cmsEl.textContent='CMS billing data found (CY'+cmsData.dataYear+') · '+ct+'/5 programs';}
+    else{cmsEl.className='pb-cms missing';cmsEl.textContent='CMS data unavailable — using your slider inputs';}
+
+    // Enable envelope
+    document.getElementById('envelopeScene').classList.remove('waiting');
+    document.getElementById('letterHeading').innerHTML='Your ACCESS Model<br>Revenue Offer';
+    document.getElementById('letterSubtext').textContent='Prepared for '+name.split(',')[0]+' · '+spec;
+
+    status.textContent='';status.className='npi-status';
+    recalc();
+  }).catch(()=>{btn.disabled=false;btn.textContent='Look Up';status.textContent='Unable to reach CMS.';status.className='npi-status error';});
+}
+
+/* ═══════════════════════════════
+   ENVELOPE
+═══════════════════════════════ */
+function openEnvelope(){
+  const scene=document.getElementById('envelopeScene');
+  scene.classList.add('opened');
+  recalc();
+  setTimeout(()=>{document.getElementById('offerPanel').classList.add('visible');},900);
+}
+
+/* ═══════════════════════════════
+   CALCULATE
+═══════════════════════════════ */
+function fmt(n){return '$'+Math.round(n).toLocaleString();}
+
+function recalc(){
+  const med=state.medicarePts,chron=state.chronPct/100,chronPts=Math.round(med*chron);
+  const accessElig=Math.round(chronPts*R.accessEligPct),tierPct=state.tier.pct/100;
+  const cms=state.cms;
+
+  // Current — CMS real data or slider values
+  const curAWV=cms&&cms.awv&&cms.awv.found?Math.round(cms.awv.totalPymt):Math.round(med*(parseFloat(document.getElementById('awvSlider').value)/100)*R.awvRate);
+  const curCCM=cms&&cms.ccm&&cms.ccm.found?Math.round(cms.ccm.totalPymt):Math.round(chronPts*(parseFloat(document.getElementById('ccmSlider').value)/100)*R.ccmRate*12);
+  const curRPM=cms&&cms.rpm&&cms.rpm.found?Math.round(cms.rpm.totalPymt):Math.round(chronPts*(parseFloat(document.getElementById('rpmSlider').value)/100)*R.rpmMonthly*12);
+  const curTCM=cms&&cms.tcm&&cms.tcm.found?Math.round(cms.tcm.totalPymt):Math.round(med*(parseFloat(document.getElementById('tcmSlider').value)/100)*R.tcmRate);
+  const curBHI=cms&&cms.bhi&&cms.bhi.found?Math.round(cms.bhi.totalPymt):Math.round(med*(parseFloat(document.getElementById('bhiSlider').value)/100)*R.bhiRate*12);
+  const curTotal=curAWV+curCCM+curRPM+curTCM+curBHI;
+
+  // Optimized
+  const optAccess=Math.round(accessElig*R.accessPMPM*12*tierPct);
+  const optAWV=Math.round(med*R.optAWVpct*R.awvRate);
+  const optCCM=Math.round(chronPts*R.optCCMpct*R.ccmRate*12);
+  const optRPM=Math.round(chronPts*R.optRPMpct*R.rpmMonthly*12);
+  const optTCM=Math.round(med*R.optTCMpct*R.tcmRate);
+  const optBHI=Math.round(med*R.optBHIpct*R.bhiRate*12);
+  const optTotal=optAccess+optAWV+optCCM+optRPM+optTCM+optBHI;
+  const gap=optTotal-curTotal;
+
+  // Render current
+  document.getElementById('curTotal').textContent=fmt(curTotal);
+  document.getElementById('rCurAWV').textContent=fmt(curAWV);
+  document.getElementById('rCurCCM').textContent=fmt(curCCM);
+  document.getElementById('rCurRPM').textContent=fmt(curRPM);
+  document.getElementById('rCurTCM').textContent=fmt(curTCM);
+  document.getElementById('rCurBHI').textContent=fmt(curBHI);
+
+  if(cms){const ct=['awv','ccm','rpm','tcm','bhi'].filter(p=>cms[p]&&cms[p].found).length;document.getElementById('curLabel').textContent='Your CMS Billing (CY'+cms.dataYear+') + Estimates';document.getElementById('curDetail').textContent=ct+'/5 programs from actual Medicare claims';}
+  else{document.getElementById('curLabel').textContent='Your Estimated Current Capture';document.getElementById('curDetail').textContent='Based on your slider inputs';}
+
+  // Render optimized
+  document.getElementById('optTotal').textContent=fmt(optTotal);
+  document.getElementById('rOptAccess').textContent=fmt(optAccess);
+  document.getElementById('rOptAWV').textContent=fmt(optAWV);
+  document.getElementById('rOptCCM').textContent=fmt(optCCM);
+  document.getElementById('rOptRPM').textContent=fmt(optRPM);
+  document.getElementById('rOptTCM').textContent=fmt(optTCM);
+  document.getElementById('rOptBHI').textContent=fmt(optBHI);
+  document.getElementById('tierPctInline').textContent=state.tier.pct;
+
+  // Gap
+  document.getElementById('gapAmount').textContent='+'+fmt(gap);
+  document.getElementById('offerProviderLine').textContent=state.name?(state.name+' · '+state.specialty+' · '+state.location):'Enter your NPI to see your personalized projection';
+
+  // VBC story blocks
+  const optFFS=optAWV+optCCM+optRPM+optTCM+optBHI;
+  document.getElementById('vbcAccess').textContent=fmt(optAccess);
+  document.getElementById('vbcFFS').textContent=fmt(optFFS);
+  document.getElementById('vbcTierPct').textContent=state.tier.pct;
+}
+
+/* ═══════════════════════════════
+   TIER
+═══════════════════════════════ */
+function selectTier(t,el){
+  document.querySelectorAll('.tier-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const tiers={1:{pct:65,name:'Full Service'},2:{pct:70,name:'Supported'},3:{pct:75,name:'Infrastructure Only'}};
+  state.tier=tiers[t];
+  recalc();
+}
+
+/* ═══════════════════════════════
+   METHODOLOGY TOGGLE
+═══════════════════════════════ */
+function toggleStep(id){document.getElementById(id).classList.toggle('expanded');}
+function toggleMeth(){document.getElementById('methToggle').classList.toggle('open');}
+function openMeth(){const t=document.getElementById('methToggle');if(!t.classList.contains('open'))t.classList.add('open');document.getElementById('methodology').scrollIntoView({behavior:'smooth',block:'start'});}
+
+// Initial calculation
+recalc();
+</script>
 </body>
 </html>

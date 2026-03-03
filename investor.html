@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InPursuit Health — Investor Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --navy:#0A1628;--navy-mid:#111D32;--navy-light:#1A2A44;--navy-soft:#1E3050;
+    --gold:#C5A55A;--gold-light:#D4BA7A;--gold-dim:rgba(197,165,90,.12);
+    --cream:#F8F6F1;--warm:#FDFCFA;
+    --text:#1A1A1A;--text-mid:#3D3D3D;--text-muted:#999;
+    --danger:#C0392B;--success:#27AE60;--accent:#3A7CA5;
+    --r:8px;--rl:14px;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Instrument Sans',system-ui,sans-serif;background:var(--warm);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.55}
+  .serif{font-family:'Instrument Serif',Georgia,serif}
+  .container{max-width:1120px;margin:0 auto;padding:0 20px}
+  @media(min-width:768px){.container{padding:0 48px}}
+  .label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+  .divider{height:1px;background:linear-gradient(90deg,var(--gold),transparent 80%);margin:32px 0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border:none;border-radius:var(--r);font-family:inherit;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .25s}
+  .btn-gold{background:var(--gold);color:var(--navy)}
+  .btn-gold:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(197,165,90,.3)}
+  .btn-outline{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
+  .btn-outline:hover{background:var(--gold-dim)}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-navy:hover{background:var(--navy-light)}
+  .btn-sm{padding:8px 16px;font-size:10px}
+  .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+  .fade-in{animation:fadeUp .55s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}
+
+  /* ═══════════════════════════════════════════════════════
+     GATE SCREEN
+     ═══════════════════════════════════════════════════════ */
+  #gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);position:relative;overflow:hidden}
+  #gate::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(197,165,90,.06) 0%,transparent 60%);pointer-events:none}
+  .gate-card{position:relative;width:100%;max-width:520px;margin:24px;background:var(--navy-mid);border:1px solid rgba(197,165,90,.15);border-radius:var(--rl);overflow:hidden}
+  .gate-header{padding:36px 36px 28px;border-bottom:1px solid rgba(197,165,90,.12)}
+  .gate-header .label{margin-bottom:10px;display:block}
+  .gate-header h1{font-family:'Instrument Serif',serif;font-size:26px;color:#fff;font-weight:400;letter-spacing:-.3px;line-height:1.3}
+  .gate-header p{font-size:12px;color:rgba(255,255,255,.4);margin-top:10px;line-height:1.6}
+  .gate-body{padding:32px 36px}
+  @media(max-width:480px){.gate-header,.gate-body{padding-left:24px;padding-right:24px}}
+  .gate-step{display:none}.gate-step.active{display:block}
+  .field-label{display:block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px}
+  .field-input{width:100%;padding:12px 16px;background:var(--navy);border:1px solid rgba(197,165,90,.2);border-radius:var(--r);color:#fff;font-family:inherit;font-size:14px;transition:border .2s}
+  .field-input:focus{outline:none;border-color:var(--gold)}
+  .field-input::placeholder{color:rgba(255,255,255,.25)}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:480px){.field-row{grid-template-columns:1fr}}
+  .field-group{margin-bottom:20px}
+  .captcha-box{display:flex;align-items:center;gap:16px;padding:16px;background:var(--navy);border:1px solid rgba(197,165,90,.15);border-radius:var(--r);margin-bottom:20px}
+  .captcha-q{font-family:'Instrument Serif',serif;font-size:18px;color:var(--gold);white-space:nowrap}
+  .captcha-input{flex:1;padding:10px 14px;background:var(--navy-light);border:1px solid rgba(197,165,90,.2);border-radius:var(--r);color:#fff;font-family:inherit;font-size:16px;text-align:center;max-width:100px}
+  .captcha-input:focus{outline:none;border-color:var(--gold)}
+  .checkbox-group{margin-bottom:14px;display:flex;gap:10px;align-items:flex-start}
+  .checkbox-group input[type=checkbox]{appearance:none;width:18px;height:18px;min-width:18px;border:1.5px solid rgba(197,165,90,.3);border-radius:4px;background:var(--navy);cursor:pointer;position:relative;margin-top:1px;transition:all .2s}
+  .checkbox-group input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold)}
+  .checkbox-group input[type=checkbox]:checked::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:12px;color:var(--navy);font-weight:700}
+  .checkbox-group label{font-size:11.5px;color:rgba(255,255,255,.55);line-height:1.55;cursor:pointer}
+  .gate-error{color:var(--danger);font-size:11px;margin-top:8px;display:none}
+  .gate-error.show{display:block}
+  .step-dots{display:flex;gap:6px;align-items:center;justify-content:center;padding:20px 0 0}
+  .step-dot{width:6px;height:6px;border-radius:50%;background:rgba(197,165,90,.2);transition:all .3s}
+  .step-dot.active{background:var(--gold);width:20px;border-radius:3px}
+  .gate-footer{padding:0 36px 32px;display:flex;justify-content:flex-end}
+  @media(max-width:480px){.gate-footer{padding:0 24px 24px}}
+
+  /* ═══════════════════════════════════════════════════════
+     PORTAL
+     ═══════════════════════════════════════════════════════ */
+  #portal{display:none}
+
+  /* Top Nav */
+  .portal-nav{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:1px solid rgba(197,165,90,.12)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0}
+  .nav-brand{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);padding:14px 0;flex-shrink:0}
+  .nav-links{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .nav-link{padding:14px 16px;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;border-bottom:2px solid transparent;transition:all .2s;cursor:pointer;white-space:nowrap}
+  .nav-link:hover,.nav-link.active{color:#fff;border-bottom-color:var(--gold)}
+  @media(max-width:768px){.nav-link{padding:12px 10px;font-size:8px;letter-spacing:1px}}
+  .nav-user{font-size:10px;color:rgba(255,255,255,.3);flex-shrink:0;display:none}
+  @media(min-width:900px){.nav-user{display:block}}
+
+  /* Portal sections */
+  .portal-section{display:none;min-height:60vh}
+  .portal-section.active{display:block}
+
+  /* ═══════════════════════════════════════════════════════
+     DATA ROOM (nested inside portal)
+     ═══════════════════════════════════════════════════════ */
+  .room-layout{display:grid;grid-template-columns:240px 1fr;gap:0;min-height:calc(100vh - 120px)}
+  @media(max-width:900px){.room-layout{grid-template-columns:1fr}}
+  .sidebar{background:var(--navy-mid);padding:28px 20px;border-right:1px solid rgba(197,165,90,.06)}
+  @media(max-width:900px){.sidebar{padding:12px 16px;border-right:none;border-bottom:1px solid rgba(197,165,90,.08);display:flex;overflow-x:auto;gap:4px}}
+  .sidebar-label{font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.18);margin-bottom:14px;padding-left:12px}
+  @media(max-width:900px){.sidebar-label{display:none}}
+  .sb-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);cursor:pointer;transition:all .2s;margin-bottom:2px;border-left:2px solid transparent}
+  .sb-item:hover{background:rgba(197,165,90,.06)}
+  .sb-item.active{background:rgba(197,165,90,.1);border-left-color:var(--gold)}
+  @media(max-width:900px){.sb-item{flex-shrink:0;margin:0;padding:8px 14px;border-left:none;border-bottom:2px solid transparent}.sb-item.active{border-bottom-color:var(--gold);border-left:none}}
+  .sb-icon{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .sb-icon.g{background:rgba(197,165,90,.15)}.sb-icon.b{background:rgba(58,124,165,.15)}.sb-icon.gr{background:rgba(39,174,96,.15)}
+  .sb-text{flex:1;min-width:0}
+  .sb-title{font-size:11px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sb-sub{font-size:9px;color:rgba(255,255,255,.25);margin-top:1px}
+  @media(max-width:900px){.sb-sub{display:none}}
+  .sb-count{font-size:8px;font-weight:700;color:var(--gold);background:rgba(197,165,90,.12);padding:2px 7px;border-radius:10px}
+  @media(max-width:900px){.sb-count{display:none}}
+
+  .main{padding:32px 36px 56px;background:var(--warm)}
+  @media(max-width:900px){.main{padding:20px 16px 40px}}
+  @media(min-width:1200px){.main{padding:36px 48px 60px}}
+  .doc-panel{display:none}.doc-panel.active{display:block}
+
+  /* Doc header */
+  .doc-header{margin-bottom:28px}
+  .doc-header h2{font-family:'Instrument Serif',serif;font-size:clamp(20px,3vw,28px);color:var(--navy);font-weight:400;letter-spacing:-.3px;margin-bottom:8px}
+  .doc-header p{font-size:12px;color:var(--text-muted);line-height:1.6;max-width:560px}
+  .doc-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:10px;color:var(--text-muted)}
+  .doc-meta span{display:flex;align-items:center;gap:5px}
+  .doc-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--gold)}
+
+  /* Document file card (downloadable) */
+  .file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:28px}
+  .file-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:var(--rl);padding:20px;display:flex;gap:14px;align-items:flex-start;transition:all .2s;cursor:pointer;position:relative;overflow:hidden}
+  .file-card:hover{border-color:rgba(197,165,90,.25);box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-2px)}
+  .file-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);opacity:0;transition:opacity .2s}
+  .file-card:hover::after{opacity:1}
+  .file-icon{width:44px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;position:relative}
+  .file-icon.pdf{background:#FEE2E2;color:#DC2626;border:1px solid #FECACA}
+  .file-icon.docx{background:#DBEAFE;color:#2563EB;border:1px solid #BFDBFE}
+  .file-icon.xlsx{background:#D1FAE5;color:#059669;border:1px solid #A7F3D0}
+  .file-icon.pptx{background:#FEF3C7;color:#D97706;border:1px solid #FDE68A}
+  .file-info{flex:1;min-width:0}
+  .file-name{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:3px;line-height:1.3}
+  .file-desc{font-size:10px;color:var(--text-muted);line-height:1.5;margin-bottom:6px}
+  .file-meta-row{display:flex;gap:12px;font-size:9px;color:var(--text-muted)}
+  .file-dl{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+  .file-card:hover .file-dl{opacity:1}
+  .file-dl svg{width:14px;height:14px;stroke:var(--navy);fill:none;stroke-width:2}
+
+  /* Content card */
+  .doc-card{background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:var(--rl);overflow:hidden;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+  .doc-card-header{padding:22px 24px 18px;border-bottom:1px solid rgba(0,0,0,.04);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  @media(max-width:480px){.doc-card-header{padding:16px 16px 12px}}
+  .doc-card-title{font-family:'Instrument Serif',serif;font-size:16px;color:var(--navy)}
+  .badge{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;white-space:nowrap}
+  .badge-safe{background:var(--gold-dim);color:var(--gold)}
+  .badge-series{background:rgba(58,124,165,.1);color:var(--accent)}
+  .badge-revenue{background:rgba(39,174,96,.1);color:var(--success)}
+  .doc-card-body{padding:24px}
+  @media(max-width:480px){.doc-card-body{padding:16px}}
+
+  /* Reusable layout bits */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  @media(max-width:640px){.two-col{grid-template-columns:1fr;gap:20px}}
+  .terms{margin-bottom:20px}
+  .t-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.04);gap:12px}
+  .t-k{font-size:11px;color:var(--text-muted);font-weight:500;flex-shrink:0}
+  .t-v{font-family:'Instrument Serif',serif;font-size:14px;color:var(--navy);text-align:right}
+  .t-v.gold{color:var(--gold);font-size:16px}
+  .t-v-sm{font-size:11px;color:var(--text-mid);text-align:right;max-width:220px}
+  .doc-section{margin-bottom:24px}
+  .doc-section h4{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .doc-section p{font-size:12px;color:var(--text-mid);line-height:1.7;margin-bottom:8px}
+  .callout{background:var(--navy);border-left:2px solid var(--gold);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;margin:16px 0}
+  .callout p{font-family:'Instrument Serif',serif;font-size:13px;color:#fff;line-height:1.55;margin-bottom:8px}
+  .callout .hl{font-family:'Instrument Sans',sans-serif;font-size:10px;color:var(--gold-light);font-weight:600;margin-bottom:0}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:20px 0}
+  @media(max-width:640px){.pillars{grid-template-columns:1fr;gap:18px}}
+  .pillar{padding:0 22px;border-left:2px solid var(--gold)}
+  @media(max-width:640px){.pillar{padding:0 0 0 16px}}
+  .pillar:first-child{padding-left:0;border-left:none}
+  @media(max-width:640px){.pillar:first-child{padding-left:16px;border-left:2px solid var(--gold)}}
+  .p-num{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .p-title{font-family:'Instrument Serif',serif;font-size:14px;color:var(--navy);margin-bottom:4px;line-height:1.3}
+  .p-time{font-size:9px;color:var(--text-muted);margin-bottom:8px;font-weight:500}
+  .p-text{font-size:11px;color:var(--text-mid);line-height:1.6;margin-bottom:8px}
+  .p-val{font-size:11px;color:var(--gold);font-weight:600}
+  .scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+  @media(max-width:640px){.scenario-grid{grid-template-columns:1fr}}
+  .sc{padding:18px;border-radius:var(--r);border:1px solid rgba(0,0,0,.06);background:#fff;text-align:center}
+  .sc.f{border-color:var(--gold);background:var(--gold-dim)}
+  .sc-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+  .sc.f .sc-label{color:var(--gold)}
+  .sc-amt{font-family:'Instrument Serif',serif;font-size:26px;color:var(--navy);margin-bottom:2px}
+  .sc-sub{font-size:11px;color:var(--text-muted)}
+  .sc-note{font-size:10px;color:var(--text-muted);margin-top:6px}
+
+  /* Tables */
+  .table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid rgba(0,0,0,.05)}
+  .data-table{width:100%;border-collapse:collapse;min-width:500px}
+  .data-table th{padding:10px 12px;text-align:left;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:var(--navy);white-space:nowrap}
+  .data-table th:not(:first-child){text-align:right}
+  .data-table td{padding:9px 12px;font-size:11px;color:var(--text-mid);border-bottom:1px solid var(--cream)}
+  .data-table td:not(:first-child){text-align:right;font-family:'Instrument Serif',serif;font-size:13px}
+  .data-table tr:nth-child(even) td{background:var(--cream)}
+  .data-table td:first-child{font-weight:600;color:var(--navy);white-space:nowrap;text-align:left}
+  .data-table tfoot td{font-weight:700;color:var(--navy);border-top:2px solid var(--gold);background:var(--gold-dim)!important}
+  .data-table tfoot td:not(:first-child){font-size:15px;color:var(--gold)}
+  .data-table tr.hl td{background:var(--gold-dim)!important;color:var(--navy);font-weight:700}
+
+  /* Milestones */
+  .ms-track{position:relative;padding-left:28px;margin:16px 0}
+  .ms-track::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:1.5px;background:rgba(197,165,90,.2)}
+  .ms{position:relative;padding-bottom:18px}
+  .ms:last-child{padding-bottom:0}
+  .ms::before{content:'';position:absolute;left:-22px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--gold-dim);border:2px solid var(--gold)}
+  .ms.done::before{background:var(--gold)}
+  .ms-t{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:2px}
+  .ms-s{font-size:10px;color:var(--text-muted);line-height:1.5}
+  .ms-v{font-family:'Instrument Serif',serif;font-size:14px;color:var(--gold);margin-top:2px}
+
+  /* Upload zone (admin) */
+  .upload-zone{border:2px dashed rgba(197,165,90,.2);border-radius:var(--rl);padding:32px;text-align:center;margin:20px 0;background:var(--cream);transition:all .2s;cursor:pointer}
+  .upload-zone:hover{border-color:var(--gold);background:var(--gold-dim)}
+  .upload-zone input[type=file]{display:none}
+  .upload-icon{font-size:28px;margin-bottom:8px}
+  .upload-text{font-size:12px;color:var(--text-muted);line-height:1.6}
+  .upload-text strong{color:var(--gold)}
+
+  /* Implementation banner */
+  .impl-banner{background:var(--navy);border-left:3px solid var(--gold);border-radius:0 var(--rl) var(--rl) 0;padding:24px 28px;margin:28px 0}
+  .impl-banner h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .impl-banner p{font-size:12px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:8px}
+  .impl-banner ul{padding-left:18px;margin-top:8px}
+  .impl-banner li{font-size:11px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:4px}
+  .impl-banner li strong{color:rgba(255,255,255,.8)}
+  .impl-banner code{background:rgba(197,165,90,.15);color:var(--gold-light);padding:2px 6px;border-radius:3px;font-size:10px}
+
+  /* Footer */
+  .footer{background:var(--navy);padding:16px 0}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+  .footer-l{font-size:8px;color:rgba(255,255,255,.25)}
+  .footer-r{font-size:8px;color:var(--gold);font-weight:600;letter-spacing:2px;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     GATE SCREEN
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="gate">
+  <div class="gate-card fade-in">
+    <div class="gate-header">
+      <span class="label">InPursuit Health — Investor Portal</span>
+      <h1 class="serif">Accredited Investor Access</h1>
+      <p>This portal contains confidential investment materials. Access is restricted to verified accredited investors under SEC Regulation D.</p>
+    </div>
+    <div class="gate-body">
+      <!-- Step 1: Identity + CAPTCHA -->
+      <div class="gate-step active" id="gs1">
+        <div class="field-row">
+          <div class="field-group"><label class="field-label">First Name</label><input type="text" class="field-input" id="fname" placeholder="First name" autocomplete="given-name"></div>
+          <div class="field-group"><label class="field-label">Last Name</label><input type="text" class="field-input" id="lname" placeholder="Last name" autocomplete="family-name"></div>
+        </div>
+        <div class="field-group"><label class="field-label">Email</label><input type="email" class="field-input" id="email" placeholder="you@company.com" autocomplete="email"></div>
+        <div class="field-group">
+          <label class="field-label">Human Verification</label>
+          <div class="captcha-box"><span class="captcha-q" id="cq"></span><span style="color:rgba(255,255,255,.2)">=</span><input type="text" class="captcha-input" id="ca" placeholder="?" inputmode="numeric"></div>
+        </div>
+        <div class="gate-error" id="err1">Please complete all fields and answer correctly.</div>
+      </div>
+      <!-- Step 2: Accredited Investor -->
+      <div class="gate-step" id="gs2">
+        <p style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:18px;line-height:1.6">Under SEC Rule 501 of Regulation D, I certify that I qualify as an accredited investor based on <strong style="color:rgba(255,255,255,.8)">one or more</strong> of the following:</p>
+        <div class="checkbox-group"><input type="checkbox" id="ai1"><label for="ai1">Individual net worth exceeding <strong style="color:#fff">$1,000,000</strong> (excluding primary residence), individually or with spouse.</label></div>
+        <div class="checkbox-group"><input type="checkbox" id="ai2"><label for="ai2">Individual income exceeding <strong style="color:#fff">$200,000</strong> (or $300,000 jointly) in each of the two most recent years with expectation of same.</label></div>
+        <div class="checkbox-group"><input type="checkbox" id="ai3"><label for="ai3">I hold a Series 7, 65, or 82 license in good standing.</label></div>
+        <div class="checkbox-group"><input type="checkbox" id="ai4"><label for="ai4">I represent an entity with assets exceeding <strong style="color:#fff">$5,000,000</strong>.</label></div>
+        <div style="margin-top:18px;padding:14px;background:var(--navy);border-radius:var(--r);border:1px solid rgba(197,165,90,.1)">
+          <div class="checkbox-group" style="margin:0"><input type="checkbox" id="ai-attest"><label for="ai-attest" style="color:var(--gold-light);font-weight:600">I attest under penalty of law that the above is true and accurate, and understand InPursuit Health is relying upon this certification.</label></div>
+        </div>
+        <div class="gate-error" id="err2">Please select at least one qualification and complete the attestation.</div>
+      </div>
+    </div>
+    <div class="step-dots"><div class="step-dot active" id="sd1"></div><div class="step-dot" id="sd2"></div></div>
+    <div class="gate-footer" style="padding-top:14px"><button class="btn btn-gold" id="gate-btn" onclick="gateNext()">Continue →</button></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     PORTAL (after gate)
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="portal">
+  <!-- Top Nav -->
+  <nav class="portal-nav">
+    <div class="container">
+      <div class="nav-inner">
+        <div class="nav-brand">InPursuit Health</div>
+        <div class="nav-links">
+          <a class="nav-link active" onclick="showSection('dataroom',this)">Data Room</a>
+          <a class="nav-link" onclick="showSection('market',this)">Market Analysis</a>
+          <a class="nav-link" onclick="showSection('execute',this)">Execute SAFE</a>
+        </div>
+        <div class="nav-user" id="nav-user"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION: DATA ROOM
+       ═══════════════════════════════════════════════════ -->
+  <div class="portal-section active" id="sec-dataroom">
+    <div class="room-layout">
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-label">Documents</div>
+        <div class="sb-item active" onclick="showDoc('safe-op',this)"><div class="sb-icon g">📄</div><div class="sb-text"><div class="sb-title">SAFE One-Pager</div><div class="sb-sub">Terms & thesis</div></div></div>
+        <div class="sb-item" onclick="showDoc('safe-exec',this)"><div class="sb-icon g">📋</div><div class="sb-text"><div class="sb-title">SAFE Exec Summary</div><div class="sb-sub">Full overview</div></div></div>
+        <div class="sb-item" onclick="showDoc('series-a',this)"><div class="sb-icon b">📊</div><div class="sb-text"><div class="sb-title">Series A Docs</div><div class="sb-sub">Bridge strategy</div></div><div class="sb-count">4</div></div>
+        <div class="sb-item" onclick="showDoc('revenue',this)"><div class="sb-icon gr">💰</div><div class="sb-text"><div class="sb-title">Revenue Projections</div><div class="sb-sub">Honeycomb · CMS · ACCESS</div></div></div>
+      </div>
+
+      <!-- Main -->
+      <div class="main">
+
+        <!-- ── SAFE ONE-PAGER ── -->
+        <div class="doc-panel active" id="doc-safe-op">
+          <div class="doc-header fade-in">
+            <span class="label">Collection 01</span>
+            <h2>SAFE Investment One-Pager</h2>
+            <p>Investment thesis, terms, and return scenarios. Download the PDF or review inline below.</p>
+            <div class="doc-meta"><span><span class="dot"></span>Post-Money SAFE</span><span><span class="dot"></span>$21M Cap</span><span><span class="dot"></span>February 2026</span></div>
+          </div>
+
+          <!-- DOWNLOADABLE FILES -->
+          <div class="file-grid fade-in d1">
+            <div class="file-card" onclick="handleDownload('InPursuit_SAFE_OnePager.pdf')">
+              <div class="file-icon pdf">PDF</div>
+              <div class="file-info">
+                <div class="file-name">InPursuit_SAFE_OnePager.pdf</div>
+                <div class="file-desc">Formatted one-page investor leave-behind</div>
+                <div class="file-meta-row"><span>PDF</span><span>•</span><span>Updated Feb 2026</span></div>
+              </div>
+              <div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="file-card" onclick="handleDownload('InPursuit_SAFE_OnePager.docx')">
+              <div class="file-icon docx">DOCX</div>
+              <div class="file-info">
+                <div class="file-name">InPursuit_SAFE_OnePager.docx</div>
+                <div class="file-desc">Editable Word version for customization</div>
+                <div class="file-meta-row"><span>Word</span><span>•</span><span>Updated Feb 2026</span></div>
+              </div>
+              <div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+
+          <!-- INLINE PREVIEW -->
+          <div class="doc-card fade-in d2">
+            <div class="doc-card-header"><div class="doc-card-title">Inline Preview</div><div class="badge badge-safe">SAFE</div></div>
+            <div class="doc-card-body">
+              <div class="callout">
+                <p>InPursuit Health is one of a select few companies elected to the CMS Health IT Ecosystem — delivering outcome-based payment infrastructure for the largest Medicare reform in a decade.</p>
+                <div class="hl">TETRA: 95% interoperability · 1.8M tx/hour · DoD/VA validated on 290K+ servers</div>
+              </div>
+              <div class="two-col" style="margin-top:24px">
+                <div>
+                  <div class="doc-section"><h4>SAFE Terms</h4>
+                    <div class="terms">
+                      <div class="t-row"><span class="t-k">Valuation Cap</span><span class="t-v gold">$21,000,000</span></div>
+                      <div class="t-row"><span class="t-k">Discount</span><span class="t-v">20%</span></div>
+                      <div class="t-row"><span class="t-k">Target Raise</span><span class="t-v gold">$1.0M–$1.5M</span></div>
+                      <div class="t-row"><span class="t-k">Min. Investment</span><span class="t-v">$25,000</span></div>
+                      <div class="t-row"><span class="t-k">Pro-Rata</span><span class="t-v">Yes (≥$100K)</span></div>
+                      <div class="t-row"><span class="t-k">MFN</span><span class="t-v">Yes</span></div>
+                      <div class="t-row"><span class="t-k">Conversion</span><span class="t-v">Series A (≥$5M)</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="doc-section"><h4>Why Now</h4>
+                    <p><strong style="color:var(--navy)">CMS Health IT Ecosystem</strong> — Elected across 3 patient-facing categories alongside Epic and Oracle Health. 140M+ beneficiaries.</p>
+                    <p><strong style="color:var(--navy)">ACCESS Model (Jul 2026)</strong> — Mandates HIE data sharing. TETRA is purpose-built. Applications close April 2026.</p>
+                    <p><strong style="color:var(--navy)">Honeycomb Signed</strong> — LOI with 22,000-patient practice. Joint ACCESS application. First revenue template.</p>
+                  </div>
+                  <div class="doc-section"><h4>$100K Return Scenarios</h4>
+                    <div class="scenario-grid"><div class="sc"><div class="sc-label">$50M Series A</div><div class="sc-amt">$238K</div><div class="sc-sub">2.4x</div></div><div class="sc f"><div class="sc-label">$75M Series A</div><div class="sc-amt">$357K</div><div class="sc-sub">3.6x</div></div><div class="sc"><div class="sc-label">$100M Series A</div><div class="sc-amt">$476K</div><div class="sc-sub">4.8x</div></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SAFE EXECUTIVE SUMMARY ── -->
+        <div class="doc-panel" id="doc-safe-exec">
+          <div class="doc-header fade-in">
+            <span class="label">Collection 02</span>
+            <h2>SAFE Executive Summary</h2>
+            <p>Comprehensive investment thesis, competitive moat, commercial strategy, and market positioning.</p>
+            <div class="doc-meta"><span><span class="dot"></span>Detailed overview</span><span><span class="dot"></span>8-min read</span></div>
+          </div>
+          <div class="file-grid fade-in d1">
+            <div class="file-card" onclick="handleDownload('InPursuit_SAFE_ExecSummary.pdf')"><div class="file-icon pdf">PDF</div><div class="file-info"><div class="file-name">InPursuit_SAFE_ExecSummary.pdf</div><div class="file-desc">Full executive summary with appendices</div><div class="file-meta-row"><span>PDF</span><span>•</span><span>12 pages</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div class="file-card" onclick="handleDownload('InPursuit_SAFE_PitchDeck.pptx')"><div class="file-icon pptx">PPTX</div><div class="file-info"><div class="file-name">InPursuit_SAFE_PitchDeck.pptx</div><div class="file-desc">12-slide investor presentation</div><div class="file-meta-row"><span>PowerPoint</span><span>•</span><span>15 slides</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </div>
+          <div class="doc-card fade-in d2">
+            <div class="doc-card-header"><div class="doc-card-title">The Problem — $1.5T in Waste</div><div class="badge badge-safe">Context</div></div>
+            <div class="doc-card-body"><div class="doc-section"><p>The US healthcare system spends $4.5 trillion annually, yet 30–40% is wasted on administrative complexity, duplicated services, and care fragmentation. CMS has mandated all Traditional Medicare beneficiaries in outcome-based care by 2030 — but the infrastructure doesn't exist for most providers. InPursuit's TETRA is that infrastructure.</p></div></div>
+          </div>
+          <div class="doc-card fade-in d3">
+            <div class="doc-card-header"><div class="doc-card-title">Federal Validation — Not Just a Claim</div><div class="badge badge-safe">Moat</div></div>
+            <div class="doc-card-body">
+              <div class="pillars">
+                <div class="pillar"><div class="p-num">CMS Ecosystem</div><div class="p-title">Elected across 3 categories</div><div class="p-text">Alongside Epic, Oracle Health. 140M+ beneficiaries. Cannot be replicated by form submission.</div></div>
+                <div class="pillar"><div class="p-num">DoD / VA</div><div class="p-title">290K+ servers validated</div><div class="p-text">Outperformed IBM, SAP, Oracle in head-to-head deployment. Millions of servicemembers served.</div></div>
+                <div class="pillar"><div class="p-num">IP & Legal</div><div class="p-title">$13M judgment awarded</div><div class="p-text">4DD Holdings v. US — $13M + $1.1M sanctions for unauthorized TETRA deployment. Battle-tested IP.</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="doc-card fade-in d4">
+            <div class="doc-card-header"><div class="doc-card-title">Competitive Landscape</div><div class="badge badge-safe">Positioning</div></div>
+            <div class="doc-card-body">
+              <div class="table-wrap">
+                <table class="data-table"><thead><tr><th style="text-align:left">Company</th><th style="text-align:left">Interop</th><th style="text-align:left">CMS</th><th style="text-align:left">Federal</th><th style="text-align:left">Model</th></tr></thead>
+                <tbody>
+                  <tr><td>Particle Health</td><td style="text-align:left">~60%</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left">API fees</td></tr>
+                  <tr><td>Redox</td><td style="text-align:left">~55%</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left">API fees</td></tr>
+                  <tr><td>Health Gorilla</td><td style="text-align:left">~50%</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left">Query fees</td></tr>
+                  <tr class="hl"><td>InPursuit Health</td><td style="text-align:left;font-family:'Instrument Serif';font-size:14px;color:var(--gold)">95%</td><td style="text-align:left">✓ 3 Categories</td><td style="text-align:left">✓ DoD/VA</td><td style="text-align:left">Outcome-aligned</td></tr>
+                </tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SERIES A COLLECTION ── -->
+        <div class="doc-panel" id="doc-series-a">
+          <div class="doc-header fade-in">
+            <span class="label">Collection 03</span>
+            <h2>Series A Strategy Collection</h2>
+            <p>The SAFE bridges InPursuit to a landmark Series A post-ACCESS launch (Jul 2026). Milestone path, comparables, and growth strategy.</p>
+            <div class="doc-meta"><span><span class="dot"></span>$50M Pre-Money Target</span><span><span class="dot"></span>Q4 2026–Q1 2027</span></div>
+          </div>
+          <div class="file-grid fade-in d1">
+            <div class="file-card" onclick="handleDownload('InPursuit_SeriesA_Strategy.pdf')"><div class="file-icon pdf">PDF</div><div class="file-info"><div class="file-name">InPursuit_SeriesA_Strategy.pdf</div><div class="file-desc">Milestone-based valuation & comparables</div><div class="file-meta-row"><span>PDF</span><span>•</span><span>8 pages</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div class="file-card" onclick="handleDownload('InPursuit_SeriesA_TermSheet.pdf')"><div class="file-icon pdf">PDF</div><div class="file-info"><div class="file-name">InPursuit_SeriesA_TermSheet.pdf</div><div class="file-desc">Anticipated Series A terms preview</div><div class="file-meta-row"><span>PDF</span><span>•</span><span>3 pages</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div class="file-card" onclick="handleDownload('InPursuit_MAHA_Constellation.pdf')"><div class="file-icon pdf">PDF</div><div class="file-info"><div class="file-name">InPursuit_MAHA_Constellation.pdf</div><div class="file-desc">Full constellation revenue model ($150M+ Yr 3)</div><div class="file-meta-row"><span>PDF</span><span>•</span><span>15 pages</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div class="file-card" onclick="handleDownload('InPursuit_BusinessPlan.pdf')"><div class="file-icon pdf">PDF</div><div class="file-info"><div class="file-name">InPursuit_BusinessPlan.pdf</div><div class="file-desc">Comprehensive business plan & financial model</div><div class="file-meta-row"><span>PDF</span><span>•</span><span>25 pages</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </div>
+
+          <!-- Milestones inline -->
+          <div class="doc-card fade-in d2">
+            <div class="doc-card-header"><div class="doc-card-title">Milestone-Based Valuation Path</div><div class="badge badge-series">SAFE → Series A</div></div>
+            <div class="doc-card-body">
+              <div class="ms-track">
+                <div class="ms done"><div class="ms-t">CMS Health IT Ecosystem Approved</div><div class="ms-s">Achieved — 3 patient-facing categories</div><div class="ms-v">Baseline: $21M cap</div></div>
+                <div class="ms done"><div class="ms-t">Honeycomb LOI Signed</div><div class="ms-s">Achieved — 22,000 patients, Memphis TN</div><div class="ms-v">+$2–4M implied</div></div>
+                <div class="ms"><div class="ms-t">ACCESS Application Accepted (Apr 2026)</div><div class="ms-s">Joint application. CMS validates commercial model.</div><div class="ms-v">→ $28–32M</div></div>
+                <div class="ms"><div class="ms-t">ACCESS Go-Live + First OAP Revenue (Jul 2026)</div><div class="ms-s">Live production. CMS payments flowing.</div><div class="ms-v">→ $35–42M</div></div>
+                <div class="ms"><div class="ms-t">2nd & 3rd ACCESS Partners (Q3 2026)</div><div class="ms-s">Template proven repeatable.</div><div class="ms-v">→ $42–50M</div></div>
+                <div class="ms"><div class="ms-t">Series A Close (Q4 2026–Q1 2027)</div><div class="ms-s">$10–15M raise. 18–24 months runway for national scale.</div><div class="ms-v">→ $50M+ pre-money</div></div>
+              </div>
+              <div class="callout" style="margin-top:24px">
+                <p>Aledade raised at ~$50M pre-money with zero revenue and zero CMS validation. InPursuit's $21M SAFE cap — with CMS approval, DoD/VA deployment, and a signed first customer — is a significant discount to comparable entry points.</p>
+                <div class="hl">SAFE investors enter at 50–75% discount to where comparables have priced at similar milestones.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── REVENUE PROJECTIONS ── -->
+        <div class="doc-panel" id="doc-revenue">
+          <div class="doc-header fade-in">
+            <span class="label">Collection 04</span>
+            <h2>Revenue Projections — SAFE Period</h2>
+            <p>Bottoms-up model: Honeycomb Medical, CMS App Store, and ACCESS Model expansion.</p>
+            <div class="doc-meta"><span><span class="dot"></span>CMS-Scoped</span><span><span class="dot"></span>Supports $21M Cap</span></div>
+          </div>
+          <div class="file-grid fade-in d1">
+            <div class="file-card" onclick="handleDownload('InPursuit_Revenue_Model.xlsx')"><div class="file-icon xlsx">XLSX</div><div class="file-info"><div class="file-name">InPursuit_Revenue_Model.xlsx</div><div class="file-desc">Full 3-year financial model with scenarios</div><div class="file-meta-row"><span>Excel</span><span>•</span><span>5 tabs</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div class="file-card" onclick="handleDownload('InPursuit_Revenue_Summary.pdf')"><div class="file-icon pdf">PDF</div><div class="file-info"><div class="file-name">InPursuit_Revenue_Summary.pdf</div><div class="file-desc">Revenue logic narrative with comparables</div><div class="file-meta-row"><span>PDF</span><span>•</span><span>10 pages</span></div></div><div class="file-dl"><svg viewBox="0 0 24 24"><path d="M12 3v13M5 12l7 7 7-7M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </div>
+
+          <div class="doc-card fade-in d2">
+            <div class="doc-card-header"><div class="doc-card-title">Three Revenue Engines</div><div class="badge badge-revenue">Model</div></div>
+            <div class="doc-card-body">
+              <div class="pillars">
+                <div class="pillar"><div class="p-num">Engine 1</div><div class="p-title">Honeycomb Medical</div><div class="p-time">LOI Signed · 22K Patients</div><div class="p-text">SaaS PMPM + OAP share + implementation. Memphis metro. First ACCESS partner.</div><div class="p-val">Year 1: ~$540K ARR</div></div>
+                <div class="pillar"><div class="p-num">Engine 2</div><div class="p-title">CMS App Store</div><div class="p-time">Health IT Ecosystem · 140M+</div><div class="p-text">TETRA listed in CMS-curated ecosystem. Pre-validated. Zero acquisition cost.</div><div class="p-val">Year 2: ~$2.4M ARR</div></div>
+                <div class="pillar"><div class="p-num">Engine 3</div><div class="p-title">ACCESS Partners</div><div class="p-time">Jul 2026 · National</div><div class="p-text">Every FFS ACO transitioning to ACCESS needs interop infrastructure. 511 ACOs in MSSP alone.</div><div class="p-val">Year 2: ~$4.8M ARR</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="doc-card fade-in d3">
+            <div class="doc-card-header"><div class="doc-card-title">Three-Year Revenue (CMS-Scoped)</div><div class="badge badge-revenue">Financials</div></div>
+            <div class="doc-card-body">
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead><tr><th style="text-align:left">Revenue Stream</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr></thead>
+                  <tbody>
+                    <tr><td>Honeycomb SaaS PMPM</td><td>$330K</td><td>$396K</td><td>$475K</td></tr>
+                    <tr><td>Honeycomb OAP Share</td><td>$110K</td><td>$264K</td><td>$350K</td></tr>
+                    <tr><td>Honeycomb Implementation</td><td>$100K</td><td>—</td><td>—</td></tr>
+                    <tr><td>CMS App Store Partners</td><td>—</td><td>$2.4M</td><td>$6.0M</td></tr>
+                    <tr><td>ACCESS Partners (3–5)</td><td>—</td><td>$4.8M</td><td>$12.0M</td></tr>
+                    <tr><td>ACCESS OAP Share</td><td>—</td><td>$1.2M</td><td>$4.5M</td></tr>
+                    <tr><td>Implementation Fees</td><td>—</td><td>$600K</td><td>$1.2M</td></tr>
+                    <tr><td>Platform / Data Services</td><td>—</td><td>$340K</td><td>$1.5M</td></tr>
+                  </tbody>
+                  <tfoot><tr><td style="text-align:left">Total Revenue</td><td>$540K</td><td>$10.0M</td><td>$26.0M</td></tr></tfoot>
+                </table>
+              </div>
+              <div class="callout" style="margin-top:20px">
+                <p>At 7–10x forward revenue, Year 2 run rate of $10M supports $70–100M valuation — well above the $50M pre-money Series A target.</p>
+                <div class="hl">SAFE at $21M is 2.1x Year 1 revenue and 0.8x Year 3 revenue. Exceptional entry point.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════
+             HOW TO ADD YOUR OWN DOCUMENTS
+             ══════════════════════════════════════════════════ -->
+        <div class="impl-banner">
+          <h4>📋 DocSend Setup Guide (10 Minutes)</h4>
+          <p>Follow these steps to connect your documents and start tracking investor engagement:</p>
+          <ul>
+            <li><strong>Step 1:</strong> Go to <code>docsend.com</code> → Create account → Choose Personal or Standard plan ($10/mo gets you analytics)</li>
+            <li><strong>Step 2:</strong> Create a Space called <strong>"InPursuit Investor Data Room"</strong></li>
+            <li><strong>Step 3:</strong> Upload all 10 documents listed in the sidebar (PDFs, DOCX, XLSX, PPTX — DocSend handles them all)</li>
+            <li><strong>Step 4:</strong> For each document, click <strong>Share</strong> → copy the link (looks like <code>https://docsend.com/view/abc123</code>)</li>
+            <li><strong>Step 5:</strong> Open this HTML file in any text editor → Find the <code>DOCSEND_LINKS</code> section near the bottom → Paste each link next to its filename</li>
+            <li><strong>Step 6:</strong> Save the file and upload to your website. Done.</li>
+          </ul>
+          <p style="margin-top:14px"><strong style="color:var(--gold)">Recommended DocSend Settings:</strong></p>
+          <ul>
+            <li><strong>"Require email to view"</strong> = ON — Investors enter their email before viewing. You see exactly who opened what.</li>
+            <li><strong>"Allow downloading"</strong> = OFF for most docs (better tracking) — ON only for the SAFE agreement they need to sign</li>
+            <li><strong>"Passcode protect"</strong> = Optional — adds another layer of security for highly sensitive docs</li>
+            <li><strong>"Require NDA"</strong> = ON if you have an NDA template — DocSend can require a click-through NDA before viewing</li>
+          </ul>
+          <p style="margin-top:14px"><strong style="color:var(--gold)">What DocSend Gives You:</strong> Real-time alerts when investors open documents. Page-by-page heatmaps showing what they read closely. Time spent per page. Whether they forwarded the link. Download attempts. This intel tells you who's seriously interested and exactly when to follow up.</p>
+        </div>
+
+      </div> <!-- /main -->
+    </div> <!-- /room-layout -->
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION: MARKET ANALYSIS (abbreviated)
+       ═══════════════════════════════════════════════════ -->
+  <div class="portal-section" id="sec-market">
+    <div class="container" style="padding-top:40px;padding-bottom:60px">
+      <div class="doc-header fade-in">
+        <span class="label">Market Intelligence</span>
+        <h2>VBC Customer Base vs. Total Provider Market</h2>
+        <p>InPursuit's addressable market spans the full US provider landscape — from VBC-active beachhead to CMS-mandated national adoption by 2030.</p>
+      </div>
+      <div class="callout fade-in d1">
+        <p>Your VBC customer base (~830K physicians, ~60K facilities) is roughly 35–40% of total US provider market. That's the beachhead — providers who need interoperability now. The other 60% is where massive growth is. CMS is mandating 100% by 2030.</p>
+        <div class="hl">Strategy: Win VBC-first customers (in pain now), then ride the CMS mandate wave to 100%.</div>
+      </div>
+      <div class="doc-card fade-in d2">
+        <div class="doc-card-header"><div class="doc-card-title">Go-to-Market — Three Phases</div></div>
+        <div class="doc-card-body">
+          <div class="pillars">
+            <div class="pillar"><div class="p-num">Phase I</div><div class="p-title">Beachhead</div><div class="p-time">Now – Q3 2026</div><div class="p-text">511 MSSP ACOs, 74 ACO REACH, TEAM hospitals, ACCESS applicants.</div><div class="p-val">~830K physicians · ~60K facilities</div></div>
+            <div class="pillar"><div class="p-num">Phase II</div><div class="p-title">Expansion</div><div class="p-time">Q4 2026 – 2027</div><div class="p-text">MIPS penalties + TEAM mandates + LEAD Model 2027.</div><div class="p-val">~200K physicians · ~30K facilities</div></div>
+            <div class="pillar"><div class="p-num">Phase III</div><div class="p-title">Total Market</div><div class="p-time">2028 – 2030</div><div class="p-text">CMS mandate: all Medicare in accountable care by 2030.</div><div class="p-val">~370K physicians · ~350K+ facilities</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION: EXECUTE SAFE
+       ═══════════════════════════════════════════════════ -->
+  <div class="portal-section" id="sec-execute">
+    <div class="container" style="padding-top:40px;padding-bottom:60px">
+      <div class="doc-header fade-in">
+        <span class="label">Execute SAFE</span>
+        <h2>Digital SAFE Execution</h2>
+        <p>Complete the steps below. InPursuit Health will countersign within 24 hours.</p>
+      </div>
+
+      <!-- Sig steps -->
+      <div style="display:flex;gap:0;margin-bottom:28px;overflow-x:auto" class="fade-in d1">
+        <div style="flex:1;min-width:100px;padding:14px;text-align:center;border-bottom:2px solid var(--gold)" id="ss1">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--gold);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-bottom:4px">1</div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--navy)">Amount</div>
+        </div>
+        <div style="flex:1;min-width:100px;padding:14px;text-align:center;border-bottom:2px solid rgba(0,0,0,.06)" id="ss2">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--cream);color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-bottom:4px">2</div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)">Review</div>
+        </div>
+        <div style="flex:1;min-width:100px;padding:14px;text-align:center;border-bottom:2px solid rgba(0,0,0,.06)" id="ss3">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--cream);color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-bottom:4px">3</div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)">Sign</div>
+        </div>
+        <div style="flex:1;min-width:100px;padding:14px;text-align:center;border-bottom:2px solid rgba(0,0,0,.06)" id="ss4">
+          <div style="width:26px;height:26px;border-radius:50%;background:var(--cream);color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-bottom:4px">4</div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)">Done</div>
+        </div>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="doc-card fade-in d2" id="sp1">
+        <div class="doc-card-header"><div class="doc-card-title">Investment Amount</div></div>
+        <div class="doc-card-body">
+          <div class="field-group" style="margin-bottom:16px">
+            <label style="display:block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">SAFE Purchase Amount (USD)</label>
+            <input type="text" class="field-input" id="inv-amt" placeholder="$100,000" style="background:var(--cream);color:var(--navy);font-family:'Instrument Serif',serif;font-size:22px;padding:14px;border-color:rgba(0,0,0,.08)" oninput="fmtAmt(this)">
+            <div style="font-size:10px;color:var(--text-muted);margin-top:6px">Minimum: $25,000</div>
+          </div>
+          <div class="field-group">
+            <label style="display:block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Investor Legal Name / Entity</label>
+            <input type="text" class="field-input" id="inv-name" placeholder="Full legal name or entity" style="background:var(--cream);color:var(--navy);border-color:rgba(0,0,0,.08)">
+          </div>
+          <div style="text-align:right;margin-top:16px"><button class="btn btn-gold" onclick="alert('In production, this advances to the DocuSign review & signature flow.\n\nIntegrate DocuSign API or Dropbox Sign to generate a pre-filled SAFE envelope with the investor\'s amount and name, route for signature, then auto-notify you for countersignature.')">Continue to Review →</button></div>
+        </div>
+      </div>
+
+      <div class="impl-banner" style="margin-top:28px">
+        <h4>🔧 Production Execution Flow</h4>
+        <p>For live deployment, replace this prototype with:</p>
+        <ul>
+          <li><strong>DocuSign / Dropbox Sign API</strong> — Auto-generate SAFE envelope pre-filled with investor amount, legal name, date. Investor signs electronically. You get notified to countersign from your phone. Both parties receive executed PDF. Full audit trail.</li>
+          <li><strong>Stripe / ACH</strong> — After signature, present wire transfer instructions or enable direct ACH payment. Confirmation triggers automatic updates.</li>
+          <li><strong>Verify Investor / Parallel Markets</strong> — Third-party accredited investor verification ($50/investor). Replaces the self-certification with SEC-compliant verification.</li>
+          <li><strong>Carta / Pulley</strong> — Auto-log SAFE to your cap table management platform. Track conversion terms, pro-rata rights, MFN provisions.</li>
+          <li><strong>Google reCAPTCHA v3</strong> — Replace math CAPTCHA with invisible bot detection for production.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-l">InPursuit Health, LLC &nbsp;|&nbsp; CMS Health IT Ecosystem Approved &nbsp;|&nbsp; www.InPursuitHealth.com</div>
+        <div class="footer-r">Confidential</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══ CAPTCHA ═══ */
+let cA,cB;
+function genC(){cA=Math.floor(Math.random()*9)+2;cB=Math.floor(Math.random()*9)+2;document.getElementById('cq').textContent=cA+' × '+cB}
+genC();
+
+/* ═══ GATE ═══ */
+let gStep=1;
+function gateNext(){
+  if(gStep===1){
+    const f=document.getElementById('fname').value.trim(),l=document.getElementById('lname').value.trim(),e=document.getElementById('email').value.trim(),a=parseInt(document.getElementById('ca').value);
+    if(!f||!l||!e||a!==cA*cB){document.getElementById('err1').classList.add('show');if(a!==cA*cB)genC();return}
+    document.getElementById('err1').classList.remove('show');
+    document.getElementById('gs1').classList.remove('active');document.getElementById('gs2').classList.add('active');
+    document.getElementById('sd1').classList.remove('active');document.getElementById('sd2').classList.add('active');
+    document.getElementById('gate-btn').textContent='Enter Portal →';gStep=2;
+  } else {
+    const checks=[document.getElementById('ai1'),document.getElementById('ai2'),document.getElementById('ai3'),document.getElementById('ai4')];
+    if(!checks.some(c=>c.checked)||!document.getElementById('ai-attest').checked){document.getElementById('err2').classList.add('show');return}
+    document.getElementById('err2').classList.remove('show');
+    const name=document.getElementById('fname').value+' '+document.getElementById('lname').value;
+    document.getElementById('nav-user').textContent=name;
+    document.getElementById('inv-name').value=name;
+    document.getElementById('gate').style.display='none';
+    document.getElementById('portal').style.display='block';
+  }
+}
+
+/* ═══ PORTAL NAV ═══ */
+function showSection(id,el){
+  document.querySelectorAll('.portal-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  if(el)el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══ DATA ROOM NAV ═══ */
+function showDoc(id,el){
+  document.querySelectorAll('.doc-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('doc-'+id).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(window.innerWidth<900)document.querySelector('.main').scrollIntoView({behavior:'smooth'});
+}
+
+/* ══════════════════════════════════════════════════════════════════
+ * DOCSEND CONFIGURATION
+ * ══════════════════════════════════════════════════════════════════
+ * 
+ * STEP 1: Go to https://www.docsend.com and create your account
+ * STEP 2: Upload each document listed below
+ * STEP 3: Copy the DocSend link for each document
+ * STEP 4: Paste the link next to the matching filename below
+ * STEP 5: Save this file and deploy — that's it!
+ *
+ * DocSend links look like: https://docsend.com/view/abc123xyz
+ * 
+ * TIP: In DocSend, enable "Require email to view" — this way you
+ * can track exactly which investors open which documents, how long
+ * they spend on each page, and whether they forwarded them.
+ *
+ * TIP: Set "Allow downloading" to OFF in DocSend settings so
+ * investors must view in DocSend (better tracking). Turn it ON
+ * only for docs they need to print/sign.
+ * ══════════════════════════════════════════════════════════════════
+ */
+const DOCSEND_LINKS = {
+
+  // ── COLLECTION 1: SAFE ONE-PAGER ──
+  'InPursuit_SAFE_OnePager.pdf':   '',  // ← Paste DocSend URL here
+  'InPursuit_SAFE_OnePager.docx':  '',  // ← Paste DocSend URL here
+
+  // ── COLLECTION 2: SAFE EXECUTIVE SUMMARY ──
+  'InPursuit_SAFE_ExecSummary.pdf': '',  // ← Paste DocSend URL here
+  'InPursuit_SAFE_PitchDeck.pptx':  '',  // ← Paste DocSend URL here
+
+  // ── COLLECTION 3: SERIES A DOCUMENTS ──
+  'InPursuit_SeriesA_Strategy.pdf':  '',  // ← Paste DocSend URL here
+  'InPursuit_SeriesA_TermSheet.pdf': '',  // ← Paste DocSend URL here
+  'InPursuit_MAHA_Constellation.pdf':'',  // ← Paste DocSend URL here
+  'InPursuit_BusinessPlan.pdf':      '',  // ← Paste DocSend URL here
+
+  // ── COLLECTION 4: REVENUE PROJECTIONS ──
+  'InPursuit_Revenue_Model.xlsx':    '',  // ← Paste DocSend URL here
+  'InPursuit_Revenue_Summary.pdf':   '',  // ← Paste DocSend URL here
+
+};
+
+function handleDownload(filename) {
+  const url = DOCSEND_LINKS[filename];
+  if (url && url.length > 0) {
+    // DocSend link exists — open it
+    window.open(url, '_blank');
+  } else {
+    // No link yet — show setup instructions
+    alert(
+      '📄 ' + filename + '\n\n' +
+      'This document hasn\'t been connected yet.\n\n' +
+      'To connect it:\n' +
+      '1. Upload ' + filename + ' to your DocSend account\n' +
+      '2. Copy the DocSend link\n' +
+      '3. Open this HTML file in a text editor\n' +
+      '4. Find DOCSEND_LINKS at the top of the <script> section\n' +
+      '5. Paste the link next to \'' + filename + '\'\n' +
+      '6. Save and redeploy'
+    );
+  }
+}
+
+function fmtAmt(el){let v=el.value.replace(/[^0-9]/g,'');el.value=v?'$'+parseInt(v).toLocaleString():''}
+</script>
+</body>
+</html>
