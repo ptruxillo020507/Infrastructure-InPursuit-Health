@@ -9,10 +9,6 @@
   /* ── NAV STRUCTURE ─────────────────────────────────────────── */
   var NAV = [
     {
-      label: 'MAHA',
-      href:  'maha.html'
-    },
-    {
       label: 'TETRA',
       href:  'tetra.html',
       children: [
@@ -83,7 +79,7 @@
     '#iph-header.scrolled{box-shadow:0 4px 30px rgba(0,0,0,0.4);}',
     '#iph-header-inner{max-width:1400px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:center;height:var(--iph-h);}',
     /* brand */
-    '#iph-brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}',
+    '#iph-brand{display:flex;align-items:center;flex-shrink:0;}#iph-brand-sub:hover{color:#C5A44E!important;opacity:1!important;}',
     '#iph-brand-wordmark{font-family:"Instrument Serif",Georgia,serif;font-size:22px;color:#C5A44E;letter-spacing:1px;line-height:1;}',
     '#iph-brand-pipe{color:rgba(197,164,78,0.3);font-size:18px;margin:0 12px;font-weight:300;}',
     '#iph-brand-sub{font-family:"Instrument Sans",Arial,sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(197,164,78,0.55);line-height:1;}',
@@ -315,8 +311,14 @@
     var header = document.createElement('header'); header.id = 'iph-header';
     var inner = document.createElement('div'); inner.id = 'iph-header-inner';
 
-    var brand = document.createElement('a'); brand.id = 'iph-brand'; brand.href = 'index.html';
-    brand.innerHTML = '<span id="iph-brand-wordmark">InPursuit Health</span><span id="iph-brand-pipe">|</span><span id="iph-brand-sub">MAHA Policy Accelerant</span>';
+    var brand = document.createElement('div'); brand.id = 'iph-brand';
+    var brandMain = document.createElement('a'); brandMain.href = 'index.html'; brandMain.style.cssText = 'text-decoration:none;display:flex;align-items:center;';
+    brandMain.innerHTML = '<span id="iph-brand-wordmark">InPursuit Health</span>';
+    var brandPipe = document.createElement('span'); brandPipe.id = 'iph-brand-pipe'; brandPipe.innerHTML = '|';
+    var brandSub = document.createElement('a'); brandSub.href = 'maha.html';
+    brandSub.id = 'iph-brand-sub'; brandSub.innerHTML = 'MAHA Policy Accelerant';
+    brandSub.style.cssText = 'text-decoration:none;';
+    brand.appendChild(brandMain); brand.appendChild(brandPipe); brand.appendChild(brandSub);
     inner.appendChild(brand);
     inner.appendChild(buildNav());
 

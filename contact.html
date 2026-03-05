@@ -83,41 +83,7 @@
 </head>
 <body>
 <!-- ===== UNIVERSAL NAV ===== -->
-<header id="iph-topbar">
-  <div id="iph-topbar-inner">
-    <div id="iph-brand-group">
-      <a id="iph-wordmark" href="index.html">InPursuit Health</a>
-      <span id="iph-brand-divider">|</span>
-      <span id="iph-maha">MAHA Policy Alignment</span>
-    </div>
-    <nav id="iph-nav">
-      <div class="iph-dropdown">
-        <a class="iph-nav-item iph-dropdown-toggle" href="tetra.html">TETRA <span class="iph-caret">&#9660;</span></a>
-        <div class="iph-dropdown-menu">
-          <span style="cursor:default;">TETRA Aegis&trade;</span>
-          <span style="cursor:default;">TETRA Sentinel&trade;</span>
-        </div>
-      </div>
-      <div class="iph-dropdown">
-        <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">For You <span class="iph-caret">&#9660;</span></span>
-        <div class="iph-dropdown-menu">
-          <span style="cursor:default;">For Your Pets</span>
-        </div>
-      </div>
-      <div class="iph-dropdown">
-        <span class="iph-nav-item iph-dropdown-toggle" style="cursor:default;">For VBC Providers <span class="iph-caret">&#9660;</span></span>
-        <div class="iph-dropdown-menu">
-          <span style="cursor:default;">ACCESS Model Offer</span>
-        </div>
-      </div>
-      <span class="iph-nav-item" style="cursor:default;">MyPursuit</span>
-      <span class="iph-nav-item" style="cursor:default;">Data Oath</span>
-      <a class="iph-nav-item" href="partner-network.html">Partner Network</a>
-      <span id="iph-cta" style="cursor:default;">Invest</span>
-    </nav>
-    <button id="iph-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-</header>
+
 
 
 <div class="preloader" id="preloader"><div class="preloader-wordmark">INPURSUIT HEALTH</div></div>
@@ -139,7 +105,7 @@
       <p class="contact-text">InPursuit Health operates with a focused team that reads every inquiry personally. Whether you&rsquo;re exploring a partnership, evaluating our platform, or interested in investing &mdash; you&rsquo;ll hear back from a real person.</p>
       <div class="contact-detail">
         <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
-        <div><div class="contact-detail-label">Email</div><div class="contact-detail-value"><a href="mailto:info@inpursuithealth.com"><span class="__cf_email__" data-cfemail="88e1e6eee7c8c1e6d8fdfafbfde1fcc0ede9e4fce0a6ebe7e5">[email&#160;protected]</span></a></div></div>
+        <div><div class="contact-detail-label">Email</div><div class="contact-detail-value"><a href="/cdn-cgi/l/email-protection#bbd2d5ddd4fbd2d5cbcec9c8ced2cfd3dedad7cfd395d8d4d6"><span class="__cf_email__" data-cfemail="88e1e6eee7c8c1e6d8fdfafbfde1fcc0ede9e4fce0a6ebe7e5">[email&#160;protected]</span></a></div></div>
       </div>
       <div class="contact-detail">
         <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
@@ -187,34 +153,9 @@
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <span class="footer-wordmark">InPursuit Health</span>
-    <span class="footer-legal">&copy; 2026 InPursuit Health, LLC. All rights reserved.</span>
-  </div>
-  <div class="footer-nav-grid">
-    <div>
-      <div class="footer-col-label">Policy</div>
-      <div class="footer-col">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-        <a href="security-center.html">Security Center</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-label">Company</div>
-      <div class="footer-col">
-        <a href="about.html">About Us</a>
-        <a href="careers.html">Careers</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-  </div>
-  <p class="footer-disclaimer">InPursuit Health is a veteran-owned healthcare technology company providing data interoperability and orchestration infrastructure. The information on this site is for informational purposes only and does not constitute medical advice. TETRA is a registered technology of InPursuit Health, LLC.</p>
-  <div class="footer-tagline">The Platform Beneath the AI&trade;</div>
-</footer>
 
-<script>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // === Universal Nav ===
 window.addEventListener('scroll', function() {
   document.getElementById('iph-topbar').classList.toggle('scrolled', window.scrollY > 10);
@@ -248,7 +189,6 @@ function handleContactSubmit(e){
   var body = encodeURIComponent('Name: ' + f.get('name') + '\nEmail: ' + f.get('email') + '\nOrganization: ' + (f.get('organization') || 'N/A') + '\nInterest: ' + f.get('interest') + '\nMessage: ' + (f.get('message') || 'N/A'));
   var recipient = ((f.get('interest') || '') + '').toLowerCase().includes('invest') ? 'invest@inpursuithealth.com' : 'info@inpursuithealth.com';
   window.location.href = 'mailto:' + recipient + '?subject=' + subject + '&body=' + body;
-  document.getElementById('contactFormCard').innerHTML = '<div style="text-align:center;padding:60px 40px;"><h3 style="font-family:Instrument Serif,serif;font-size:28px;color:var(--navy);margin-bottom:12px;">Thank You</h3><p style="color:var(--text-muted);">We\'ll be in touch shortly.</p></div>';
-}
-// === Reveal Animations ===
-var revObs = new IntersectionObs
+  document.getElementById('contactFormCard').innerHTML = '<div style="text-align:center;padding:60px 40px;"><h3 style="font-family:Instrument Serif,serif;font-size:28px;color:var(--navy);margin-bottom:12px;
+<script src="nav.js"></script>
+</body></html>
