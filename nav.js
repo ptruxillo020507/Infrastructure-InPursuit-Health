@@ -9,6 +9,10 @@
   /* ── NAV STRUCTURE ─────────────────────────────────────────── */
   var NAV = [
     {
+      label: 'MAHA',
+      href:  'maha.html'
+    },
+    {
       label: 'TETRA',
       href:  'tetra.html',
       children: [
@@ -213,16 +217,29 @@
     ul.id = 'iph-nav';
     NAV.forEach(function (item) {
       var li = document.createElement('li'); li.className = 'iph-ni';
-      var a = document.createElement('a'); a.href = item.href || '#'; a.innerHTML = item.label;
+      var a = document.createElement('a'); a.href = item.href || '#';
+      var labelSpan = document.createElement('span');
+      labelSpan.innerHTML = item.label;
+      a.appendChild(labelSpan);
       if (item.children) a.appendChild(chev());
       li.appendChild(a);
       if (item.children) {
         li.appendChild(buildDrop(item.children));
-        a.addEventListener('click', function (e) {
-          e.preventDefault();
-          var was = li.classList.contains('iph-open');
+        // Hover opens/closes dropdown
+        li.addEventListener('mouseenter', function () {
           document.querySelectorAll('.iph-ni.iph-open').forEach(function (el) { el.classList.remove('iph-open'); });
-          if (!was) li.classList.add('iph-open');
+          li.classList.add('iph-open');
+        });
+        li.addEventListener('mouseleave', function () {
+          li.classList.remove('iph-open');
+        });
+        // Clicking the label text navigates; clicking chevron toggles dropdown
+        a.addEventListener('click', function (e) {
+          if (e.target.closest('.iph-chev')) {
+            e.preventDefault();
+            li.classList.toggle('iph-open');
+          }
+          // otherwise let href navigate normally
         });
       }
       ul.appendChild(li);
@@ -323,11 +340,7 @@
     if (existing) existing.remove();
     document.body.appendChild(buildFooter());
 
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest || !e.target.closest('.iph-ni')) {
-        document.querySelectorAll('.iph-ni.iph-open').forEach(function (el) { el.classList.remove('iph-open'); });
-      }
-    });
+    // Dropdowns close on mouseleave — no click handler needed
 
     var page = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('#iph-nav .iph-ni>a').forEach(function (a) {
