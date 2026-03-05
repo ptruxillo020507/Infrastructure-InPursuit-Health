@@ -1,286 +1,344 @@
 /**
- * InPursuit Health — Universal Navigation
- * Drop <script src="nav.js"></script> into any page.
- * Edit ONLY this file to update nav sitewide.
+ * nav.js — InPursuit Health Universal Navigation + Footer
+ * Drop in site root. Add before </body> on every page:
+ *   <script src="nav.js"></script>
  */
+
 (function () {
 
-  var css = `
-    :root { --navy-deep:#060E1A; --gold:#C5A44E; --gold-bright:#E8D48B; }
-    #iph-topbar {
-      background:var(--navy-deep);
-      border-bottom:1px solid rgba(197,164,78,0.2);
-      position:fixed;top:0;left:0;right:0;z-index:9999;
-      transition:box-shadow 0.3s ease;
-      font-family:'Instrument Sans','DM Sans',sans-serif;
+  /* ── NAV STRUCTURE ─────────────────────────────────────────── */
+  var NAV = [
+    {
+      label: 'TETRA',
+      href:  'tetra.html',
+      children: [
+        { label: 'TETRA Ex\u2122',        href: 'tetra-ex.html',        desc: 'Enterprise data exchange &amp; interoperability infrastructure' },
+        { label: 'TETRA Conductor\u2122', href: 'tetra-conductor.html', desc: 'Model-agnostic AI orchestration layer for healthcare' },
+        {
+          label: 'TETRA Aegis\u2122',
+          href:  'tetra-aegis.html',
+          desc:  'AI governance &amp; supervisory control architecture',
+          children: [
+            { label: 'TETRA Sentinel\u2122', href: 'tetra-sentinel.html', desc: 'Real-time AI supervision &amp; threat interception agent' }
+          ]
+        }
+      ]
+    },
+    {
+      label: 'For You',
+      href:  'for-you.html',
+      children: [
+        { label: 'The Data Oath', href: 'data-oath.html', desc: 'Our promise on how your health data is used' }
+      ]
+    },
+    {
+      label: 'For VBC Providers',
+      href:  'for-providers.html',
+      children: [
+        { label: 'CMS ACCESS Model', href: 'access.html', desc: 'Apply by April\u00a01, 2026\u00a0\u2014 Cohort\u00a01' },
+        { label: 'MSSP',            href: 'mssp.html',   desc: 'Medicare Shared Savings Program' },
+        { label: 'LEAD',            href: 'lead.html',   desc: 'Lung Cancer Early Detection' },
+        { label: 'TEAM',            href: 'team.html',   desc: 'Transforming Episode Accountability Model' }
+      ]
+    },
+    {
+      label: 'Veterans First',
+      href:  'veterans-first.html'
     }
-    #iph-topbar.scrolled{box-shadow:0 4px 30px rgba(0,0,0,0.5);}
-    #iph-topbar-inner{
-      max-width:1400px;margin:0 auto;padding:0 40px;
-      display:flex;justify-content:space-between;align-items:center;height:64px;
+  ];
+
+  var CTA = { label: 'Invest', href: 'investor.html' };
+
+  /* ── FOOTER COLUMNS ────────────────────────────────────────── */
+  var FOOTER_COLS = [
+    {
+      heading: 'Policy',
+      links: [
+        { label: 'MAHA',             href: 'maha.html' },
+        { label: 'Privacy Policy',   href: 'privacy.html' },
+        { label: 'Terms of Service', href: 'terms.html' },
+        { label: 'Security Center',  href: 'security.html' }
+      ]
+    },
+    {
+      heading: 'Company',
+      links: [
+        { label: 'About Us',   href: 'about.html' },
+        { label: 'Leadership', href: 'leadership.html' },
+        { label: 'Careers',    href: 'careers.html' },
+        { label: 'Contact',    href: 'contact.html' }
+      ]
     }
-    #iph-brand-group{display:flex;align-items:center;gap:10px;}
-    #iph-wordmark{
-      font-family:'Instrument Serif',Georgia,serif;
-      font-size:22px;color:var(--gold);letter-spacing:1px;
-      line-height:1;white-space:nowrap;
-      text-decoration:none;transition:opacity 0.3s;
-    }
-    #iph-wordmark:hover{opacity:0.8;}
-    #iph-brand-divider{color:rgba(255,255,255,0.2);font-size:14px;}
-    #iph-maha{
-      font-size:11px;font-weight:500;letter-spacing:0.5px;
-      color:rgba(255,255,255,0.45);
-      white-space:nowrap;text-decoration:none;transition:color 0.3s;
-    }
-    #iph-maha:hover{color:rgba(255,255,255,0.7);}
-    #iph-nav{display:flex;align-items:center;gap:4px;}
-    .iph-nav-item{
-      padding:20px 14px;font-size:11px;font-weight:500;
-      letter-spacing:1.5px;text-transform:uppercase;
-      color:rgba(255,255,255,0.6);text-decoration:none;
-      position:relative;transition:color 0.3s;white-space:nowrap;
-      background:none;border:none;cursor:pointer;font-family:inherit;
-    }
-    .iph-nav-item:hover{color:var(--gold);}
-    .iph-nav-item::after{
-      content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-      width:0;height:2px;background:var(--gold);transition:width 0.3s;
-    }
-    .iph-nav-item:hover::after{width:60%;}
-    .iph-dropdown{position:relative;display:inline-flex;align-items:center;}
-    .iph-dropdown-toggle{display:inline-flex;align-items:center;gap:5px;}
-    .iph-dropdown-toggle .iph-caret{
-      font-size:8px;opacity:0.5;
-      transition:transform 0.25s,opacity 0.25s;display:inline-block;
-    }
-    .iph-dropdown:hover .iph-caret,.iph-dropdown.open .iph-caret{transform:rotate(180deg);opacity:1;}
-    .iph-dropdown-menu{
-      display:none;position:absolute;top:calc(100% - 2px);left:0;
-      background:#0B1628;border:1px solid rgba(197,164,78,0.15);
-      border-radius:0 0 8px 8px;box-shadow:0 20px 60px rgba(0,0,0,0.5);
-      min-width:260px;z-index:10000;overflow:hidden;
-    }
-    .iph-dropdown:hover .iph-dropdown-menu,.iph-dropdown.open .iph-dropdown-menu{display:block;}
-    .iph-dropdown-menu a{
-      display:block;padding:13px 20px;
-      font-size:11px;font-weight:500;letter-spacing:1px;
-      text-transform:uppercase;color:rgba(255,255,255,0.5);
-      text-decoration:none;border-bottom:1px solid rgba(197,164,78,0.06);
-      transition:all 0.2s;white-space:nowrap;
-    }
-    .iph-dropdown-menu a:last-child{border-bottom:none;}
-    .iph-dropdown-menu a:hover{color:var(--gold);background:rgba(197,164,78,0.05);padding-left:26px;}
-    .iph-sub-label{
-      display:block;padding:10px 20px 6px;
-      font-size:9px;letter-spacing:2px;font-weight:700;
-      text-transform:uppercase;color:rgba(197,164,78,0.35);
-      border-bottom:1px solid rgba(197,164,78,0.06);pointer-events:none;
-    }
-    #iph-cta{
-      display:inline-flex;align-items:center;margin-left:8px;padding:8px 18px;
-      background:var(--gold);color:var(--navy-deep);font-size:10px;font-weight:700;
-      letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;
-      border-radius:4px;transition:all 0.3s;white-space:nowrap;
-    }
-    #iph-cta:hover{background:var(--gold-bright);transform:translateY(-1px);}
-    #iph-toggle{
-      display:none;background:none;border:none;
-      width:32px;height:32px;cursor:pointer;position:relative;flex-shrink:0;
-    }
-    #iph-toggle span{
-      display:block;width:22px;height:2px;background:var(--gold);
-      position:absolute;left:5px;transition:all 0.3s;
-    }
-    #iph-toggle span:nth-child(1){top:8px;}
-    #iph-toggle span:nth-child(2){top:15px;}
-    #iph-toggle span:nth-child(3){top:22px;}
-    body{padding-top:64px!important;}
-    @media(max-width:1000px){
-      #iph-topbar-inner{padding:0 20px;}
-      #iph-nav{display:none;}
-      #iph-toggle{display:block;}
-      #iph-nav.open{
-        display:flex;flex-direction:column;align-items:flex-start;
-        position:absolute;top:64px;left:0;right:0;
-        background:var(--navy-deep);
-        border-bottom:1px solid rgba(197,164,78,0.2);
-        padding:12px 0;max-height:calc(100vh - 64px);overflow-y:auto;
+  ];
+
+  /* ── CSS ───────────────────────────────────────────────────── */
+  var CSS = [
+    ':root{--iph-navy:#0A1628;--iph-navy-deep:#060E1A;--iph-navy-mid:#112240;--iph-gold:#C5A44E;--iph-gold-light:#D4B96A;--iph-white:#FFFFFF;--iph-muted:rgba(255,255,255,0.55);--iph-border:rgba(197,164,78,0.2);--iph-border-dim:rgba(197,164,78,0.08);--iph-drop:#060E1A;--iph-h:64px;}',
+    'body{padding-top:var(--iph-h);}',
+    '#iph-header{background:#060E1A;border-bottom:1px solid rgba(197,164,78,0.2);position:fixed;top:0;left:0;right:0;z-index:1000;transition:box-shadow 0.3s ease;}',
+    '#iph-header.scrolled{box-shadow:0 4px 30px rgba(0,0,0,0.4);}',
+    '#iph-header-inner{max-width:1400px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:center;height:var(--iph-h);}',
+    /* brand */
+    '#iph-brand{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}',
+    '#iph-brand-wordmark{font-family:"Instrument Serif",Georgia,serif;font-size:22px;color:#C5A44E;letter-spacing:1px;line-height:1;}',
+    '#iph-brand-pipe{color:rgba(197,164,78,0.3);font-size:18px;margin:0 12px;font-weight:300;}',
+    '#iph-brand-sub{font-family:"Instrument Sans",Arial,sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(197,164,78,0.55);line-height:1;}',
+    /* desktop nav */
+    '#iph-nav{display:flex;align-items:center;gap:0;list-style:none;margin:0;padding:0;}',
+    '.iph-ni{position:relative;list-style:none;}',
+    '.iph-ni>a{display:flex;align-items:center;gap:4px;padding:20px 14px;font-family:"Instrument Sans",Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;transition:color 0.3s ease;cursor:pointer;position:relative;white-space:nowrap;}',
+    '.iph-ni>a:hover,.iph-ni.iph-open>a{color:#C5A44E;}',
+    '.iph-ni>a::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:#C5A44E;transition:width 0.3s ease;}',
+    '.iph-ni>a:hover::after,.iph-ni.iph-open>a::after{width:60%;}',
+    '.iph-chev{width:10px;height:10px;flex-shrink:0;opacity:0.5;transition:transform 0.2s,opacity 0.2s;}',
+    '.iph-ni.iph-open>a .iph-chev,.iph-drop-item.iph-open>a .iph-chev{transform:rotate(180deg);opacity:0.9;}',
+    /* dropdown */
+    '.iph-drop{display:none;position:absolute;top:calc(var(--iph-h) + 1px);left:0;min-width:280px;background:#060E1A;border:1px solid rgba(197,164,78,0.15);border-radius:10px;padding:8px;box-shadow:0 24px 60px rgba(0,0,0,0.5);z-index:999;list-style:none;margin:0;}',
+    '.iph-ni.iph-open>.iph-drop{display:block;}',
+    '.iph-drop-item{position:relative;list-style:none;}',
+    '.iph-drop-item>a{display:flex;flex-direction:column;padding:11px 14px;border-radius:8px;text-decoration:none;transition:background 0.15s;}',
+    '.iph-drop-item>a:hover,.iph-drop-item.iph-open>a{background:rgba(197,164,78,0.07);}',
+    '.iph-drop-sep{height:1px;background:rgba(197,164,78,0.08);margin:4px 8px;}',
+    '.di-label{font-family:"Instrument Sans",Arial,sans-serif;font-size:13px;font-weight:600;color:#FFFFFF;display:flex;align-items:center;gap:6px;}',
+    '.di-desc{font-family:"Instrument Sans",Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;line-height:1.45;}',
+    /* sub-dropdown */
+    '.iph-subdrop{display:none;background:rgba(0,0,0,0.3);border:1px solid rgba(197,164,78,0.08);border-radius:8px;margin:2px 8px 4px;padding:4px;list-style:none;}',
+    '.iph-drop-item.iph-open>.iph-subdrop{display:block;}',
+    '.iph-subdrop-item{list-style:none;}',
+    '.iph-subdrop-item a{display:flex;flex-direction:column;padding:9px 12px;border-radius:6px;text-decoration:none;transition:background 0.15s;}',
+    '.iph-subdrop-item a:hover{background:rgba(197,164,78,0.07);}',
+    '.iph-subdrop-item .di-label{font-size:12px;color:#C5A44E;}',
+    /* CTA */
+    '#iph-cta{margin-left:24px;flex-shrink:0;display:inline-flex;align-items:center;padding:9px 22px;background:#C5A44E;color:#060E1A;font-family:"Instrument Sans",Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:4px;white-space:nowrap;position:relative;overflow:hidden;animation:iphInvestPulse 3.5s ease-in-out infinite;}',
+    '#iph-cta::before{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,0.28) 50%,transparent 80%);animation:iphInvestShimmer 3.5s ease-in-out infinite;pointer-events:none;}',
+    '#iph-cta:hover{transform:translateY(-1px);animation-play-state:paused;}',
+    '#iph-cta:hover::before{animation-play-state:paused;}',
+    '@keyframes iphInvestPulse{0%,100%{background:#C5A44E;box-shadow:0 0 0 0 rgba(197,164,78,0);}40%{background:#d4b05a;box-shadow:0 0 12px 2px rgba(197,164,78,0.45),0 0 28px 6px rgba(197,164,78,0.18);}70%{background:#C5A44E;box-shadow:0 0 6px 1px rgba(197,164,78,0.2);}}',
+    '@keyframes iphInvestShimmer{0%,30%{left:-100%;}55%{left:140%;}100%{left:140%;}}',
+    '.btn-invest{position:relative;overflow:hidden;animation:iphInvestPulse 3.5s ease-in-out infinite;}',
+    '.btn-invest::before{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,0.28) 50%,transparent 80%);animation:iphInvestShimmer 3.5s ease-in-out infinite;pointer-events:none;}',
+    '.btn-invest:hover{animation-play-state:paused;}',
+    '.btn-invest:hover::before{animation-play-state:paused;}',
+    /* burger */
+    '#iph-burger{display:none;background:none;border:none;width:32px;height:32px;cursor:pointer;position:relative;flex-shrink:0;}',
+    '#iph-burger span{display:block;width:22px;height:2px;background:#C5A44E;position:absolute;left:5px;transition:all 0.3s ease;}',
+    '#iph-burger span:nth-child(1){top:8px;}#iph-burger span:nth-child(2){top:15px;}#iph-burger span:nth-child(3){top:22px;}',
+    '#iph-header.iph-mob-open #iph-burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}',
+    '#iph-header.iph-mob-open #iph-burger span:nth-child(2){opacity:0;}',
+    '#iph-header.iph-mob-open #iph-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}',
+    /* mobile */
+    '#iph-mob{display:none;position:fixed;top:var(--iph-h);left:0;right:0;background:#060E1A;border-top:1px solid rgba(197,164,78,0.2);z-index:999;overflow-y:auto;max-height:calc(100vh - var(--iph-h));padding:12px 0 32px;}',
+    '#iph-header.iph-mob-open~#iph-mob{display:block;}',
+    '.mob-sec{border-bottom:1px solid rgba(197,164,78,0.07);padding:2px 0;}',
+    '.mob-top{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;font-family:"Instrument Sans",Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);text-decoration:none;cursor:pointer;}',
+    '.mob-sec.iph-open .mob-top .iph-chev{transform:rotate(180deg);opacity:0.9;}',
+    '.mob-kids{display:none;padding-bottom:6px;}.mob-sec.iph-open .mob-kids{display:block;}',
+    '.mob-kid{display:flex;flex-direction:column;padding:10px 24px 10px 36px;text-decoration:none;}',
+    '.mob-kid .di-label{font-size:13px;color:#FFFFFF;}.mob-kid .di-desc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}',
+    '.mob-sub-head{padding:8px 24px 3px 36px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C5A44E;opacity:0.5;}',
+    '.mob-sub{display:flex;flex-direction:column;padding:9px 24px 9px 50px;text-decoration:none;background:rgba(0,0,0,0.18);}',
+    '.mob-sub .di-label{font-size:12px;color:#C5A44E;}.mob-sub .di-desc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}',
+    '.mob-cta{display:block;margin:20px 24px 0;padding:14px;background:#C5A44E;color:#060E1A;font-family:"Instrument Sans",Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;text-decoration:none;border-radius:4px;}',
+    /* footer */
+    '#iph-footer{background:#060E1A;border-top:1px solid rgba(197,164,78,0.1);padding:48px 40px 32px;}',
+    '#iph-footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}',
+    '#iph-footer-brand{font-family:"Instrument Serif",Georgia,serif;font-size:18px;color:#C5A44E;letter-spacing:1px;}',
+    '#iph-footer-legal{font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.5px;}',
+    '#iph-footer-cols{max-width:1200px;margin:24px auto 0;padding-top:24px;border-top:1px solid rgba(197,164,78,0.08);display:flex;gap:64px;flex-wrap:wrap;}',
+    '.iph-fcol-head{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(197,164,78,0.5);margin-bottom:14px;}',
+    '.iph-fcol-links{display:flex;flex-direction:column;gap:11px;}',
+    '.iph-fcol-links a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.3s;}',
+    '.iph-fcol-links a:hover{color:#C5A44E;}',
+    '#iph-footer-disclaimer{max-width:1200px;margin:24px auto 0;font-size:10px;color:rgba(255,255,255,0.15);line-height:1.6;}',
+    /* responsive */
+    '@media(max-width:900px){#iph-nav,#iph-cta{display:none!important;}#iph-burger{display:block;}#iph-footer-cols{gap:40px;}}',
+    '@media(min-width:901px){#iph-mob{display:none!important;}}',
+    '@media(max-width:768px){#iph-header-inner{padding:0 20px;}#iph-footer{padding:40px 24px 28px;}}'
+  ].join('\n');
+
+  /* ── CHEVRON ────────────────────────────────────────────────── */
+  function chev() {
+    var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '0 0 12 12');
+    s.setAttribute('fill', 'none');
+    s.setAttribute('stroke', 'currentColor');
+    s.setAttribute('stroke-width', '2');
+    s.setAttribute('stroke-linecap', 'round');
+    s.setAttribute('stroke-linejoin', 'round');
+    s.className.baseVal = 'iph-chev';
+    var p = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    p.setAttribute('points', '2,4 6,8 10,4');
+    s.appendChild(p);
+    return s;
+  }
+
+  /* ── DESKTOP DROPDOWN ───────────────────────────────────────── */
+  function buildDrop(items) {
+    var ul = document.createElement('ul');
+    ul.className = 'iph-drop';
+    items.forEach(function (item, idx) {
+      if (idx > 0) { var sep = document.createElement('li'); sep.className = 'iph-drop-sep'; ul.appendChild(sep); }
+      var li = document.createElement('li');
+      li.className = 'iph-drop-item';
+      var a = document.createElement('a');
+      a.href = item.href || '#';
+      var lbl = document.createElement('span');
+      lbl.className = 'di-label';
+      lbl.innerHTML = item.label;
+      if (item.children && item.children.length) lbl.appendChild(chev());
+      a.appendChild(lbl);
+      if (item.desc) { var d = document.createElement('span'); d.className = 'di-desc'; d.innerHTML = item.desc; a.appendChild(d); }
+      li.appendChild(a);
+      if (item.children && item.children.length) {
+        var sub = document.createElement('ul');
+        sub.className = 'iph-subdrop';
+        item.children.forEach(function (sc) {
+          var sli = document.createElement('li'); sli.className = 'iph-subdrop-item';
+          var sa = document.createElement('a'); sa.href = sc.href || '#';
+          var sl = document.createElement('span'); sl.className = 'di-label'; sl.innerHTML = sc.label; sa.appendChild(sl);
+          if (sc.desc) { var sd = document.createElement('span'); sd.className = 'di-desc'; sd.innerHTML = sc.desc; sa.appendChild(sd); }
+          sli.appendChild(sa); sub.appendChild(sli);
+        });
+        li.appendChild(sub);
+        a.addEventListener('click', function (e) { e.preventDefault(); li.classList.toggle('iph-open'); });
       }
-      #iph-nav.open .iph-nav-item{padding:13px 24px;width:100%;}
-      #iph-nav.open .iph-dropdown{width:100%;flex-direction:column;align-items:flex-start;}
-      #iph-nav.open .iph-dropdown-menu{
-        display:none;position:static;box-shadow:none;border:none;
-        border-radius:0;min-width:100%;
-        background:rgba(197,164,78,0.04);
-        border-top:1px solid rgba(197,164,78,0.08);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  /* ── DESKTOP NAV ────────────────────────────────────────────── */
+  function buildNav() {
+    var ul = document.createElement('ul');
+    ul.id = 'iph-nav';
+    NAV.forEach(function (item) {
+      var li = document.createElement('li'); li.className = 'iph-ni';
+      var a = document.createElement('a'); a.href = item.href || '#'; a.innerHTML = item.label;
+      if (item.children) a.appendChild(chev());
+      li.appendChild(a);
+      if (item.children) {
+        li.appendChild(buildDrop(item.children));
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          var was = li.classList.contains('iph-open');
+          document.querySelectorAll('.iph-ni.iph-open').forEach(function (el) { el.classList.remove('iph-open'); });
+          if (!was) li.classList.add('iph-open');
+        });
       }
-      #iph-nav.open .iph-dropdown.open .iph-dropdown-menu{display:block;}
-      #iph-nav.open .iph-dropdown-menu a{padding:11px 36px;}
-      #iph-cta{margin-left:24px;margin-top:4px;margin-bottom:14px;}
-    }
-  `;
-  var s = document.createElement('style');
-  s.textContent = css;
-  document.head.appendChild(s);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
 
-  var html = `
-    <div id="iph-topbar-inner">
-      <div id="iph-brand-group">
-        <a id="iph-wordmark" href="index.html">InPursuit Health</a>
-        <span id="iph-brand-divider">|</span>
-        <a id="iph-maha" href="maha.html">MAHA Policy Alignment</a>
-      </div>
-      <nav id="iph-nav">
+  /* ── MOBILE MENU ────────────────────────────────────────────── */
+  function buildMobile() {
+    var wrap = document.createElement('div'); wrap.id = 'iph-mob';
+    NAV.forEach(function (item) {
+      var sec = document.createElement('div'); sec.className = 'mob-sec';
+      if (item.children) {
+        var topDiv = document.createElement('div'); topDiv.className = 'mob-top';
+        var ts = document.createElement('span'); ts.innerHTML = item.label; topDiv.appendChild(ts); topDiv.appendChild(chev());
+        topDiv.addEventListener('click', function () { sec.classList.toggle('iph-open'); });
+        sec.appendChild(topDiv);
+        var kids = document.createElement('div'); kids.className = 'mob-kids';
+        item.children.forEach(function (child) {
+          var ca = document.createElement('a'); ca.href = child.href || '#'; ca.className = 'mob-kid';
+          var cl = document.createElement('span'); cl.className = 'di-label'; cl.innerHTML = child.label; ca.appendChild(cl);
+          if (child.desc) { var cd = document.createElement('span'); cd.className = 'di-desc'; cd.innerHTML = child.desc; ca.appendChild(cd); }
+          kids.appendChild(ca);
+          if (child.children && child.children.length) {
+            var sh = document.createElement('div'); sh.className = 'mob-sub-head'; sh.textContent = 'Includes'; kids.appendChild(sh);
+            child.children.forEach(function (sub) {
+              var sa = document.createElement('a'); sa.href = sub.href || '#'; sa.className = 'mob-sub';
+              var sl = document.createElement('span'); sl.className = 'di-label'; sl.innerHTML = sub.label; sa.appendChild(sl);
+              if (sub.desc) { var sd = document.createElement('span'); sd.className = 'di-desc'; sd.innerHTML = sub.desc; sa.appendChild(sd); }
+              kids.appendChild(sa);
+            });
+          }
+        });
+        sec.appendChild(kids);
+      } else {
+        var a = document.createElement('a'); a.href = item.href; a.className = 'mob-top'; a.innerHTML = item.label; sec.appendChild(a);
+      }
+      wrap.appendChild(sec);
+    });
+    var cta = document.createElement('a'); cta.href = CTA.href; cta.className = 'mob-cta'; cta.textContent = CTA.label;
+    wrap.appendChild(cta);
+    return wrap;
+  }
 
-        <div class="iph-dropdown">
-          <a href="tetra.html" class="iph-nav-item iph-dropdown-toggle">TETRA <span class="iph-caret">▼</span></a>
-          <div class="iph-dropdown-menu">
-            <a href="tetra-ex.html">TETRA <em>ex</em>™</a>
-            <a href="tetra-aegis.html">TETRA Aegis™</a>
-          </div>
-        </div>
+  /* ── FOOTER ─────────────────────────────────────────────────── */
+  function buildFooter() {
+    var footer = document.createElement('footer'); footer.id = 'iph-footer';
+    var inner = document.createElement('div'); inner.id = 'iph-footer-inner';
+    var brand = document.createElement('div'); brand.id = 'iph-footer-brand'; brand.textContent = 'InPursuit Health';
+    var legal = document.createElement('span'); legal.id = 'iph-footer-legal'; legal.innerHTML = '\u00a9 2026 InPursuit Health, LLC. All rights reserved.';
+    inner.appendChild(brand); inner.appendChild(legal); footer.appendChild(inner);
+    var cols = document.createElement('div'); cols.id = 'iph-footer-cols';
+    FOOTER_COLS.forEach(function (col) {
+      var div = document.createElement('div');
+      var head = document.createElement('div'); head.className = 'iph-fcol-head'; head.textContent = col.heading; div.appendChild(head);
+      var links = document.createElement('div'); links.className = 'iph-fcol-links';
+      col.links.forEach(function (lk) {
+        var a = document.createElement('a'); a.href = lk.href; a.textContent = lk.label; links.appendChild(a);
+      });
+      div.appendChild(links); cols.appendChild(div);
+    });
+    footer.appendChild(cols);
+    var disc = document.createElement('p'); disc.id = 'iph-footer-disclaimer';
+    disc.textContent = 'InPursuit Health is a veteran-owned healthcare technology company providing data interoperability and orchestration infrastructure. The information on this site is for informational purposes only and does not constitute medical advice. TETRA is a registered technology of InPursuit Health, LLC.';
+    footer.appendChild(disc);
+    return footer;
+  }
 
-        <div class="iph-dropdown">
-          <a href="for-you.html" class="iph-nav-item iph-dropdown-toggle">For You <span class="iph-caret">▼</span></a>
-          <div class="iph-dropdown-menu">
-            
-            
-          </div>
-        </div>
+  /* ── INJECT ─────────────────────────────────────────────────── */
+  function inject() {
+    var style = document.createElement('style'); style.textContent = CSS; document.head.appendChild(style);
 
-        <div class="iph-dropdown">
-          <a href="for-providers.html" class="iph-nav-item iph-dropdown-toggle">For VBC Providers <span class="iph-caret">▼</span></a>
-          <div class="iph-dropdown-menu">
-            <a href="access.html">CMS ACCESS — Apply Now</a>
-          </div>
-        </div>
+    var header = document.createElement('header'); header.id = 'iph-header';
+    var inner = document.createElement('div'); inner.id = 'iph-header-inner';
 
-        <a href="data-oath.html" class="iph-nav-item">Data Oath</a>
-        <a href="veterans.html" class="iph-nav-item">Veterans First</a>
-        <a id="iph-cta" href="investors.html">Invest</a>
+    var brand = document.createElement('a'); brand.id = 'iph-brand'; brand.href = 'index.html';
+    brand.innerHTML = '<span id="iph-brand-wordmark">InPursuit Health</span><span id="iph-brand-pipe">|</span><span id="iph-brand-sub">MAHA Policy Accelerant</span>';
+    inner.appendChild(brand);
+    inner.appendChild(buildNav());
 
-      </nav>
-      <button id="iph-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  `;
+    var ctaEl = document.createElement('a'); ctaEl.id = 'iph-cta'; ctaEl.href = CTA.href; ctaEl.textContent = CTA.label;
+    inner.appendChild(ctaEl);
 
-  var bar = document.createElement('header');
-  bar.id = 'iph-topbar';
-  bar.innerHTML = html;
-  document.querySelectorAll('header#iph-topbar,header.top-bar,header#topBar,.nav,nav.nav').forEach(function(el){el.remove();});
-  document.body.insertBefore(bar, document.body.firstChild);
+    var burger = document.createElement('button'); burger.id = 'iph-burger'; burger.setAttribute('aria-label', 'Menu');
+    burger.innerHTML = '<span></span><span></span><span></span>';
+    burger.addEventListener('click', function () { header.classList.toggle('iph-mob-open'); });
+    inner.appendChild(burger);
 
-  window.addEventListener('scroll', function(){bar.classList.toggle('scrolled',window.scrollY>10);});
+    header.appendChild(inner);
+    var mob = buildMobile();
+    document.body.insertBefore(mob, document.body.firstChild);
+    document.body.insertBefore(header, document.body.firstChild);
 
-  document.getElementById('iph-toggle').addEventListener('click', function(){
-    document.getElementById('iph-nav').classList.toggle('open');
-  });
+    window.addEventListener('scroll', function () { header.classList.toggle('scrolled', window.scrollY > 10); });
 
-  document.querySelectorAll('.iph-dropdown-toggle').forEach(function(t){
-    t.addEventListener('click', function(e){
-      if(window.innerWidth<=1000){
-        e.preventDefault();
-        var p=this.closest('.iph-dropdown');
-        var was=p.classList.contains('open');
-        document.querySelectorAll('.iph-dropdown').forEach(function(d){d.classList.remove('open');});
-        if(!was) p.classList.add('open');
+    // Replace existing footer or append
+    var existing = document.querySelector('footer');
+    if (existing) existing.remove();
+    document.body.appendChild(buildFooter());
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('.iph-ni')) {
+        document.querySelectorAll('.iph-ni.iph-open').forEach(function (el) { el.classList.remove('iph-open'); });
       }
     });
-  });
 
-  var page=window.location.pathname.split('/').pop()||'index.html';
-  document.querySelectorAll('.iph-nav-item,.iph-dropdown-menu a').forEach(function(a){
-    if(a.getAttribute('href')===page) a.style.color='var(--gold)';
-  });
+    var page = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('#iph-nav .iph-ni>a').forEach(function (a) {
+      if (a.getAttribute('href') === page) a.style.color = '#C5A44E';
+    });
+  }
 
-  // ── UNIVERSAL FOOTER ──
-  var fcss = `
-    #iph-footer {
-      background: #060E1A;
-      border-top: 1px solid rgba(197,164,78,0.12);
-      padding: 56px 40px 32px;
-      font-family: 'Instrument Sans','DM Sans',sans-serif;
-    }
-    #iph-footer-inner { max-width:1200px; margin:0 auto; }
-    #iph-footer-top {
-      display:flex; justify-content:space-between; align-items:flex-start;
-      flex-wrap:wrap; gap:48px;
-      padding-bottom:40px; border-bottom:1px solid rgba(197,164,78,0.08);
-    }
-    #iph-footer-brand-col .iph-footer-wordmark {
-      font-family:'Instrument Serif',Georgia,serif; font-size:20px;
-      color:#C5A44E; letter-spacing:1px; display:block;
-      margin-bottom:8px; text-decoration:none;
-    }
-    #iph-footer-brand-col .iph-footer-tagline {
-      font-size:10px; letter-spacing:2px; text-transform:uppercase;
-      color:rgba(255,255,255,0.25);
-    }
-    #iph-footer-brand-col .iph-footer-contact {
-      display:block; margin-top:16px; font-size:11px; letter-spacing:0.5px;
-      color:rgba(197,164,78,0.55); text-decoration:none; transition:color 0.3s;
-    }
-    #iph-footer-brand-col .iph-footer-contact:hover { color:#C5A44E; }
-    .iph-footer-col-label {
-      font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
-      color:rgba(197,164,78,0.45); margin-bottom:16px;
-    }
-    .iph-footer-links { display:flex; flex-direction:column; gap:10px; }
-    .iph-footer-links a {
-      font-size:11px; letter-spacing:1px; text-transform:uppercase;
-      color:rgba(255,255,255,0.35); text-decoration:none; transition:color 0.3s;
-    }
-    .iph-footer-links a:hover { color:#C5A44E; }
-    #iph-footer-bottom {
-      display:flex; justify-content:space-between; align-items:center;
-      flex-wrap:wrap; gap:12px; padding-top:28px;
-    }
-    #iph-footer-legal { font-size:10px; color:rgba(255,255,255,0.2); letter-spacing:0.5px; line-height:1.6; }
-    #iph-footer-marks { font-size:10px; color:rgba(255,255,255,0.15); letter-spacing:0.5px; }
-    @media(max-width:768px){ #iph-footer{padding:40px 20px 24px;} #iph-footer-top{gap:32px;} }
-  `;
-  var fs = document.createElement('style');
-  fs.textContent = fcss;
-  document.head.appendChild(fs);
-
-  var fhtml = `
-    <div id="iph-footer-inner">
-      <div id="iph-footer-top">
-        <div id="iph-footer-brand-col">
-          <a class="iph-footer-wordmark" href="index.html">InPursuit Health</a>
-          <span class="iph-footer-tagline">Harness the Power of Your Data\u2122</span>
-          <a class="iph-footer-contact" href="mailto:info@inpursuithealth.com">info@inpursuithealth.com</a>
-        </div>
-        <div>
-          <div class="iph-footer-col-label">Policy</div>
-          <div class="iph-footer-links">
-            <a href="terms.html">Terms of Service</a>
-            <a href="security.html">Security Center</a>
-          </div>
-        </div>
-        <div>
-          <div class="iph-footer-col-label">Company</div>
-          <div class="iph-footer-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="leadership.html">Leadership</a>
-            <a href="careers.html">Careers</a>
-            <a href="mailto:info@inpursuithealth.com">Contact</a>
-          </div>
-        </div>
-      </div>
-      <div id="iph-footer-bottom">
-        <div id="iph-footer-legal">&copy; 2026 InPursuit Health, LLC &mdash; Wyoming Limited Liability Company. All rights reserved. Patent pending.</div>
-        <div id="iph-footer-marks">Results Matter\u2122 &nbsp;|&nbsp; Harness the Power of Your Data\u2122</div>
-      </div>
-    </div>
-  `;
-
-  document.querySelectorAll('footer').forEach(function(el){ el.remove(); });
-  var footer = document.createElement('footer');
-  footer.id = 'iph-footer';
-  footer.innerHTML = fhtml;
-  document.body.appendChild(footer);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inject);
+  } else {
+    inject();
+  }
 
 })();
