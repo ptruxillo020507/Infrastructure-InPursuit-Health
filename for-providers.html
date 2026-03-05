@@ -560,6 +560,45 @@ body { font-family: 'Instrument Sans', sans-serif; background: var(--cream); col
   font-weight: 600;
 }
 .rl-uplift-bridge { background: rgba(56,217,199,0.06); border-color: rgba(56,217,199,0.15); color: #38d9c7; }
+/* ===== MULTI-MODEL ROUTER ===== */
+.router-section{background:var(--navy-deep);position:relative;overflow:hidden;padding:80px 24px;}
+.router-grid{display:grid;grid-template-columns:240px 1fr 320px;gap:0;align-items:center;min-height:540px;}
+@media(max-width:900px){.router-grid{grid-template-columns:1fr;gap:24px;}}
+
+/* Animated connection lines */
+.router-flow{position:absolute;top:50%;height:2px;background:linear-gradient(90deg,transparent,rgba(201,151,0,0.08) 10%,rgba(201,151,0,0.2) 50%,rgba(201,151,0,0.08) 90%,transparent);}
+.router-flow.left{left:240px;width:calc(50% - 380px);}
+.router-flow.right{right:320px;width:calc(50% - 380px);}
+
+/* Flowing particles on the lines */
+@keyframes flowRight{0%{left:-8px;opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{left:calc(100% + 8px);opacity:0;}}
+@keyframes flowLeft{0%{right:-8px;opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{right:calc(100% + 8px);opacity:0;}}
+.flow-particle{position:absolute;top:-2px;width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(201,151,0,0.6);animation:flowRight 2.5s linear infinite;}
+.flow-particle.p2{animation-delay:0.8s;}
+.flow-particle.p3{animation-delay:1.6s;}
+
+/* Route cards animation */
+.route-card-anim{opacity:0;transform:translateX(24px);transition:all 0.6s cubic-bezier(0.23,1,0.32,1);}
+.route-card-anim.visible{opacity:1;transform:translateX(0);}
+
+/* TETRA hub pulse */
+@keyframes hubPulse{0%,100%{box-shadow:0 0 30px rgba(201,151,0,0.05),0 0 60px rgba(201,151,0,0.02);}50%{box-shadow:0 0 50px rgba(201,151,0,0.1),0 0 100px rgba(201,151,0,0.04);}}
+.router-hub{animation:hubPulse 4s ease-in-out infinite;}
+
+/* Orbit ring animation */
+@keyframes orbitSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.router-orbit{position:absolute;border-radius:50%;border:1px solid rgba(201,151,0,0.06);}
+.router-orbit.o1{width:200px;height:200px;top:calc(50% - 100px);left:calc(50% - 100px);animation:orbitSpin 30s linear infinite;}
+.router-orbit.o2{width:300px;height:300px;top:calc(50% - 150px);left:calc(50% - 150px);animation:orbitSpin 45s linear infinite reverse;}
+
+/* Orbit dots */
+.router-orbit-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(201,151,0,0.3);}
+.router-orbit.o1 .router-orbit-dot{top:0;left:50%;transform:translate(-50%,-50%);}
+.router-orbit.o2 .router-orbit-dot{bottom:0;left:50%;transform:translate(-50%,50%);}
+
+/* Model cards hover */
+.model-link{display:block;text-decoration:none;border-radius:16px;padding:24px;transition:all 0.35s cubic-bezier(0.23,1,0.32,1);}
+.model-link:hover{transform:translateY(-6px);}
 </style>
 </head>
 <body>
@@ -886,6 +925,136 @@ body { font-family: 'Instrument Sans', sans-serif; background: var(--cream); col
   </div>
 </section>
 
+<!-- ============================================== -->
+<!-- MULTI-MODEL PAYMENT ROUTER — CENTERPIECE -->
+<!-- ============================================== -->
+<section class="router-section" id="payment-router">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(201,151,0,0.03),transparent 60%);"></div>
+  <div style="max-width:1100px;margin:0 auto;position:relative;z-index:2;">
+    <p class="section-overline reveal" style="text-align:center;color:rgba(201,151,0,0.5);">The TETRA Difference</p>
+    <h2 class="section-headline reveal" style="text-align:center;color:var(--white);max-width:700px;margin:0 auto 12px;">One patient. Four models.<br><em style="color:var(--gold);">Every dollar captured.</em></h2>
+    <p style="text-align:center;font-size:14px;color:rgba(255,255,255,0.3);max-width:640px;margin:0 auto 48px;line-height:1.7;" class="reveal">Every other VBC vendor wants you to pick their model. TETRA evaluates every patient against every eligible CMS payment pathway and routes each service to the optimal model &mdash; in real time.</p>
+
+    <div class="router-grid reveal" id="routerGraphic">
+
+      <!-- LEFT: ROTATING PATIENT PROFILE -->
+      <div id="patientPanel" style="transition:opacity 0.6s ease;">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;text-align:center;margin-bottom:10px;position:relative;overflow:hidden;">
+          <img id="patientImg" src="mrs_johnson.png" alt="" onerror="this.style.display='none'" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(201,151,0,0.2);margin:0 auto 10px;display:block;background:rgba(201,151,0,0.05);">
+          <div id="patientName" style="font-family:'Instrument Serif',serif;font-size:17px;color:var(--white);">Mrs. Johnson, 72</div>
+          <div id="patientSub" style="font-size:10px;color:rgba(255,255,255,0.25);">Medicare FFS &middot; Attributed to MSSP ACO</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;">
+          <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.12);margin-bottom:6px;">Conditions</div>
+          <div id="patientConditions" style="display:flex;flex-direction:column;gap:4px;"></div>
+        </div>
+        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;margin-top:8px;">
+          <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.12);margin-bottom:6px;">Eligible Programs</div>
+          <div id="patientPrograms" style="display:flex;flex-wrap:wrap;gap:3px;"></div>
+        </div>
+        <!-- Rotation indicator -->
+        <div style="display:flex;justify-content:center;gap:6px;margin-top:12px;">
+          <div class="patient-dot" id="pdot0" style="width:8px;height:8px;border-radius:50%;background:var(--gold);transition:all 0.3s;cursor:pointer;" onclick="showPatient(0)"></div>
+          <div class="patient-dot" id="pdot1" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s;cursor:pointer;" onclick="showPatient(1)"></div>
+          <div class="patient-dot" id="pdot2" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s;cursor:pointer;" onclick="showPatient(2)"></div>
+        </div>
+      </div>
+
+      <!-- CENTER: TETRA ROUTER with animated orbits -->
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:0 20px;">
+        <!-- Animated flow lines -->
+        <div class="router-flow left"><div class="flow-particle"></div><div class="flow-particle p2"></div><div class="flow-particle p3"></div></div>
+        <div class="router-flow right"><div class="flow-particle"></div><div class="flow-particle p2"></div><div class="flow-particle p3"></div></div>
+
+        <div class="router-hub" style="position:relative;z-index:2;background:var(--navy-deep);border:2px solid rgba(201,151,0,0.25);border-radius:20px;padding:28px 24px;text-align:center;min-width:260px;">
+          <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+
+          <!-- Orbiting rings -->
+          <div class="router-orbit o1"><div class="router-orbit-dot"></div></div>
+          <div class="router-orbit o2"><div class="router-orbit-dot"></div></div>
+
+          <div style="position:relative;z-index:3;">
+            <div style="font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">TETRA&trade; Orchestration</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--white);line-height:1.3;margin-bottom:6px;">Analyze. Route.<br>Optimize.</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.2);line-height:1.5;margin-bottom:14px;">Every interaction routed to the optimal payment pathway</div>
+
+            <div style="display:flex;flex-direction:column;gap:5px;text-align:left;">
+              <div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:5px;">
+                <div style="width:18px;height:18px;border-radius:3px;background:rgba(56,217,199,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:8px;color:#38d9c7;font-weight:700;">1</div>
+                <div style="font-size:8px;color:rgba(255,255,255,0.3);">Identify conditions &amp; model eligibility</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:5px;">
+                <div style="width:18px;height:18px;border-radius:3px;background:rgba(201,151,0,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:8px;color:var(--gold);font-weight:700;">2</div>
+                <div style="font-size:8px;color:rgba(255,255,255,0.3);">Calculate optimal pathway per service</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:5px;">
+                <div style="width:18px;height:18px;border-radius:3px;background:rgba(78,140,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:8px;color:#4e8cff;font-weight:700;">3</div>
+                <div style="font-size:8px;color:rgba(255,255,255,0.3);">Route billing &amp; capture every claim</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: REVENUE STREAMS (animated cards) -->
+      <!-- RIGHT: ROTATING REVENUE STREAMS -->
+      <div id="revenuePanel" style="display:flex;flex-direction:column;gap:7px;transition:opacity 0.6s ease;">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(201,151,0,0.35);text-align:center;margin-bottom:2px;">Revenue Streams &mdash; <span id="revPatientName">Mrs. Johnson</span></div>
+        <div id="revenueCards"></div>
+        <!-- TOTAL -->
+        <div style="background:rgba(201,151,0,0.08);border:1px solid rgba(201,151,0,0.25);border-radius:10px;padding:14px;text-align:center;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+          <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Total Annual &mdash; One Patient</div>
+          <div id="revTotal" style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--gold);">$3,250</div>
+          <div style="font-size:8px;color:rgba(255,255,255,0.15);margin-top:3px;">vs. &lt;$500 without infrastructure</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom callout -->
+    <div style="text-align:center;margin-top:40px;padding:20px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);border-radius:12px;max-width:700px;margin-left:auto;margin-right:auto;" class="reveal">
+      <div style="font-family:'Instrument Serif',serif;font-size:18px;color:var(--white);margin-bottom:6px;">Without TETRA, you pick one model. With TETRA, you pick all of them.</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.25);line-height:1.7;">The same clinical work generates revenue across every eligible payment pathway. One deployment. Every model. Maximum revenue per patient.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- FOUR CMS MODELS — Navigate to Each -->
+<!-- ============================================== -->
+<section class="section" id="models" style="padding:80px 24px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <p class="section-overline reveal" style="text-align:center;">Four CMS Models. One Infrastructure.</p>
+    <h2 class="section-headline reveal" style="text-align:center;">Every model has a dedicated page <em>with its own calculator.</em></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;" class="reveal">
+      <a href="access.html" class="model-link" style="background:rgba(56,217,199,0.03);border:1px solid rgba(56,217,199,0.12);" onmouseover="this.style.borderColor='rgba(56,217,199,0.3)'" onmouseout="this.style.borderColor='rgba(56,217,199,0.12)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#38d9c7;margin-bottom:6px;">CMS ACCESS Model</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--navy);margin-bottom:4px;">Disease-Specific OAPs</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">$35 PMPM + FFS optimization. 4 clinical tracks. Cohort 1 deadline: April 1, 2026.</div>
+        <div style="font-size:10px;color:#38d9c7;font-weight:600;">Explore ACCESS &rarr;</div>
+      </a>
+      <a href="mssp.html" class="model-link" style="background:rgba(78,140,255,0.03);border:1px solid rgba(78,140,255,0.12);" onmouseover="this.style.borderColor='rgba(78,140,255,0.3)'" onmouseout="this.style.borderColor='rgba(78,140,255,0.12)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#4e8cff;margin-bottom:6px;">MSSP — Shared Savings</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--navy);margin-bottom:4px;">TCOC + FFS Dual Stream</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">477 ACOs, 11.2M beneficiaries, $2.1B savings (2023). Open enrollment.</div>
+        <div style="font-size:10px;color:#4e8cff;font-weight:600;">Explore MSSP &rarr;</div>
+      </a>
+      <a href="lead.html" class="model-link" style="background:rgba(139,92,246,0.03);border:1px solid rgba(139,92,246,0.12);" onmouseover="this.style.borderColor='rgba(139,92,246,0.3)'" onmouseout="this.style.borderColor='rgba(139,92,246,0.12)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b5cf6;margin-bottom:6px;">LEAD Model (Replaces ACO REACH)</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--navy);margin-bottom:4px;">10-Year Capitated ACO</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">No benchmark rebasing. Prospective capitation. RFA March 2026.</div>
+        <div style="font-size:10px;color:#8b5cf6;font-weight:600;">Explore LEAD &rarr;</div>
+      </a>
+      <a href="team.html" class="model-link" style="background:rgba(255,107,53,0.03);border:1px solid rgba(255,107,53,0.12);" onmouseover="this.style.borderColor='rgba(255,107,53,0.3)'" onmouseout="this.style.borderColor='rgba(255,107,53,0.12)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#ff6b35;margin-bottom:6px;">TEAM Model (Mandatory)</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--navy);margin-bottom:4px;">Surgical Episode Bundles</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">5 episode categories, 188 CBSAs. Live January 2026. Mandatory.</div>
+        <div style="font-size:10px;color:#ff6b35;font-weight:600;">Explore TEAM &rarr;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- TECHNOLOGY TOPOLOGY DIAGRAM -->
 <!-- ============================================== -->
 <section class="topo-section" id="technology">
@@ -986,7 +1155,7 @@ body { font-family: 'Instrument Sans', sans-serif; background: var(--cream); col
           <div class="topo-outer-dot"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
           <span class="topo-outer-label">Your EHR</span>
         </div>
-        <div class="topo-outer-node" data-info="CMS / Payers|ACCESS OAPs, ACO shared savings, bundled payments, quality reporting." data-angle="60">
+        <div class="topo-outer-node" data-info="CMS / Payers|ACCESS OAPs, MSSP shared savings, LEAD capitation, TEAM episodes, quality reporting." data-angle="60">
           <div class="topo-outer-dot"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
           <span class="topo-outer-label">CMS / Payers</span>
         </div>
@@ -1199,10 +1368,10 @@ body { font-family: 'Instrument Sans', sans-serif; background: var(--cream); col
         <label style="font-size:11px;margin-top:12px;">What VBC / APM contracts do you currently participate in? <span style="font-size:9px; color:rgba(197,164,78,0.35); text-transform:none; letter-spacing:0; font-weight:400;">(select all)</span></label>
         <div class="calc-checkbox-grid" id="currentContracts">
           <label class="calc-check"><input type="checkbox" value="none" id="vbcNone" checked> None — new to VBC</label>
-          <label class="calc-check"><input type="checkbox" value="mssp"> MSSP / ACO</label>
-          <label class="calc-check"><input type="checkbox" value="acoreach"> ACO REACH</label>
-          <label class="calc-check"><input type="checkbox" value="mastars"> Medicare Advantage Stars</label>
-          <label class="calc-check"><input type="checkbox" value="bundled"> Bundled Payments</label>
+          <label class="calc-check"><input type="checkbox" value="access"> ACCESS (Predictive / Disease-Specific)</label>
+          <label class="calc-check"><input type="checkbox" value="mssp"> MSSP / ACO (Shared Savings)</label>
+          <label class="calc-check"><input type="checkbox" value="lead"> LEAD (Capitated ACO — 2027)</label>
+          <label class="calc-check"><input type="checkbox" value="team"> TEAM (Episode Bundles — Mandatory)</label>
           <label class="calc-check"><input type="checkbox" value="commercial"> Commercial VBC (BCBS, Aetna, Cigna, etc.)</label>
         </div>
 
@@ -1487,6 +1656,185 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* Route card sequential animation */
+const routerObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const cards = document.querySelectorAll('.route-card-anim');
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('visible'), 200 + i * 180);
+      });
+      routerObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.25 });
+const routerEl = document.getElementById('routerGraphic');
+if (routerEl) routerObs.observe(routerEl);
+
+/* ══ PATIENT PROFILE ROTATION ══ */
+const patients = [
+  {
+    img: 'mrs_johnson.png',
+    name: 'Mrs. Johnson, 72',
+    sub: 'Medicare FFS &middot; Attributed to MSSP ACO',
+    conditions: [
+      { color: '#38d9c7', label: 'CKD Stage 3 (eCKD track)' },
+      { color: '#4e8cff', label: 'Type 2 Diabetes' },
+      { color: '#8b5cf6', label: 'Major Depression' },
+      { color: 'var(--gold)', label: 'Hypertension' }
+    ],
+    programs: [
+      { bg: 'rgba(56,217,199,0.1)', color: '#38d9c7', label: 'ACCESS' },
+      { bg: 'rgba(78,140,255,0.1)', color: '#4e8cff', label: 'MSSP' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'AWV' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'CCM' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'RPM' },
+      { bg: 'rgba(139,92,246,0.1)', color: '#8b5cf6', label: 'BHI' }
+    ],
+    revenue: [
+      { model: 'ACCESS eCKD', desc: 'Outcome-Aligned Payment', amount: '$420', detail: '$35 PMPM &times; 12 months', bg: 'rgba(56,217,199,0.04)', border: 'rgba(56,217,199,0.15)', color: '#38d9c7' },
+      { model: 'MSSP Shared Savings', desc: 'TCOC reduction', amount: '$323', detail: '$12,900 &times; 5% &times; 50% sharing', bg: 'rgba(78,140,255,0.04)', border: 'rgba(78,140,255,0.15)', color: '#4e8cff' },
+      { model: 'FFS Care Management', desc: 'AWV + CCM + RPM + BHI', amount: '$2,507', detail: '$155 + $720 + $1,008 + $624', bg: 'rgba(201,151,0,0.04)', border: 'rgba(201,151,0,0.15)', color: 'var(--gold)' }
+    ],
+    total: '$3,250',
+    shortName: 'Mrs. Johnson'
+  },
+  {
+    img: 'mr_davis.png',
+    name: 'Mr. Davis, 68',
+    sub: 'Medicare FFS &middot; In Mandatory TEAM CBSA',
+    conditions: [
+      { color: '#ff6b35', label: 'Knee OA (LEJR scheduled)' },
+      { color: '#4e8cff', label: 'CHF (HFrEF)' },
+      { color: 'var(--gold)', label: 'Hypertension (uncontrolled)' },
+      { color: '#38d9c7', label: 'Type 2 Diabetes' }
+    ],
+    programs: [
+      { bg: 'rgba(255,107,53,0.1)', color: '#ff6b35', label: 'TEAM' },
+      { bg: 'rgba(78,140,255,0.1)', color: '#4e8cff', label: 'MSSP' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'AWV' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'CCM' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'RPM' }
+    ],
+    revenue: [
+      { model: 'TEAM LEJR Episode', desc: 'Knee replacement savings', amount: '$938', detail: '$25K target &times; 5% &times; 75% Track 3', bg: 'rgba(255,107,53,0.04)', border: 'rgba(255,107,53,0.15)', color: '#ff6b35' },
+      { model: 'MSSP Shared Savings', desc: 'TCOC reduction', amount: '$323', detail: '$12,900 &times; 5% &times; 50% sharing', bg: 'rgba(78,140,255,0.04)', border: 'rgba(78,140,255,0.15)', color: '#4e8cff' },
+      { model: 'FFS Care Management', desc: 'AWV + CCM + RPM', amount: '$1,883', detail: '$155 + $720 + $1,008', bg: 'rgba(201,151,0,0.04)', border: 'rgba(201,151,0,0.15)', color: 'var(--gold)' }
+    ],
+    total: '$3,144',
+    shortName: 'Mr. Davis'
+  },
+  {
+    img: 'ms_chen.png',
+    name: 'Ms. Chen, 81',
+    sub: 'Dual-eligible &middot; Homebound &middot; Rural County',
+    conditions: [
+      { color: '#38d9c7', label: 'CKD Stage 4' },
+      { color: '#4e8cff', label: 'COPD (on O2)' },
+      { color: 'var(--gold)', label: 'Hypertension' },
+      { color: '#8b5cf6', label: 'Homebound / High-Needs' }
+    ],
+    programs: [
+      { bg: 'rgba(56,217,199,0.1)', color: '#38d9c7', label: 'ACCESS' },
+      { bg: 'rgba(139,92,246,0.1)', color: '#8b5cf6', label: 'LEAD' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'AWV' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'CCM' },
+      { bg: 'rgba(201,151,0,0.1)', color: 'var(--gold)', label: 'RPM' }
+    ],
+    revenue: [
+      { model: 'ACCESS eCKD', desc: 'Outcome-Aligned Payment', amount: '$420', detail: '$35 PMPM &times; 12 months', bg: 'rgba(56,217,199,0.04)', border: 'rgba(56,217,199,0.15)', color: '#38d9c7' },
+      { model: 'LEAD Capitation Surplus', desc: 'Projected Year 3+', amount: '$516', detail: '$12,900 &times; 4% savings &times; 100% Global', bg: 'rgba(139,92,246,0.04)', border: 'rgba(139,92,246,0.15)', color: '#8b5cf6' },
+      { model: 'FFS Care Management', desc: 'AWV + CCM + RPM', amount: '$1,883', detail: '$155 + $720 + $1,008', bg: 'rgba(201,151,0,0.04)', border: 'rgba(201,151,0,0.15)', color: 'var(--gold)' }
+    ],
+    total: '$2,819',
+    shortName: 'Ms. Chen'
+  }
+];
+
+let currentPatient = 0;
+let patientTimer;
+
+function renderCondition(c) {
+  return '<div style="font-size:10px;color:rgba(255,255,255,0.35);display:flex;align-items:center;gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:'+c.color+';flex-shrink:0;"></span>'+c.label+'</div>';
+}
+function renderProgram(p) {
+  return '<span style="padding:2px 6px;font-size:8px;font-weight:600;border-radius:3px;background:'+p.bg+';color:'+p.color+';">'+p.label+'</span>';
+}
+function renderRevCard(r) {
+  return '<div style="background:'+r.bg+';border:1px solid '+r.border+';border-radius:10px;padding:12px;margin-bottom:7px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+    '<div><div style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:'+r.color+';">'+r.model+'</div><div style="font-size:9px;color:rgba(255,255,255,0.2);margin-top:1px;">'+r.desc+'</div></div>' +
+    '<div style="font-family:\'Instrument Serif\',serif;font-size:18px;color:'+r.color+';">'+r.amount+'</div>' +
+    '</div><div style="font-size:8px;color:rgba(255,255,255,0.12);margin-top:3px;">'+r.detail+'</div></div>';
+}
+
+function showPatient(idx) {
+  currentPatient = idx;
+  const p = patients[idx];
+  const panel = document.getElementById('patientPanel');
+  const revPanel = document.getElementById('revenuePanel');
+
+  // Fade out
+  panel.style.opacity = '0';
+  revPanel.style.opacity = '0';
+
+  setTimeout(() => {
+    // Update patient
+    const imgEl = document.getElementById('patientImg');
+    imgEl.style.display = 'block';
+    imgEl.src = p.img;
+    imgEl.onerror = function(){ this.style.display='none'; };
+    document.getElementById('patientName').textContent = p.name;
+    document.getElementById('patientSub').innerHTML = p.sub;
+    document.getElementById('patientConditions').innerHTML = p.conditions.map(renderCondition).join('');
+    document.getElementById('patientPrograms').innerHTML = p.programs.map(renderProgram).join('');
+
+    // Update revenue
+    document.getElementById('revPatientName').textContent = p.shortName;
+    document.getElementById('revenueCards').innerHTML = p.revenue.map(renderRevCard).join('');
+    document.getElementById('revTotal').textContent = p.total;
+
+    // Update dots
+    for (let i = 0; i < 3; i++) {
+      document.getElementById('pdot' + i).style.background = i === idx ? 'var(--gold)' : 'rgba(255,255,255,0.15)';
+    }
+
+    // Fade in
+    panel.style.opacity = '1';
+    revPanel.style.opacity = '1';
+  }, 500);
+
+  // Reset timer
+  clearInterval(patientTimer);
+  patientTimer = setInterval(() => showPatient((currentPatient + 1) % 3), 7000);
+}
+
+// Initialize first patient immediately (no fade on load)
+(function initPatient() {
+  const p = patients[0];
+  const img = document.getElementById('patientImg');
+  if (img) { img.src = p.img; img.onerror = function(){ this.style.display='none'; }; }
+  const nameEl = document.getElementById('patientName');
+  if (nameEl) nameEl.textContent = p.name;
+  const subEl = document.getElementById('patientSub');
+  if (subEl) subEl.innerHTML = p.sub;
+  const condEl = document.getElementById('patientConditions');
+  if (condEl) condEl.innerHTML = p.conditions.map(renderCondition).join('');
+  const progEl = document.getElementById('patientPrograms');
+  if (progEl) progEl.innerHTML = p.programs.map(renderProgram).join('');
+  const revNameEl = document.getElementById('revPatientName');
+  if (revNameEl) revNameEl.textContent = p.shortName;
+  const revCardsEl = document.getElementById('revenueCards');
+  if (revCardsEl) revCardsEl.innerHTML = p.revenue.map(renderRevCard).join('');
+  const revTotalEl = document.getElementById('revTotal');
+  if (revTotalEl) revTotalEl.textContent = p.total;
+})();
+
+// Start auto-rotation every 7 seconds
+patientTimer = setInterval(function() {
+  showPatient((currentPatient + 1) % 3);
+}, 7000);
 
 // ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(a => {
