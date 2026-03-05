@@ -1,350 +1,633 @@
-/**
- * nav.js — InPursuit Health Universal Navigation + Footer
- * Drop in site root. Add before </body> on every page:
- *   <script src="nav.js"></script>
- */
+/* ─────────────────────────────────────────────────────
+   InPursuit Health — nav.js
+   Brand gold: #C5A44E  |  Navy: #0A1628
+   ───────────────────────────────────────────────────── */
 
 (function () {
+  const GOLD  = '#C5A44E';
+  const NAVY  = '#0A1628';
+  const NAV_H = '68px';
 
-  /* ── NAV STRUCTURE ─────────────────────────────────────────── */
-  var NAV = [
-    {
-      label: 'TETRA',
-      href:  'tetra.html',
-      children: [
-        { label: 'TETRA Ex\u2122',        href: 'tetra-ex.html',        desc: 'Enterprise data exchange &amp; interoperability infrastructure' },
-        { label: 'TETRA Conductor\u2122', href: 'tetra-conductor.html', desc: 'Model-agnostic AI orchestration layer for healthcare' },
-        {
-          label: 'TETRA Aegis\u2122',
-          href:  'tetra-aegis.html',
-          desc:  'AI governance &amp; supervisory control architecture',
-          children: [
-            { label: 'TETRA Sentinel\u2122', href: 'tetra-sentinel.html', desc: 'Real-time AI supervision &amp; threat interception agent' }
-          ]
-        }
-      ]
-    },
-    {
-      label: 'For You',
-      href:  'for-you.html',
-      children: [
-        { label: 'The Data Oath', href: 'data-oath.html', desc: 'Our promise on how your health data is used' }
-      ]
-    },
-    {
-      label: 'For VBC Providers',
-      href:  'for-providers.html',
-      children: [
-        { label: 'CMS ACCESS Model', href: 'access.html', desc: 'Apply by April\u00a01, 2026\u00a0\u2014 Cohort\u00a01' },
-        { label: 'MSSP',            href: 'mssp.html',   desc: 'Medicare Shared Savings Program' },
-        { label: 'LEAD',            href: 'lead.html',   desc: 'Lung Cancer Early Detection' },
-        { label: 'TEAM',            href: 'team.html',   desc: 'Transforming Episode Accountability Model' }
-      ]
-    },
-    {
-      label: 'Veterans First',
-      href:  'veterans-first.html'
+  /* ── 1. INJECT STYLES ── */
+  const style = document.createElement('style');
+  style.textContent = `
+    /* Reset nav margin so nothing shifts */
+    body { margin-top: ${NAV_H}; }
+
+    #ip-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: ${NAV_H};
+      background: ${NAVY};
+      border-bottom: 1px solid rgba(197,164,78,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 9999;
+      font-family: Arial, Helvetica, sans-serif;
+      box-sizing: border-box;
     }
-  ];
 
-  var CTA = { label: 'Invest', href: 'investor.html' };
-
-  /* ── FOOTER COLUMNS ────────────────────────────────────────── */
-  var FOOTER_COLS = [
-    {
-      heading: 'Policy',
-      links: [
-        { label: 'MAHA',             href: 'maha.html' },
-        { label: 'Privacy Policy',   href: 'privacy.html' },
-        { label: 'Terms of Service', href: 'terms.html' },
-        { label: 'Security Center',  href: 'security.html' }
-      ]
-    },
-    {
-      heading: 'Company',
-      links: [
-        { label: 'About Us',   href: 'about.html' },
-        { label: 'Leadership', href: 'leadership.html' },
-        { label: 'Careers',    href: 'careers.html' },
-        { label: 'Contact',    href: 'contact.html' }
-      ]
+    /* ── Logo ── */
+    #ip-nav .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      flex-shrink: 0;
     }
-  ];
 
-  /* ── CSS ───────────────────────────────────────────────────── */
-  var CSS = [
-    ':root{--iph-navy:#0A1628;--iph-navy-deep:#060E1A;--iph-navy-mid:#112240;--iph-gold:#C5A44E;--iph-gold-light:#D4B96A;--iph-white:#FFFFFF;--iph-muted:rgba(255,255,255,0.55);--iph-border:rgba(197,164,78,0.2);--iph-border-dim:rgba(197,164,78,0.08);--iph-drop:#060E1A;--iph-h:64px;}',
-    'body{padding-top:var(--iph-h);}',
-    '#iph-header{background:#060E1A;border-bottom:1px solid rgba(197,164,78,0.2);position:fixed;top:0;left:0;right:0;z-index:1000;transition:box-shadow 0.3s ease;}',
-    '#iph-header.scrolled{box-shadow:0 4px 30px rgba(0,0,0,0.4);}',
-    '#iph-header-inner{max-width:1400px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;align-items:center;height:var(--iph-h);}',
-    /* brand */
-    '#iph-brand{display:flex;align-items:center;flex-shrink:0;}#iph-brand-sub:hover{color:#C5A44E!important;opacity:1!important;}',
-    '#iph-brand-wordmark{font-family:"Instrument Serif",Georgia,serif;font-size:22px;color:#C5A44E;letter-spacing:1px;line-height:1;}',
-    '#iph-brand-pipe{color:rgba(197,164,78,0.3);font-size:18px;margin:0 12px;font-weight:300;}',
-    '#iph-brand-sub{font-family:"Instrument Sans",Arial,sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(197,164,78,0.55);line-height:1;}',
-    /* desktop nav */
-    '#iph-nav{display:flex;align-items:center;gap:0;list-style:none;margin:0;padding:0;}',
-    '.iph-ni{position:relative;list-style:none;}',
-    '.iph-ni>a{display:flex;align-items:center;gap:4px;padding:20px 14px;font-family:"Instrument Sans",Arial,sans-serif;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;transition:color 0.3s ease;cursor:pointer;position:relative;white-space:nowrap;}',
-    '.iph-ni>a:hover,.iph-ni.iph-open>a,.iph-ni:hover>a{color:#C5A44E;}',
-    '.iph-ni>a::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:#C5A44E;transition:width 0.3s ease;}',
-    '.iph-ni>a:hover::after,.iph-ni.iph-open>a::after,.iph-ni:hover>a::after{width:60%;}',
-    '.iph-chev{width:10px;height:10px;flex-shrink:0;opacity:0.5;transition:transform 0.2s,opacity 0.2s;}',
-    '.iph-ni.iph-open>a .iph-chev,.iph-drop-item.iph-open>a .iph-chev{transform:rotate(180deg);opacity:0.9;}',
-    /* dropdown */
-    '.iph-drop{display:none;position:absolute;top:calc(var(--iph-h) - 4px);padding-top:4px;left:0;min-width:280px;background:#060E1A;border:1px solid rgba(197,164,78,0.15);border-radius:10px;padding:8px;box-shadow:0 24px 60px rgba(0,0,0,0.5);z-index:999;list-style:none;margin:0;}',
-    '.iph-ni.iph-open>.iph-drop,.iph-ni:hover>.iph-drop{display:block;}',
-    '.iph-drop-item{position:relative;list-style:none;}',
-    '.iph-drop-item>a{display:flex;flex-direction:column;padding:11px 14px;border-radius:8px;text-decoration:none;transition:background 0.15s;}',
-    '.iph-drop-item>a:hover,.iph-drop-item.iph-open>a{background:rgba(197,164,78,0.07);}',
-    '.iph-drop-sep{height:1px;background:rgba(197,164,78,0.08);margin:4px 8px;}',
-    '.di-label{font-family:"Instrument Sans",Arial,sans-serif;font-size:13px;font-weight:600;color:#FFFFFF;display:flex;align-items:center;gap:6px;}',
-    '.di-desc{font-family:"Instrument Sans",Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;line-height:1.45;}',
-    /* sub-dropdown */
-    '.iph-subdrop{display:none;background:rgba(0,0,0,0.3);border:1px solid rgba(197,164,78,0.08);border-radius:8px;margin:2px 8px 4px;padding:4px;list-style:none;}',
-    '.iph-drop-item.iph-open>.iph-subdrop,.iph-drop-item:hover>.iph-subdrop{display:block;}',
-    '.iph-subdrop-item{list-style:none;}',
-    '.iph-subdrop-item a{display:flex;flex-direction:column;padding:9px 12px;border-radius:6px;text-decoration:none;transition:background 0.15s;}',
-    '.iph-subdrop-item a:hover{background:rgba(197,164,78,0.07);}',
-    '.iph-subdrop-item .di-label{font-size:12px;color:#C5A44E;}',
-    /* CTA */
-    '#iph-cta{margin-left:24px;flex-shrink:0;display:inline-flex;align-items:center;padding:9px 22px;background:#C5A44E;color:#060E1A;font-family:"Instrument Sans",Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:4px;white-space:nowrap;position:relative;overflow:hidden;animation:iphInvestPulse 3.5s ease-in-out infinite;}',
-    '#iph-cta::before{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,0.28) 50%,transparent 80%);animation:iphInvestShimmer 3.5s ease-in-out infinite;pointer-events:none;}',
-    '#iph-cta:hover{transform:translateY(-1px);animation-play-state:paused;}',
-    '#iph-cta:hover::before{animation-play-state:paused;}',
-    '@keyframes iphInvestPulse{0%,100%{background:#C5A44E;box-shadow:0 0 0 0 rgba(197,164,78,0);}40%{background:#d4b05a;box-shadow:0 0 12px 2px rgba(197,164,78,0.45),0 0 28px 6px rgba(197,164,78,0.18);}70%{background:#C5A44E;box-shadow:0 0 6px 1px rgba(197,164,78,0.2);}}',
-    '@keyframes iphInvestShimmer{0%,30%{left:-100%;}55%{left:140%;}100%{left:140%;}}',
-    '.btn-invest{position:relative;overflow:hidden;animation:iphInvestPulse 3.5s ease-in-out infinite;}',
-    '.btn-invest::before{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,0.28) 50%,transparent 80%);animation:iphInvestShimmer 3.5s ease-in-out infinite;pointer-events:none;}',
-    '.btn-invest:hover{animation-play-state:paused;}',
-    '.btn-invest:hover::before{animation-play-state:paused;}',
-    /* burger */
-    '#iph-burger{display:none;background:none;border:none;width:32px;height:32px;cursor:pointer;position:relative;flex-shrink:0;}',
-    '#iph-burger span{display:block;width:22px;height:2px;background:#C5A44E;position:absolute;left:5px;transition:all 0.3s ease;}',
-    '#iph-burger span:nth-child(1){top:8px;}#iph-burger span:nth-child(2){top:15px;}#iph-burger span:nth-child(3){top:22px;}',
-    '#iph-header.iph-mob-open #iph-burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}',
-    '#iph-header.iph-mob-open #iph-burger span:nth-child(2){opacity:0;}',
-    '#iph-header.iph-mob-open #iph-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}',
-    /* mobile */
-    '#iph-mob{display:none;position:fixed;top:var(--iph-h);left:0;right:0;background:#060E1A;border-top:1px solid rgba(197,164,78,0.2);z-index:999;overflow-y:auto;max-height:calc(100vh - var(--iph-h));padding:12px 0 32px;}',
-    '#iph-header.iph-mob-open~#iph-mob{display:block;}',
-    '.mob-sec{border-bottom:1px solid rgba(197,164,78,0.07);padding:2px 0;}',
-    '.mob-top{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;font-family:"Instrument Sans",Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);text-decoration:none;cursor:pointer;}',
-    '.mob-sec.iph-open .mob-top .iph-chev{transform:rotate(180deg);opacity:0.9;}',
-    '.mob-kids{display:none;padding-bottom:6px;}.mob-sec.iph-open .mob-kids{display:block;}',
-    '.mob-kid{display:flex;flex-direction:column;padding:10px 24px 10px 36px;text-decoration:none;}',
-    '.mob-kid .di-label{font-size:13px;color:#FFFFFF;}.mob-kid .di-desc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}',
-    '.mob-sub-head{padding:8px 24px 3px 36px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C5A44E;opacity:0.5;}',
-    '.mob-sub{display:flex;flex-direction:column;padding:9px 24px 9px 50px;text-decoration:none;background:rgba(0,0,0,0.18);}',
-    '.mob-sub .di-label{font-size:12px;color:#C5A44E;}.mob-sub .di-desc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}',
-    '.mob-cta{display:block;margin:20px 24px 0;padding:14px;background:#C5A44E;color:#060E1A;font-family:"Instrument Sans",Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;text-decoration:none;border-radius:4px;}',
-    /* footer */
-    '#iph-footer{background:#060E1A;border-top:1px solid rgba(197,164,78,0.1);padding:48px 40px 32px;}',
-    '#iph-footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}',
-    '#iph-footer-brand{font-family:"Instrument Serif",Georgia,serif;font-size:18px;color:#C5A44E;letter-spacing:1px;}',
-    '#iph-footer-legal{font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.5px;}',
-    '#iph-footer-cols{max-width:1200px;margin:24px auto 0;padding-top:24px;border-top:1px solid rgba(197,164,78,0.08);display:flex;gap:64px;flex-wrap:wrap;}',
-    '.iph-fcol-head{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(197,164,78,0.5);margin-bottom:14px;}',
-    '.iph-fcol-links{display:flex;flex-direction:column;gap:11px;}',
-    '.iph-fcol-links a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.3s;}',
-    '.iph-fcol-links a:hover{color:#C5A44E;}',
-    '#iph-footer-disclaimer{max-width:1200px;margin:24px auto 0;font-size:10px;color:rgba(255,255,255,0.15);line-height:1.6;}',
-    /* responsive */
-    '@media(max-width:900px){#iph-nav,#iph-cta{display:none!important;}#iph-burger{display:block;}#iph-footer-cols{gap:40px;}}',
-    '@media(min-width:901px){#iph-mob{display:none!important;}}',
-    '@media(max-width:768px){#iph-header-inner{padding:0 20px;}#iph-footer{padding:40px 24px 28px;}}'
-  ].join('\n');
+    #ip-nav .nav-logo-mark {
+      width: 32px; height: 32px;
+    }
 
-  /* ── CHEVRON ────────────────────────────────────────────────── */
-  function chev() {
-    var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    s.setAttribute('viewBox', '0 0 12 12');
-    s.setAttribute('fill', 'none');
-    s.setAttribute('stroke', 'currentColor');
-    s.setAttribute('stroke-width', '2');
-    s.setAttribute('stroke-linecap', 'round');
-    s.setAttribute('stroke-linejoin', 'round');
-    s.className.baseVal = 'iph-chev';
-    var p = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-    p.setAttribute('points', '2,4 6,8 10,4');
-    s.appendChild(p);
-    return s;
-  }
+    #ip-nav .nav-logo-text {
+      font-family: Georgia, serif;
+      font-size: 1.15rem;
+      color: #fff;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
 
-  /* ── DESKTOP DROPDOWN ───────────────────────────────────────── */
-  function buildDrop(items) {
-    var ul = document.createElement('ul');
-    ul.className = 'iph-drop';
-    items.forEach(function (item, idx) {
-      if (idx > 0) { var sep = document.createElement('li'); sep.className = 'iph-drop-sep'; ul.appendChild(sep); }
-      var li = document.createElement('li');
-      li.className = 'iph-drop-item';
-      var a = document.createElement('a');
-      a.href = item.href || '#';
-      var lbl = document.createElement('span');
-      lbl.className = 'di-label';
-      lbl.innerHTML = item.label;
-      if (item.children && item.children.length) lbl.appendChild(chev());
-      a.appendChild(lbl);
-      if (item.desc) { var d = document.createElement('span'); d.className = 'di-desc'; d.innerHTML = item.desc; a.appendChild(d); }
-      li.appendChild(a);
-      if (item.children && item.children.length) {
-        var sub = document.createElement('ul');
-        sub.className = 'iph-subdrop';
-        item.children.forEach(function (sc) {
-          var sli = document.createElement('li'); sli.className = 'iph-subdrop-item';
-          var sa = document.createElement('a'); sa.href = sc.href || '#';
-          var sl = document.createElement('span'); sl.className = 'di-label'; sl.innerHTML = sc.label; sa.appendChild(sl);
-          if (sc.desc) { var sd = document.createElement('span'); sd.className = 'di-desc'; sd.innerHTML = sc.desc; sa.appendChild(sd); }
-          sli.appendChild(sa); sub.appendChild(sli);
-        });
-        li.appendChild(sub);
-        a.addEventListener('click', function (e) { e.preventDefault(); li.classList.toggle('iph-open'); });
-      }
-      ul.appendChild(li);
+    #ip-nav .nav-logo-text span {
+      display: block;
+      font-family: Arial, sans-serif;
+      font-size: 0.58rem;
+      color: ${GOLD};
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ── Nav links container ── */
+    #ip-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      list-style: none;
+      margin: 0; padding: 0;
+      height: ${NAV_H};
+    }
+
+    /* ── Top-level items ── */
+    #ip-nav .nav-links > li {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    #ip-nav .nav-links > li > a {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      height: 100%;
+      padding: 0 1rem;
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: color 0.2s;
+      /* Extend the hover area downward to bridge the gap to the dropdown */
+      padding-bottom: 0;
+      box-sizing: border-box;
+    }
+
+    #ip-nav .nav-links > li > a:hover,
+    #ip-nav .nav-links > li.open > a {
+      color: ${GOLD};
+    }
+
+    /* Caret indicator for items with dropdowns */
+    #ip-nav .nav-links > li.has-drop > a::after {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      margin-top: -3px;
+      transition: transform 0.2s;
+    }
+
+    #ip-nav .nav-links > li.has-drop.open > a::after {
+      transform: rotate(-135deg);
+      margin-top: 3px;
+    }
+
+    /* ── THE KEY FIX: bridge element fills gap between nav item and dropdown ── */
+    #ip-nav .nav-links > li.has-drop > a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 12px;               /* covers the gap */
+      background: transparent;
+    }
+
+    /* ── Dropdown panel ── */
+    #ip-nav .nav-drop {
+      display: none;
+      position: absolute;
+      top: calc(${NAV_H} - 1px);  /* flush to nav bottom, no gap */
+      left: 0;
+      min-width: 220px;
+      background: ${NAVY};
+      border: 1px solid rgba(197,164,78,0.2);
+      border-top: 2px solid ${GOLD};
+      border-radius: 0 0 8px 8px;
+      padding: 0.5rem 0;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      z-index: 10000;
+    }
+
+    /* Show on hover — the parent li maintains hover state because
+       the dropdown is a child of it, so moving mouse into dropdown
+       keeps the li:hover active. No gap = no disappearing. */
+    #ip-nav .nav-links > li.has-drop:hover > .nav-drop,
+    #ip-nav .nav-links > li.has-drop.open > .nav-drop {
+      display: block;
+    }
+
+    #ip-nav .nav-drop a {
+      display: block;
+      padding: 0.55rem 1.25rem;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    #ip-nav .nav-drop a:hover {
+      color: ${GOLD};
+      background: rgba(197,164,78,0.07);
+      padding-left: 1.5rem;
+    }
+
+    #ip-nav .nav-drop .drop-label {
+      display: block;
+      padding: 0.6rem 1.25rem 0.3rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: ${GOLD};
+      opacity: 0.7;
+    }
+
+    #ip-nav .nav-drop hr {
+      border: none;
+      border-top: 1px solid rgba(197,164,78,0.12);
+      margin: 0.35rem 0;
+    }
+
+    /* ── CTA button ── */
+    #ip-nav .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    #ip-nav .nav-cta a {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    #ip-nav .btn-nav-outline {
+      border: 1px solid rgba(197,164,78,0.45);
+      color: ${GOLD};
+      background: transparent;
+    }
+
+    #ip-nav .btn-nav-outline:hover {
+      background: rgba(197,164,78,0.1);
+      border-color: ${GOLD};
+    }
+
+    #ip-nav .btn-nav-solid {
+      background: ${GOLD};
+      color: ${NAVY};
+      border: 1px solid ${GOLD};
+    }
+
+    #ip-nav .btn-nav-solid:hover {
+      background: #d4ba6e;
+      border-color: #d4ba6e;
+    }
+
+    /* ── Mobile hamburger ── */
+    #ip-nav .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    #ip-nav .nav-hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ── Mobile drawer ── */
+    #ip-nav-mobile {
+      display: none;
+      position: fixed;
+      top: ${NAV_H};
+      left: 0; right: 0;
+      background: ${NAVY};
+      border-bottom: 1px solid rgba(197,164,78,0.2);
+      z-index: 9998;
+      padding: 1rem 0 1.5rem;
+      font-family: Arial, sans-serif;
+      overflow-y: auto;
+      max-height: calc(100vh - ${NAV_H});
+    }
+
+    #ip-nav-mobile.open { display: block; }
+
+    #ip-nav-mobile a {
+      display: block;
+      padding: 0.65rem 2rem;
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+
+    #ip-nav-mobile a:hover {
+      color: ${GOLD};
+      border-left-color: ${GOLD};
+      background: rgba(197,164,78,0.06);
+    }
+
+    #ip-nav-mobile .mob-section {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: ${GOLD};
+      opacity: 0.6;
+      padding: 1rem 2rem 0.25rem;
+    }
+
+    #ip-nav-mobile .mob-sub a {
+      padding-left: 2.75rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    #ip-nav-mobile .mob-cta {
+      padding: 1rem 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    #ip-nav-mobile .mob-cta a {
+      text-align: center;
+      border-radius: 6px;
+      padding: 0.7rem;
+      border-left: none !important;
+    }
+
+    /* ── Footer ── */
+    #ip-footer {
+      background: ${NAVY};
+      border-top: 1px solid rgba(197,164,78,0.2);
+      padding: 3.5rem 2.5rem 2rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .ip-footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .ip-footer-brand .logo-text {
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .ip-footer-brand .logo-sub {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: ${GOLD};
+      margin-bottom: 1rem;
+    }
+
+    .ip-footer-brand p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      max-width: 240px;
+    }
+
+    .ip-footer-brand .footer-marks {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: rgba(197,164,78,0.6);
+    }
+
+    .ip-footer-col h4 {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: ${GOLD};
+      margin-bottom: 1rem;
+    }
+
+    .ip-footer-col a {
+      display: block;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin-bottom: 0.55rem;
+      transition: color 0.2s;
+    }
+
+    .ip-footer-col a:hover { color: ${GOLD}; }
+
+    .ip-footer-bottom {
+      max-width: 1100px;
+      margin: 2.5rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(197,164,78,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .ip-footer-bottom p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .ip-footer-bottom a {
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      margin-left: 1.25rem;
+      font-size: 0.72rem;
+      transition: color 0.2s;
+    }
+
+    .ip-footer-bottom a:hover { color: ${GOLD}; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      #ip-nav .nav-links,
+      #ip-nav .nav-cta { display: none; }
+      #ip-nav .nav-hamburger { display: flex; }
+      .ip-footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      #ip-nav { padding: 0 1.25rem; }
+      .ip-footer-grid { grid-template-columns: 1fr; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ── 2. BUILD NAV HTML ── */
+  const nav = document.createElement('nav');
+  nav.id = 'ip-nav';
+  nav.innerHTML = `
+    <a href="/index.html" class="nav-logo">
+      <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="15" stroke="${GOLD}" stroke-width="1.5" fill="none"/>
+        <line x1="16" y1="1" x2="16" y2="31" stroke="${GOLD}" stroke-width="1" opacity="0.5"/>
+        <line x1="1" y1="16" x2="31" y2="16" stroke="${GOLD}" stroke-width="1" opacity="0.5"/>
+        <circle cx="16" cy="16" r="3" fill="${GOLD}"/>
+        <line x1="16" y1="1" x2="16" y2="10" stroke="${GOLD}" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <div class="nav-logo-text">
+        InPursuit Health
+        <span>Results Matter™</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+
+      <li class="has-drop">
+        <a href="#">Infrastructure</a>
+        <div class="nav-drop">
+          <span class="drop-label">Core</span>
+          <a href="/tetra.html">TETRA™ — Data Fabric</a>
+          <a href="/tetra-ex.html">TETRA Ex™ — Exchange</a>
+          <hr>
+          <span class="drop-label">Intelligence</span>
+          <a href="/tetra-aegis.html">TETRA Aegis™ — Protection</a>
+          <a href="/tetra-conductor.html">TETRA Conductor™ — AI Orchestration</a>
+        </div>
+      </li>
+
+      <li class="has-drop">
+        <a href="#">Solutions</a>
+        <div class="nav-drop">
+          <span class="drop-label">Providers</span>
+          <a href="/for-providers.html">For Providers</a>
+          <a href="/access.html">CMS ACCESS Model</a>
+          <a href="/access-apply.html">Apply Now</a>
+          <hr>
+          <span class="drop-label">Consumers</span>
+          <a href="/for-you.html">For You</a>
+          <a href="/mypursuit.html">MyPursuit App</a>
+          <hr>
+          <span class="drop-label">Federal</span>
+          <a href="/veterans-first.html">Veterans First</a>
+          <a href="/maha.html">MAHA Initiative</a>
+        </div>
+      </li>
+
+      <li class="has-drop">
+        <a href="#">VBC Models</a>
+        <div class="nav-drop">
+          <a href="/access.html">ACCESS Model</a>
+          <a href="/mssp.html">MSSP</a>
+          <a href="/lead.html">LEAD</a>
+          <a href="/team.html">TEAM</a>
+        </div>
+      </li>
+
+      <li class="has-drop">
+        <a href="#">Company</a>
+        <div class="nav-drop">
+          <a href="/about.html">About</a>
+          <a href="/leadership.html">Leadership</a>
+          <a href="/partner-network.html">Partner Network</a>
+          <a href="/careers.html">Careers</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+      </li>
+
+      <li>
+        <a href="/investor.html">Investors</a>
+      </li>
+
+    </ul>
+
+    <div class="nav-cta">
+      <a href="/access-apply.html" class="btn-nav-outline">Apply — ACCESS Model</a>
+      <a href="mailto:info@inpursuithealth.com" class="btn-nav-solid">Contact Us</a>
+    </div>
+
+    <button class="nav-hamburger" id="ip-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  `;
+  document.body.prepend(nav);
+
+  /* ── 3. MOBILE DRAWER ── */
+  const drawer = document.createElement('div');
+  drawer.id = 'ip-nav-mobile';
+  drawer.innerHTML = `
+    <div class="mob-section">Infrastructure</div>
+    <div class="mob-sub">
+      <a href="/tetra.html">TETRA™ — Data Fabric</a>
+      <a href="/tetra-ex.html">TETRA Ex™ — Exchange</a>
+      <a href="/tetra-aegis.html">TETRA Aegis™ — Protection</a>
+      <a href="/tetra-conductor.html">TETRA Conductor™ — AI Orchestration</a>
+    </div>
+    <div class="mob-section">Solutions</div>
+    <div class="mob-sub">
+      <a href="/for-providers.html">For Providers</a>
+      <a href="/access.html">CMS ACCESS Model</a>
+      <a href="/for-you.html">For You</a>
+      <a href="/mypursuit.html">MyPursuit App</a>
+      <a href="/veterans-first.html">Veterans First</a>
+      <a href="/maha.html">MAHA Initiative</a>
+    </div>
+    <div class="mob-section">VBC Models</div>
+    <div class="mob-sub">
+      <a href="/access.html">ACCESS</a>
+      <a href="/mssp.html">MSSP</a>
+      <a href="/lead.html">LEAD</a>
+      <a href="/team.html">TEAM</a>
+    </div>
+    <div class="mob-section">Company</div>
+    <div class="mob-sub">
+      <a href="/about.html">About</a>
+      <a href="/leadership.html">Leadership</a>
+      <a href="/partner-network.html">Partner Network</a>
+      <a href="/careers.html">Careers</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/investor.html">Investors</a>
+    </div>
+    <div class="mob-cta">
+      <a href="/access-apply.html" class="btn-nav-outline" style="border:1px solid rgba(197,164,78,0.45);color:#C5A44E;">Apply — ACCESS Model</a>
+      <a href="mailto:info@inpursuithealth.com" class="btn-nav-solid" style="background:#C5A44E;color:#0A1628;font-weight:700;">Contact Us</a>
+    </div>
+  `;
+  document.body.insertBefore(drawer, nav.nextSibling);
+
+  /* ── 4. HAMBURGER TOGGLE ── */
+  document.getElementById('ip-hamburger').addEventListener('click', function () {
+    drawer.classList.toggle('open');
+    const spans = this.querySelectorAll('span');
+    if (drawer.classList.contains('open')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+
+  /* ── 5. CLOSE DRAWER ON LINK CLICK ── */
+  drawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      document.getElementById('ip-hamburger').querySelectorAll('span')
+        .forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
     });
-    return ul;
-  }
+  });
 
-  /* ── DESKTOP NAV ────────────────────────────────────────────── */
-  function buildNav() {
-    var ul = document.createElement('ul');
-    ul.id = 'iph-nav';
-    NAV.forEach(function (item) {
-      var li = document.createElement('li'); li.className = 'iph-ni';
-      var a = document.createElement('a'); a.href = item.href || '#';
-      var labelSpan = document.createElement('span');
-      labelSpan.innerHTML = item.label;
-      a.appendChild(labelSpan);
-      if (item.children) a.appendChild(chev());
-      li.appendChild(a);
-      if (item.children) {
-        li.appendChild(buildDrop(item.children));
-        // Click chevron toggles for keyboard/touch; hover handled by CSS
-        a.addEventListener('click', function (e) {
-          if (e.target.closest('.iph-chev')) {
-            e.preventDefault();
-            li.classList.toggle('iph-open');
-          }
-        });
-      }
-      ul.appendChild(li);
-    });
-    return ul;
-  }
+  /* ── 6. HIGHLIGHT ACTIVE PAGE ── */
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  nav.querySelectorAll('.nav-links a').forEach(a => {
+    const href = a.getAttribute('href');
+    if (href && href !== '#' && href.endsWith(path)) {
+      a.style.color = GOLD;
+    }
+  });
 
-  /* ── MOBILE MENU ────────────────────────────────────────────── */
-  function buildMobile() {
-    var wrap = document.createElement('div'); wrap.id = 'iph-mob';
-    NAV.forEach(function (item) {
-      var sec = document.createElement('div'); sec.className = 'mob-sec';
-      if (item.children) {
-        var topDiv = document.createElement('div'); topDiv.className = 'mob-top';
-        var ts = document.createElement('span'); ts.innerHTML = item.label; topDiv.appendChild(ts); topDiv.appendChild(chev());
-        topDiv.addEventListener('click', function () { sec.classList.toggle('iph-open'); });
-        sec.appendChild(topDiv);
-        var kids = document.createElement('div'); kids.className = 'mob-kids';
-        item.children.forEach(function (child) {
-          var ca = document.createElement('a'); ca.href = child.href || '#'; ca.className = 'mob-kid';
-          var cl = document.createElement('span'); cl.className = 'di-label'; cl.innerHTML = child.label; ca.appendChild(cl);
-          if (child.desc) { var cd = document.createElement('span'); cd.className = 'di-desc'; cd.innerHTML = child.desc; ca.appendChild(cd); }
-          kids.appendChild(ca);
-          if (child.children && child.children.length) {
-            var sh = document.createElement('div'); sh.className = 'mob-sub-head'; sh.textContent = 'Includes'; kids.appendChild(sh);
-            child.children.forEach(function (sub) {
-              var sa = document.createElement('a'); sa.href = sub.href || '#'; sa.className = 'mob-sub';
-              var sl = document.createElement('span'); sl.className = 'di-label'; sl.innerHTML = sub.label; sa.appendChild(sl);
-              if (sub.desc) { var sd = document.createElement('span'); sd.className = 'di-desc'; sd.innerHTML = sub.desc; sa.appendChild(sd); }
-              kids.appendChild(sa);
-            });
-          }
-        });
-        sec.appendChild(kids);
-      } else {
-        var a = document.createElement('a'); a.href = item.href; a.className = 'mob-top'; a.innerHTML = item.label; sec.appendChild(a);
-      }
-      wrap.appendChild(sec);
-    });
-    var cta = document.createElement('a'); cta.href = CTA.href; cta.className = 'mob-cta'; cta.textContent = CTA.label;
-    wrap.appendChild(cta);
-    return wrap;
-  }
-
-  /* ── FOOTER ─────────────────────────────────────────────────── */
-  function buildFooter() {
-    var footer = document.createElement('footer'); footer.id = 'iph-footer';
-    var inner = document.createElement('div'); inner.id = 'iph-footer-inner';
-    var brand = document.createElement('div'); brand.id = 'iph-footer-brand'; brand.textContent = 'InPursuit Health';
-    var legal = document.createElement('span'); legal.id = 'iph-footer-legal'; legal.innerHTML = '\u00a9 2026 InPursuit Health, LLC. All rights reserved.';
-    inner.appendChild(brand); inner.appendChild(legal); footer.appendChild(inner);
-    var cols = document.createElement('div'); cols.id = 'iph-footer-cols';
-    FOOTER_COLS.forEach(function (col) {
-      var div = document.createElement('div');
-      var head = document.createElement('div'); head.className = 'iph-fcol-head'; head.textContent = col.heading; div.appendChild(head);
-      var links = document.createElement('div'); links.className = 'iph-fcol-links';
-      col.links.forEach(function (lk) {
-        var a = document.createElement('a'); a.href = lk.href; a.textContent = lk.label; links.appendChild(a);
-      });
-      div.appendChild(links); cols.appendChild(div);
-    });
-    footer.appendChild(cols);
-    var disc = document.createElement('p'); disc.id = 'iph-footer-disclaimer';
-    disc.textContent = 'InPursuit Health is a veteran-owned healthcare technology company providing data interoperability and orchestration infrastructure. The information on this site is for informational purposes only and does not constitute medical advice. TETRA is a registered technology of InPursuit Health, LLC.';
-    footer.appendChild(disc);
-    return footer;
-  }
-
-  /* ── INJECT ─────────────────────────────────────────────────── */
-  function inject() {
-    var style = document.createElement('style'); style.textContent = CSS; document.head.appendChild(style);
-
-    var header = document.createElement('header'); header.id = 'iph-header';
-    var inner = document.createElement('div'); inner.id = 'iph-header-inner';
-
-    var brand = document.createElement('div'); brand.id = 'iph-brand';
-    var brandMain = document.createElement('a'); brandMain.href = 'index.html'; brandMain.style.cssText = 'text-decoration:none;display:flex;align-items:center;';
-    brandMain.innerHTML = '<span id="iph-brand-wordmark">InPursuit Health</span>';
-    var brandPipe = document.createElement('span'); brandPipe.id = 'iph-brand-pipe'; brandPipe.innerHTML = '|';
-    var brandSub = document.createElement('a'); brandSub.href = 'maha.html';
-    brandSub.id = 'iph-brand-sub'; brandSub.innerHTML = 'MAHA Policy Accelerant';
-    brandSub.style.cssText = 'text-decoration:none;';
-    brand.appendChild(brandMain); brand.appendChild(brandPipe); brand.appendChild(brandSub);
-    inner.appendChild(brand);
-    inner.appendChild(buildNav());
-
-    var ctaEl = document.createElement('a'); ctaEl.id = 'iph-cta'; ctaEl.href = CTA.href; ctaEl.textContent = CTA.label;
-    inner.appendChild(ctaEl);
-
-    var burger = document.createElement('button'); burger.id = 'iph-burger'; burger.setAttribute('aria-label', 'Menu');
-    burger.innerHTML = '<span></span><span></span><span></span>';
-    burger.addEventListener('click', function () { header.classList.toggle('iph-mob-open'); });
-    inner.appendChild(burger);
-
-    header.appendChild(inner);
-    var mob = buildMobile();
-    document.body.insertBefore(mob, document.body.firstChild);
-    document.body.insertBefore(header, document.body.firstChild);
-
-    window.addEventListener('scroll', function () { header.classList.toggle('scrolled', window.scrollY > 10); });
-
-    // Replace existing footer or append
-    var existing = document.querySelector('footer');
-    if (existing) existing.remove();
-    document.body.appendChild(buildFooter());
-
-    // Dropdowns close on mouseleave — no click handler needed
-
-    var page = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('#iph-nav .iph-ni>a').forEach(function (a) {
-      if (a.getAttribute('href') === page) a.style.color = '#C5A44E';
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', inject);
-  } else {
-    inject();
-  }
+  /* ── 7. FOOTER ── */
+  const footer = document.createElement('footer');
+  footer.id = 'ip-footer';
+  footer.innerHTML = `
+    <div class="ip-footer-grid">
+      <div class="ip-footer-brand">
+        <div class="logo-text">InPursuit Health</div>
+        <div class="logo-sub">Harness the Power of Your Data™</div>
+        <p>AI-ready data infrastructure for value-based care. Powering providers, protecting patients, and enabling the next generation of healthcare at federal scale.</p>
+        <div class="footer-marks">Results Matter™ &nbsp;·&nbsp; Harness the Power of Your Data™</div>
+      </div>
+      <div class="ip-footer-col">
+        <h4>Infrastructure</h4>
+        <a href="/tetra.html">TETRA™</a>
+        <a href="/tetra-ex.html">TETRA Ex™</a>
+        <a href="/tetra-aegis.html">TETRA Aegis™</a>
+        <a href="/tetra-conductor.html">TETRA Conductor™</a>
+      </div>
+      <div class="ip-footer-col">
+        <h4>Solutions</h4>
+        <a href="/for-providers.html">For Providers</a>
+        <a href="/access.html">ACCESS Model</a>
+        <a href="/for-you.html">For You</a>
+        <a href="/veterans-first.html">Veterans First</a>
+        <a href="/maha.html">MAHA</a>
+      </div>
+      <div class="ip-footer-col">
+        <h4>Company</h4>
+        <a href="/about.html">About</a>
+        <a href="/leadership.html">Leadership</a>
+        <a href="/investor.html">Investors</a>
+        <a href="/careers.html">Careers</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="ip-footer-bottom">
+      <p>© 2026 InPursuit Health, LLC &nbsp;·&nbsp; Wyoming &nbsp;·&nbsp; All rights reserved.</p>
+      <div>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/security-center.html">Security</a>
+        <a href="/data-oath.html">Data Oath</a>
+        <a href="mailto:info@inpursuithealth.com">info@inpursuithealth.com</a>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(footer);
 
 })();
